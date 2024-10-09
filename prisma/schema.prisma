@@ -18,6 +18,7 @@ model User {
   githubId       Int      @unique
   githubUsername String   @unique
   views          Int      @default(0)
+  praises        Int      @default(0)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   Link           Link[]
@@ -27,8 +28,8 @@ model Link {
   id        Int      @id @default(autoincrement())
   title     String
   url       String
-  postedBy  User?    @relation(fields: [userId], references: [id])
-  userId    Int?
+  postedBy  User    @relation(fields: [userId], references: [githubId])
+  userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
