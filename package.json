@@ -34,6 +34,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@auth/sveltekit": "^1.7.0",
 		"bits-ui": "^0.21.16",
 		"clsx": "^2.1.1",
 		"lucide-svelte": "^0.451.0",

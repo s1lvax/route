@@ -2,8 +2,11 @@
 	import { Button } from '$lib/components/ui/button';
 	import Sun from 'lucide-svelte/icons/sun';
 	import Moon from 'lucide-svelte/icons/moon';
+	import { LogOut } from 'lucide-svelte';
+	import { signOut } from '@auth/sveltekit/client';
 
 	import { toggleMode } from 'mode-watcher';
+	import { page } from '$app/stores';
 </script>
 
 <header class="sticky top-0 z-10 items-center border-b bg-background">
@@ -40,7 +43,11 @@
 				/>
 				<span class="sr-only">Toggle theme</span>
 			</Button>
-			<Button href="/profile">My Profile</Button>
+			{#if $page.data.session}
+				<Button on:click={() => signOut()} variant="destructive" class="flex items-center space-x-2"
+					><LogOut /> <span>Logout</span></Button
+				>
+			{/if}
 		</div>
 	</div>
 </header>
