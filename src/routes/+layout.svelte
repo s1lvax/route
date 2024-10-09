@@ -5,7 +5,7 @@
 </script>
 
 <Navbar />
-<div class="flex h-full flex-col">
+<div class="flex h-screen flex-col">
 	<ModeWatcher />
 	<slot />
 </div>

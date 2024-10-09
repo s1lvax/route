@@ -7,6 +7,8 @@
 
 	import { toggleMode } from 'mode-watcher';
 	import { page } from '$app/stores';
+
+	import * as Avatar from '$lib/components/ui/avatar';
 </script>
 
 <header class="sticky top-0 z-10 items-center border-b bg-background">
@@ -43,7 +45,16 @@
 				/>
 				<span class="sr-only">Toggle theme</span>
 			</Button>
+
 			{#if $page.data.session}
+				{#if $page.data.session.user}
+					<a href="/profile">
+						<Avatar.Root>
+							<Avatar.Image src={$page.data.session.user.image} alt="@github.user" />
+							<Avatar.Fallback>X</Avatar.Fallback>
+						</Avatar.Root>
+					</a>
+				{/if}
 				<Button on:click={() => signOut()} variant="destructive" class="flex items-center space-x-2"
 					><LogOut /> <span>Logout</span></Button
 				>
