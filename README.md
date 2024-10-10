@@ -1,9 +1,44 @@
-# Connekt.dev
+# Route
 
-Connekt.dev is a minimalist platform for developers to showcase their projects, links and sync their GitHub activity.
+Route is a platform that allows users to easily connect and share their projects, skills, and resources in one centralized place.
+
+![Route Logo](https://i.imgur.com/dM2NQQe.png)
 
 ## Features
 
-- Sync GitHub activity
-- Display tech stack
-- Customizable profiles
+- Showcase your favorite links like Linktree
+- Showcase your Tech Stack with a cool design
+- Automatically show your Github stats
+- Shareable link at `https://route2.dev/yourusername`
+
+## Tech Stack
+
+- **FullStack Framework**: SvelteKit
+- **Styling**: Shadcn-Svelte && Tailwind
+- **Database**: PostgresQL (Prisma as ORM)
+
+## How to Contribute
+
+1. Clone the project
+
+```bash
+git clone https://github.com/s1lvax/route
+```
+
+2. Install dependencies
+
+```bash
+pnpm i
+```
+
+3. Run a Postgres instance (I recommend using Docker)
+
+```bash
+docker run --name your_postgres_container -e POSTGRES_USER=your_username -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=your_database -p 5432:5432 -d postgres
+```
+
+4. Update the `example.env` to `.env` and fill in your data
+5. Develop the change using a separate branch, either `bugfix/name` or `feature/name`
+6. Push your changes and open a Pull Request with details about your changes
+
+#### All Pull Requests are very appreciated :D
