@@ -1,9 +1,9 @@
 name: Deploy App
 
-on:
-  push:
-    branches:
-      - main # or your deployment branch
+#on:
+#  push:
+#    branches:
+#      - main # or your deployment branch
 
 jobs:
   deploy:
