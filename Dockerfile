@@ -9,7 +9,8 @@ RUN npm install -g pnpm
 COPY package*.json ./
 RUN pnpm install
 
-# Install prisma
+# Copy Prisma files and generate
+COPY prisma ./prisma
 RUN npx prisma generate
 
 # Copy the rest of the files and build the application
@@ -26,6 +27,7 @@ WORKDIR /app
 # Copy necessary files from builder stage
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
+COPY --from=builder /app/prisma prisma/   # Copy Prisma files
 COPY package.json .
 
 # Set the environment and expose the port
