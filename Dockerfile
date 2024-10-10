@@ -27,7 +27,7 @@ WORKDIR /app
 # Copy necessary files from builder stage
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
-COPY --from=builder /app/prisma prisma/   # Copy Prisma files
+COPY --from=builder /app/prisma prisma/ 
 COPY package.json .
 
 # Set the environment and expose the port
