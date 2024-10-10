@@ -20,12 +20,10 @@ export const load: PageServerLoad = async (event) => {
 	// Extract user ID from the image URL
 	const userId = getGitHubUserIdFromImageUrl(session.user.image);
 
-	// Check if user ID is defined
 	if (!userId) {
 		throw new Error('User ID could not be determined from image URL');
 	}
 
-	// Check if the user exists in the database
 	user = await prisma.user.findUnique({
 		where: { githubId: userId }
 	});
@@ -47,13 +45,10 @@ export const load: PageServerLoad = async (event) => {
 		});
 	}
 
-	// Fetch the repository count using the username
 	const repoCount = await countGithubProjects(user.githubUsername);
 
-	// Fetch contributions count using the username
 	const contributionsCount = await fetchGitHubContributionsCount(user.githubUsername);
 
-	// Fetch all links associated with the user ID
 	const links = await prisma.link.findMany({
 		where: { userId: user.githubId } // Filter links by userId
 	});
@@ -62,15 +57,15 @@ export const load: PageServerLoad = async (event) => {
 	const userStats = {
 		repoCount,
 		contributionsCount,
-		views: user.views || 0, // Add views from the user record, default to 0 if undefined
-		praises: user.praises || 0 // Add praises from the user record, default to 0 if undefined
+		views: user.views || 0,
+		praises: user.praises || 0
 	};
 
 	return { userStats, links, form: await superValidate(zod(linksSchema)) };
 };
 
 export const actions: Actions = {
-	default: async (event) => {
+	createLink: async (event) => {
 		const form = await superValidate(event, zod(linksSchema));
 		if (!form.valid) {
 			return fail(400, {
@@ -99,5 +94,29 @@ export const actions: Actions = {
 		return {
 			form
 		};
+	},
+	deleteLink: async ({ url }) => {
+		//get task id from url
+		const id = url.searchParams.get('id');
+
+		//if no id found, return error
+		if (!id) {
+			return fail(400, { message: 'Invalid request' });
+		}
+
+		//delete tasks
+		try {
+			if (user) {
+				await prisma.link.delete({
+					where: {
+						id: Number(id),
+						userId: user.githubId
+					}
+				});
+			}
+		} catch (err) {
+			console.log(err);
+			return fail(500, { message: 'Something went wrong.' });
+		}
 	}
 };

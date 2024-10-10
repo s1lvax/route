@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import * as Card from '$lib/components/ui/card';
 	import * as Table from '$lib/components/ui/table';
 	import { formatDate } from '$lib/utils/formatDate';
+	import { Button } from '$lib/components/ui/button';
+	import { Trash2 } from 'lucide-svelte';
 
 	export let links; // Use the Link type for the links prop
 </script>
@@ -18,6 +21,7 @@
 					<Table.Head>Title</Table.Head>
 					<Table.Head>URL</Table.Head>
 					<Table.Head>Created At</Table.Head>
+					<Table.Head>Actions</Table.Head>
 				</Table.Row>
 			</Table.Header>
 			<Table.Body>
@@ -35,6 +39,11 @@
 							>
 						</Table.Cell>
 						<Table.Cell>{formatDate(link.createdAt)}</Table.Cell>
+						<Table.Cell>
+							<form action="?/deleteLink&id={link.id}" method="POST" use:enhance>
+								<Button type="submit" id="deleteLink" variant="ghost"><Trash2 /></Button>
+							</form>
+						</Table.Cell>
 					</Table.Row>
 				{/each}
 			</Table.Body>
