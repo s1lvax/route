@@ -15,6 +15,11 @@ RUN npx prisma generate
 
 # Copy the rest of the files and build the application
 COPY . .
+
+# Increase Node.js memory limit
+ENV NODE_OPTIONS="--max-old-space-size=2048"
+
+# Run the build process
 RUN pnpm run build
 
 # Prune development dependencies
@@ -27,7 +32,7 @@ WORKDIR /app
 # Copy necessary files from builder stage
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
-COPY --from=builder /app/prisma prisma/ 
+COPY --from=builder /app/prisma prisma/
 COPY package.json .
 
 # Set the environment and expose the port
