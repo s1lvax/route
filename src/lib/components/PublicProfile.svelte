@@ -6,32 +6,11 @@
 	import { ThumbsUp } from 'lucide-svelte'; // For praises
 	import { Progress } from '$lib/components/ui/progress';
 	import { Button } from '$lib/components/ui/button';
-
-	// Define the type for userData
-	interface UserData {
-		links: { title: string; url: string }[];
-		skills: { title: string; level: string }[];
-		repoCount: number;
-		contributionsCount: number;
-		pfp: string;
-		praises: number;
-		username: string;
-	}
+	import type { PublicProfile } from '$lib/types/PublicProfile';
+	import { getProgressValue } from '$lib/utils/getProgressValue';
 
 	// Accept userData as a prop
-	export let userData: UserData;
-
-	// Function to convert skill level (string) into percentage for progress bar
-	const getProgressValue = (level: string): number => {
-		const levels: { [key: string]: number } = {
-			'1': 20,
-			'2': 40,
-			'3': 60,
-			'4': 80,
-			'5': 100
-		};
-		return levels[level] || 0;
-	};
+	export let userData: PublicProfile;
 </script>
 
 <!-- Main Profile Content -->
@@ -158,7 +137,3 @@
 		</div>
 	</main>
 </div>
-
-<style>
-	/* Additional styling if needed */
-</style>
