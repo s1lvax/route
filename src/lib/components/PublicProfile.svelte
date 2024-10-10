@@ -66,7 +66,7 @@
 				<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 					<div class="flex items-center space-x-2">
 						<Folder class="h-4 w-4 text-muted-foreground" />
-						<Card.Title class="text-sm font-medium">Total Projects</Card.Title>
+						<Card.Title class="text-sm font-medium">Projects on GitHub</Card.Title>
 					</div>
 				</Card.Header>
 				<Card.Content>
@@ -150,6 +150,11 @@
 					{/if}
 				</Card.Content>
 			</Card.Root>
+		</div>
+		<div class="flex justify-center">
+			<p class="text-sm text-muted-foreground">
+				Do you like this? <a href="/" class="text-blue-600 underline">Create yours here.</a>
+			</p>
 		</div>
 	</main>
 </div>
