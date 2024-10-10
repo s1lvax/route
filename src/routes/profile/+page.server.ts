@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { countGithubProjects } from '$lib/utils/countGithubProjects';
 import { getGithubUsername } from '$lib/utils/getGithubUsername';
-import { fetchGitHubContributionsCount } from '$lib/utils/fetchGitHubContributions';
+import { fetchGitHubContributionsCount } from '$lib/utils/fetchGithubContributions';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
 import { prisma } from '$lib/server/prisma';
 import { fail, superValidate } from 'sveltekit-superforms';
