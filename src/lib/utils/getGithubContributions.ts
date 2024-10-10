@@ -1,5 +1,3 @@
-import type { GitHubEvent } from '$lib/types/GithubEvent';
-
 // Function to fetch GitHub contributions count (events)
 export const fetchGitHubContributionsCount = async (username: string): Promise<number> => {
 	const url = `https://api.github.com/users/${username}/events`;
@@ -13,7 +11,7 @@ export const fetchGitHubContributionsCount = async (username: string): Promise<n
 			throw new Error(`Error fetching data: ${response.statusText}`);
 		}
 
-		const data: GitHubEvent[] = await response.json();
+		const data = await response.json();
 
 		// Return the count of contributions
 		return data.length;
