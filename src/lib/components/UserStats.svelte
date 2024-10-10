@@ -53,7 +53,7 @@
 			</div>
 		</Card.Header>
 		<Card.Content>
-			<div class="text-2xl font-bold">25</div>
+			<div class="text-2xl font-bold">{userStats.praises}</div>
 		</Card.Content>
 	</Card.Root>
 </div>
