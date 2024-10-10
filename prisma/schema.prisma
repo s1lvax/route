@@ -14,17 +14,18 @@ datasource db {
 }
 
 model User {
-  id             Int      @id @default(autoincrement())
-  githubId       Int      @unique
-  githubUsername String   @unique
-  views          Int      @default(0)
-  praises        Int      @default(0)
-  contributionsCount Int  @default(0)
-  repoCount     Int      @default(0)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  Link           Link[]
-  Skill          Skill[]
+  id                 Int      @id @default(autoincrement())
+  githubId           Int      @unique
+  githubUsername     String   @unique
+  views              Int      @default(0)
+  praises            Int      @default(0)
+  contributionsCount Int      @default(0)
+  repoCount          Int      @default(0)
+  pfp                String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  Link               Link[]
+  Skill              Skill[]
 }
 
 model Link {
