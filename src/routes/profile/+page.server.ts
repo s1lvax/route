@@ -12,7 +12,7 @@ import type { User } from '$lib/types/User';
 import { skillsSchema } from '$lib/schemas/skills';
 import { formatDate } from '$lib/utils/formatDate';
 
-// Define the user variable with a possible null type
+// Define the user variable with a possible null
 let user: User | null = null;
 
 export const load: PageServerLoad = async (event) => {
