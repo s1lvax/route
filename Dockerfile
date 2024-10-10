@@ -9,6 +9,9 @@ RUN npm install -g pnpm
 COPY package*.json ./
 RUN pnpm install
 
+# Install prisma
+RUN npx prisma generate
+
 # Copy the rest of the files and build the application
 COPY . .
 RUN pnpm run build
