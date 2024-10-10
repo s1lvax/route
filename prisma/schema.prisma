@@ -19,16 +19,29 @@ model User {
   githubUsername String   @unique
   views          Int      @default(0)
   praises        Int      @default(0)
+  contributionsCount Int  @default(0)
+  repoCount     Int      @default(0)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   Link           Link[]
+  Skill          Skill[]
 }
 
 model Link {
   id        Int      @id @default(autoincrement())
   title     String
   url       String
-  postedBy  User    @relation(fields: [userId], references: [githubId])
+  postedBy  User     @relation(fields: [userId], references: [githubId])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  title     String
+  level     String
+  postedBy  User     @relation(fields: [userId], references: [githubId])
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

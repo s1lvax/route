@@ -18,7 +18,7 @@
 	method="POST"
 	use:enhance
 	action="?/createLink"
-	class="flex items-center justify-center space-x-4"
+	class="flex w-full max-w-sm items-center space-x-2"
 >
 	<div class="flex flex-col">
 		<Form.Field {form} name="title">

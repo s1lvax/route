@@ -1,18 +1,15 @@
 <script lang="ts">
-	import GitHub from 'lucide-svelte/icons/github'; // For GitHub contributions
-	import Users from 'lucide-svelte/icons/users'; // For profile views
-	import Folder from 'lucide-svelte/icons/folder'; // For total projects
-	import { ThumbsUp } from 'lucide-svelte';
 	import * as Card from '$lib/components/ui/card';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	// Link form
 	import LinkForm from '$lib/components/LinkForm.svelte';
-	import UserStats from '$lib/components/UserStats.svelte'; // Import UserStats component
-	import UserLinks from '$lib/components/UserLinks.svelte'; // Import UserLinks component
+	import UserStats from '$lib/components/UserStats.svelte';
+	import UserLinks from '$lib/components/UserLinks.svelte';
+	import SkillsForm from '$lib/components/SkillsForm.svelte';
+	import UserSkills from '$lib/components/UserSkills.svelte';
 </script>
 
 <div class="flex min-h-screen w-full flex-col">
@@ -37,64 +34,11 @@
 
 			<Card.Root>
 				<Card.Header>
-					<Card.Title>Recent Sales</Card.Title>
+					<Card.Title>Tech Stack</Card.Title>
+					<SkillsForm data={data.skillsForm} />
 				</Card.Header>
 				<Card.Content class="grid gap-8">
-					<div class="flex items-center gap-4">
-						<Avatar.Root class="hidden h-9 w-9 sm:flex">
-							<Avatar.Image src="/avatars/01.png" alt="Avatar" />
-							<Avatar.Fallback>OM</Avatar.Fallback>
-						</Avatar.Root>
-						<div class="grid gap-1">
-							<p class="text-sm font-medium leading-none">Olivia Martin</p>
-							<p class="text-sm text-muted-foreground">olivia.martin@email.com</p>
-						</div>
-						<div class="ml-auto font-medium">+$1,999.00</div>
-					</div>
-					<div class="flex items-center gap-4">
-						<Avatar.Root class="hidden h-9 w-9 sm:flex">
-							<Avatar.Image src="/avatars/02.png" alt="Avatar" />
-							<Avatar.Fallback>JL</Avatar.Fallback>
-						</Avatar.Root>
-						<div class="grid gap-1">
-							<p class="text-sm font-medium leading-none">Jackson Lee</p>
-							<p class="text-sm text-muted-foreground">jackson.lee@email.com</p>
-						</div>
-						<div class="ml-auto font-medium">+$39.00</div>
-					</div>
-					<div class="flex items-center gap-4">
-						<Avatar.Root class="hidden h-9 w-9 sm:flex">
-							<Avatar.Image src="/avatars/03.png" alt="Avatar" />
-							<Avatar.Fallback>IN</Avatar.Fallback>
-						</Avatar.Root>
-						<div class="grid gap-1">
-							<p class="text-sm font-medium leading-none">Isabella Nguyen</p>
-							<p class="text-sm text-muted-foreground">isabella.nguyen@email.com</p>
-						</div>
-						<div class="ml-auto font-medium">+$299.00</div>
-					</div>
-					<div class="flex items-center gap-4">
-						<Avatar.Root class="hidden h-9 w-9 sm:flex">
-							<Avatar.Image src="/avatars/04.png" alt="Avatar" />
-							<Avatar.Fallback>WK</Avatar.Fallback>
-						</Avatar.Root>
-						<div class="grid gap-1">
-							<p class="text-sm font-medium leading-none">William Kim</p>
-							<p class="text-sm text-muted-foreground">will@email.com</p>
-						</div>
-						<div class="ml-auto font-medium">+$99.00</div>
-					</div>
-					<div class="flex items-center gap-4">
-						<Avatar.Root class="hidden h-9 w-9 sm:flex">
-							<Avatar.Image src="/avatars/05.png" alt="Avatar" />
-							<Avatar.Fallback>SD</Avatar.Fallback>
-						</Avatar.Root>
-						<div class="grid gap-1">
-							<p class="text-sm font-medium leading-none">Sofia Davis</p>
-							<p class="text-sm text-muted-foreground">sofia.davis@email.com</p>
-						</div>
-						<div class="ml-auto font-medium">+$39.00</div>
-					</div>
+					<UserSkills skills={data.skills} />
 				</Card.Content>
 			</Card.Root>
 		</div>
