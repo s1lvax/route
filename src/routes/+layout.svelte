@@ -4,7 +4,6 @@
 	import { ModeWatcher } from 'mode-watcher';
 </script>
 
-<Navbar />
 <div class="flex h-screen flex-col">
 	<ModeWatcher />
 	<slot />

@@ -3,4 +3,8 @@ export interface User {
 	githubUsername: string;
 	views: number;
 	praises: number;
+	pfp: string | null;
+	repoCount: number;
+	contributionsCount: number;
+	updatedAt: Date;
 }

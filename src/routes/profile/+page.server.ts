@@ -10,68 +10,115 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { linksSchema } from '$lib/schemas/links';
 import type { User } from '$lib/types/User';
 import { skillsSchema } from '$lib/schemas/skills';
+import { formatDate } from '$lib/utils/formatDate';
 
-// user
-let user: User | null;
+// Define the user variable with a possible null type
+let user: User | null = null;
 
 export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.auth();
 	if (!session?.user) throw redirect(303, '/');
 
-	// Extract user ID from the image URL
 	const userId = getGitHubUserIdFromImageUrl(session.user.image);
+	if (!userId) throw new Error('User ID could not be determined from image URL');
 
-	if (!userId) {
-		throw new Error('User ID could not be determined from image URL');
-	}
-
+	// Fetch the user from the database
 	user = await prisma.user.findUnique({
 		where: { githubId: userId }
 	});
 
-	// If user does not exist, create a new user record and fetch the username
+	let repoCount = 0;
+	let contributionsCount = 0;
+
+	// If the user does not exist, create a new user
 	if (!user) {
 		const username = await getGithubUsername(session.user.image);
+		if (!username) throw new Error('Username could not be determined from image URL');
 
-		// Check if username is defined
-		if (!username) {
-			throw new Error('Username could not be determined from image URL');
-		}
+		// Fetch repository and contributions count
+		repoCount = await countGithubProjects(username);
+		contributionsCount = await fetchGitHubContributionsCount(username);
 
+		// Create new user in the database
 		user = await prisma.user.create({
 			data: {
 				githubId: userId,
-				githubUsername: username
+				githubUsername: username,
+				pfp: session.user.image,
+				repoCount,
+				contributionsCount,
+				updatedAt: new Date()
 			}
 		});
+	} else {
+		// Update profile picture if necessary
+		if (!user.pfp || user.pfp !== session.user.image) {
+			await prisma.user.update({
+				where: { githubId: userId },
+				data: { pfp: session.user.image }
+			});
+		}
+
+		const now = new Date();
+		const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000);
+
+		// Fetch new counts if `updatedAt` is older than 10 minutes
+		if (!user.updatedAt || user.updatedAt < tenMinutesAgo) {
+			repoCount = await countGithubProjects(user.githubUsername);
+			contributionsCount = await fetchGitHubContributionsCount(user.githubUsername);
+
+			await prisma.user.update({
+				where: { githubId: userId },
+				data: {
+					repoCount,
+					contributionsCount,
+					updatedAt: now
+				}
+			});
+
+			// Update user object with new values
+			user.repoCount = repoCount;
+			user.contributionsCount = contributionsCount;
+			user.updatedAt = now;
+		} else {
+			// Use existing counts if recently updated
+			repoCount = user.repoCount;
+			contributionsCount = user.contributionsCount;
+		}
 	}
 
-	const repoCount = await countGithubProjects(user.githubUsername);
+	// Ensure user is not null before accessing properties
+	if (!user) throw new Error('User creation failed or user is null');
 
-	const contributionsCount = await fetchGitHubContributionsCount(user.githubUsername);
-
+	// Fetch links and skills related to the user
 	const links = await prisma.link.findMany({
-		where: { userId: user.githubId } // Filter links by userId
+		where: { userId: user.githubId }
 	});
 
 	const skills = await prisma.skill.findMany({
-		where: { userId: user.githubId } // Filter links by userId
+		where: { userId: user.githubId }
 	});
 
-	// Create the userStats object, including views and praises
+	// Create userStats object
 	const userStats = {
-		repoCount,
-		contributionsCount,
+		repoCount: user.repoCount,
+		contributionsCount: user.contributionsCount,
 		views: user.views || 0,
-		praises: user.praises || 0
+		praises: user.praises || 0,
+		lastUpdatedAt: formatDate(user.updatedAt)
 	};
 
+	// Initialize forms using superValidate
+	const linksForm = await superValidate(zod(linksSchema));
+	const skillsForm = await superValidate(zod(skillsSchema));
+
+	// Return data to the frontend
 	return {
 		userStats,
 		links,
 		skills,
-		form: await superValidate(zod(linksSchema)),
-		skillsForm: await superValidate(zod(skillsSchema))
+		form: linksForm,
+		skillsForm: skillsForm
 	};
 };
 
