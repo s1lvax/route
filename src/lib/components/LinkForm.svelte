@@ -14,21 +14,31 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<form method="POST" use:enhance class="flex items-center justify-center space-x-4">
-	<Form.Field {form} name="title">
-		<Form.Control let:attrs>
-			<Form.Label>Title</Form.Label>
-			<Input {...attrs} bind:value={$formData.title} />
-		</Form.Control>
-		<Form.FieldErrors />
-	</Form.Field>
+<form
+	method="POST"
+	use:enhance
+	action="?/createLink"
+	class="flex items-center justify-center space-x-4"
+>
+	<div class="flex flex-col">
+		<Form.Field {form} name="title">
+			<Form.Control let:attrs>
+				<Form.Label>Title</Form.Label>
+				<Input {...attrs} bind:value={$formData.title} />
+			</Form.Control>
+			<Form.FieldErrors />
+		</Form.Field>
+	</div>
 
-	<Form.Field {form} name="url">
-		<Form.Control let:attrs>
-			<Form.Label>URL</Form.Label>
-			<Input {...attrs} bind:value={$formData.url} />
-		</Form.Control>
-		<Form.FieldErrors />
-	</Form.Field>
+	<div class="flex flex-col">
+		<Form.Field {form} name="url">
+			<Form.Control let:attrs>
+				<Form.Label>URL</Form.Label>
+				<Input {...attrs} bind:value={$formData.url} />
+			</Form.Control>
+			<Form.FieldErrors />
+		</Form.Field>
+	</div>
+
 	<Form.Button>Add</Form.Button>
 </form>
