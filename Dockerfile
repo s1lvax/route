@@ -11,7 +11,7 @@ RUN pnpm install
 
 # Copy Prisma files and generate
 COPY prisma ./prisma
-RUN npx prisma generate
+
 
 # Copy the rest of the files and build the application
 COPY . .
@@ -38,6 +38,8 @@ COPY package.json .
 # Set the environment and expose the port
 EXPOSE 3000
 ENV NODE_ENV=production
+
+RUN npx prisma generate
 
 # Command to run the application
 CMD [ "node", "build" ]
