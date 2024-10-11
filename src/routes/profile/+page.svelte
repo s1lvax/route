@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
-	import * as Avatar from '$lib/components/ui/avatar';
+	import { Button } from '$lib/components/ui/button';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -10,10 +10,17 @@
 	import UserLinks from '$lib/components/UserLinks.svelte';
 	import SkillsForm from '$lib/components/SkillsForm.svelte';
 	import UserSkills from '$lib/components/UserSkills.svelte';
+	import { ArrowUpRight } from 'lucide-svelte';
 </script>
 
 <div class="flex min-h-screen w-full flex-col">
 	<main class="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+		<div class="flex w-full justify-end space-x-2">
+			<Button variant="outline" href="/${data.userStats.username}"
+				>View my public profile <ArrowUpRight /></Button
+			>
+		</div>
+
 		<UserStats userStats={data.userStats} />
 		<!-- Use UserStats component and pass userStats -->
 

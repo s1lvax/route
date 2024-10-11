@@ -102,6 +102,7 @@ export const load: PageServerLoad = async (event) => {
 	// Create userStats object
 	const userStats = {
 		repoCount: user.repoCount,
+		username: user.githubUsername,
 		contributionsCount: user.contributionsCount,
 		views: user.views || 0,
 		praises: user.praises || 0,
