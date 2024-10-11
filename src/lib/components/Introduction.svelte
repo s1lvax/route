@@ -11,7 +11,7 @@
 
 <NewSection>
 	<h1 class="mb-8 text-center text-3xl font-bold md:text-6xl">
-		Build, Connect, and Showcase with Connekt.dev
+		Build, Connect, and Showcase with Route
 	</h1>
 	<p class="mb-2 text-center md:text-lg">
 		Keep your GitHub activity live, showcase your tools, and create a portfolio that highlights your
