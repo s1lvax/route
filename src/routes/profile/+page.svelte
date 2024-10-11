@@ -16,7 +16,7 @@
 <div class="flex min-h-screen w-full flex-col">
 	<main class="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
 		<div class="flex w-full justify-end space-x-2">
-			<Button variant="outline" href="/${data.userStats.username}"
+			<Button variant="outline" href="/{data.userStats.username}"
 				>View my public profile <ArrowUpRight /></Button
 			>
 		</div>
