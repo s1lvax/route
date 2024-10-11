@@ -12,7 +12,7 @@ RUN pnpm install
 
 # Copy the rest of the files and build the application
 COPY . .
-RUN npx prisma generate
+RUN npx prisma generate && npx prisma db push
 RUN pnpm run build
 
 # Prune development dependencies
