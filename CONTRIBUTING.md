@@ -1,22 +1,3 @@
-# Route
-
-Route is a platform that allows users to easily connect and share their projects, skills, and resources in one centralized place.
-
-![Route Logo](https://i.imgur.com/dM2NQQe.png)
-
-## Features
-
-- Showcase your favorite links like Linktree
-- Showcase your Tech Stack with a cool design
-- Automatically show your Github stats
-- Shareable link at `https://route2.dev/yourusername`
-
-## Tech Stack
-
-- **FullStack Framework**: SvelteKit
-- **Styling**: Shadcn-Svelte && Tailwind
-- **Database**: PostgresQL (Prisma as ORM)
-
 ## How to Contribute
 
 1. Clone the project
@@ -52,5 +33,3 @@ pnpm dev
 
 7. Develop the change using a separate branch, either `bugfix/name` or `feature/name`
 8. Push your changes and open a Pull Request with details about your changes
-
-#### All Pull Requests are very appreciated :D
