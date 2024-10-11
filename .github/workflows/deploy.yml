@@ -47,4 +47,4 @@ jobs:
             docker build -t route .
             docker stop route || true
             docker rm route || true
-            docker run -d --name route --restart always -p 3002:3000 route
+            docker run -d --name route --restart always --env-file .env -p 3002:3000 route
