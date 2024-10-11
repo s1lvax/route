@@ -1,9 +1,9 @@
 name: Deploy App
 
-#on:
-#  push:
-#    branches:
-#      - main # or your deployment branch
+on:
+  push:
+    branches:
+      - main # or your deployment branch
 
 jobs:
   deploy:
@@ -38,6 +38,7 @@ jobs:
             echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env
             echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+            echo "AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST }}" >> .env
 
             docker build -t route .
             docker stop route || true
