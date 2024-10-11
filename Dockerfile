@@ -7,10 +7,12 @@ RUN npm install -g pnpm
 
 # Copy package files and install dependencies
 COPY package*.json ./
+COPY prisma ./prisma/
 RUN pnpm install
 
 # Copy the rest of the files and build the application
 COPY . .
+RUN npx prisma generate
 RUN pnpm run build
 
 # Prune development dependencies
