@@ -14,7 +14,7 @@
 		onUpdated({ form }) {
 			if (form.valid) {
 				// Only reset the title, that way the user doesn't have to specify level of mastery every single time
-				form.data.title = '';
+				$formData.title = '';
 			}
 		}
 	});
