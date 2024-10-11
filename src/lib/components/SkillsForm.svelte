@@ -9,7 +9,14 @@
 	export let data: SuperValidated<Infer<SkillsSchema>>;
 
 	const form = superForm(data, {
-		validators: zodClient(skillsSchema)
+		validators: zodClient(skillsSchema),
+		resetForm: false,
+		onUpdated({ form }) {
+			if (form.valid) {
+				// Only reset the title, that way the user doesn't have to specify level of mastery every single time
+				$formData.title = '';
+			}
+		}
 	});
 
 	const { form: formData, enhance } = form;
