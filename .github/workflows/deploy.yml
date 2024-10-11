@@ -34,7 +34,8 @@ jobs:
             cd '/opt/route'
 
             # Overwrite the .env file to recreate it during each deployment
-            echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" > .env
+            rm -f .env
+            echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
             echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env
             echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
