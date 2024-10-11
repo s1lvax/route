@@ -40,6 +40,9 @@ jobs:
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
             echo "AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST }}" >> .env
 
+            #Prisma
+            npx prisma generate
+
             docker build -t route .
             docker stop route || true
             docker rm route || true
