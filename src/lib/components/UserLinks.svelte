@@ -4,9 +4,29 @@
 	import * as Table from '$lib/components/ui/table';
 	import { formatDate } from '$lib/utils/formatDate';
 	import { Button } from '$lib/components/ui/button';
-	import { Trash2 } from 'lucide-svelte';
+	import { Trash2, Copy } from 'lucide-svelte';
+	import { toast } from 'svelte-sonner';
 
 	export let links; // Use the Link type for the links prop
+
+	const copyToClipboard = (url: string) => {
+		navigator.clipboard
+			.writeText(url)
+			.then(() => {
+				console.log('Link copied to clipboard!');
+			})
+			.catch((err) => {
+				console.error('Failed to copy: ', err);
+			});
+
+		toast.success('Link has been copied.', {
+			description: url,
+			action: {
+				label: 'Undo',
+				onClick: () => console.info('Undo')
+			}
+		});
+	};
 </script>
 
 <Card.Root>
@@ -37,6 +57,12 @@
 								rel="noopener noreferrer"
 								class="text-blue-600 hover:underline">Link is available here</a
 							>
+
+							<Button variant="ghost" on:click={() => copyToClipboard(link.url)}>
+								<Copy
+									class="h-4 w-4 transform transition-transform duration-300 hover:scale-110 hover:cursor-pointer"
+								/>
+							</Button>
 						</Table.Cell>
 						<Table.Cell>{formatDate(link.createdAt)}</Table.Cell>
 						<Table.Cell>
