@@ -38,7 +38,7 @@ docker run --name your_postgres_container -e POSTGRES_USER=your_username -e POST
 ```
 
 4. Update the `example.env` to `.env` and fill in your data
-5. Push the databse schema using Prisma
+5. Push the database schema using Prisma
 
 ```bash
 npx prisma db push
