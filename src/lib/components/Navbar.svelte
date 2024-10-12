@@ -20,9 +20,6 @@
 				><img src="/logo.png" alt="logo" class="h-12 w-auto md:h-14 lg:h-16" /></a
 			>
 		</nav>
-		<a href="/">
-			<img src="/logo.png" alt="logo" class="h-8 w-auto md:h-6 lg:h-8" />
-		</a>
 		<div class="flex w-auto items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
 			<Button on:click={toggleMode} variant="outline" size="icon">
 				<Sun
