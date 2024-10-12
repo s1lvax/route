@@ -17,24 +17,9 @@
 			class="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6"
 		>
 			<a href="/" class="flex items-center gap-2 text-lg font-semibold md:text-base"
-				><span>Route</span></a
+				><img src="/logo.png" alt="logo" class="h-8 w-auto md:h-12 lg:h-16" /></a
 			>
 		</nav>
-		<a href="/"
-			><svg
-				width="71"
-				height="71"
-				viewBox="0 0 71 71"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-auto w-5 sm:hidden"
-				><path d="M25.5284 70.664H70.5509L48.0386 31.6714L25.5284 70.664Z" fill="#121212"
-				></path><path
-					d="M19.1436 38.4004C29.7162 38.4004 38.2871 29.8295 38.2871 19.2568C38.2871 8.68414 29.7162 0.113281 19.1436 0.113281C8.57086 0.113281 0 8.68414 0 19.2568C0 29.8295 8.57086 38.4004 19.1436 38.4004Z"
-					fill="#121212"
-				></path></svg
-			></a
-		>
 		<div class="flex w-auto items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
 			<Button on:click={toggleMode} variant="outline" size="icon">
 				<Sun
