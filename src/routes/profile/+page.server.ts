@@ -10,7 +10,6 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { linksSchema } from '$lib/schemas/links';
 import type { User } from '$lib/types/User';
 import { skillsSchema } from '$lib/schemas/skills';
-import { formatDate } from '$lib/utils/formatDate';
 import { deleteUser } from '$lib/utils/deleteUser';
 
 // Define the user variable with a possible null
@@ -107,7 +106,7 @@ export const load: PageServerLoad = async (event) => {
 		contributionsCount: user.contributionsCount,
 		views: user.views || 0,
 		praises: user.praises || 0,
-		lastUpdatedAt: formatDate(user.updatedAt)
+		lastUpdatedAt: user.updatedAt
 	};
 
 	// Initialize forms using superValidate
