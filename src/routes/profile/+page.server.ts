@@ -11,6 +11,7 @@ import { linksSchema } from '$lib/schemas/links';
 import type { User } from '$lib/types/User';
 import { skillsSchema } from '$lib/schemas/skills';
 import { formatDate } from '$lib/utils/formatDate';
+import { deleteUser } from '$lib/utils/deleteUser';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -115,6 +116,7 @@ export const load: PageServerLoad = async (event) => {
 
 	// Return data to the frontend
 	return {
+		userId: user.id,
 		userStats,
 		links,
 		skills,
@@ -231,5 +233,26 @@ export const actions: Actions = {
 			console.log(err);
 			return fail(500, { message: 'Something went wrong.' });
 		}
+	},
+	deleteAccount: async ({ url }) => {
+		//get user id from url
+		const id = url.searchParams.get('id');
+
+		//if no id found, return error
+		if (!id) {
+			return fail(400, { message: 'Invalid request' });
+		}
+
+		//delete user
+		if (user) {
+			try {
+				//make sure it's the correct user
+				deleteUser(user.githubId, Number(id));
+			} catch (error) {
+				console.log(error);
+				throw Error('Failed to delete user');
+			}
+		}
+		throw redirect(303, '/');
 	}
 };
