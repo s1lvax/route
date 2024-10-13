@@ -3,17 +3,19 @@
 	import * as Avatar from '$lib/components/ui/avatar';
 	import GitHub from 'lucide-svelte/icons/github'; // For GitHub contributions and GitHub link
 	import Folder from 'lucide-svelte/icons/folder'; // For total projects
-	import { ThumbsUp } from 'lucide-svelte'; // For praises
+	import { ArrowUpRight, ThumbsUp } from 'lucide-svelte'; // For praises
 	import { Progress } from '$lib/components/ui/progress';
 	import { Button } from '$lib/components/ui/button';
 	import type { PublicProfile } from '$lib/types/PublicProfile';
 	import { getProgressValue } from '$lib/utils/getProgressValue';
+	import * as Table from '$lib/components/ui/table';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
 </script>
 
 <!-- Main Profile Content -->
+
 <div class="flex min-h-screen w-full flex-col items-center">
 	<main class="flex w-full max-w-6xl flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
 		<!-- User Avatar and Basic Info -->
@@ -86,24 +88,28 @@
 			<Card.Root>
 				<Card.Header>
 					<Card.Title>Links</Card.Title>
-					<Card.Description
-						>Discover the developer's projects and favorite resources</Card.Description
-					>
+					<Card.Description>
+						Discover the developer's projects and favorite resources
+					</Card.Description>
 				</Card.Header>
 				<Card.Content class="grid gap-4">
 					{#if userData.links.length > 0}
-						{#each userData.links as link}
-							<div>
-								<a
-									href={link.url}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="text-blue-600 hover:underline"
-								>
-									{link.title}
-								</a>
-							</div>
-						{/each}
+						<Table.Root>
+							<Table.Header>
+								<Table.Row>
+									<Table.Head>Title</Table.Head>
+									<Table.Head>Visit</Table.Head>
+								</Table.Row>
+							</Table.Header>
+							<Table.Body>
+								{#each userData.links as link}
+									<Table.Row class="hover:cursor-pointer">
+										<Table.Cell class="font-medium">{link.title}</Table.Cell>
+										<Table.Cell class="text-muted-foreground"><ArrowUpRight /></Table.Cell>
+									</Table.Row>
+								{/each}
+							</Table.Body>
+						</Table.Root>
 					{:else}
 						<p class="text-muted-foreground">No links available</p>
 					{/if}
