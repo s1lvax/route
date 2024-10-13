@@ -1,11 +1,9 @@
 <script lang="ts">
 	import NewSection from '$lib/components/NewSection.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { UserPen } from 'lucide-svelte';
-	import { Github } from 'lucide-svelte';
-	import { GitPullRequestCreate } from 'lucide-svelte';
+	import { GitPullRequestCreate, UserPen, Github, LogOut } from 'lucide-svelte';
 
-	import { signIn } from '@auth/sveltekit/client';
+	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 </script>
 
@@ -21,6 +19,9 @@
 		{#if $page.data.session}
 			<Button href="/profile" class="flex items-center space-x-2"
 				><UserPen /> <span>My Profile</span></Button
+			>
+			<Button on:click={() => signOut()} variant="destructive" class="flex items-center space-x-2"
+				><LogOut /> <span>Logout</span></Button
 			>
 		{:else}
 			<Button on:click={() => signIn('github')} class="flex items-center space-x-2"
