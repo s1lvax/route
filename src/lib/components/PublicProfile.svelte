@@ -9,9 +9,21 @@
 	import type { PublicProfile } from '$lib/types/PublicProfile';
 	import { getProgressValue } from '$lib/utils/getProgressValue';
 	import * as Table from '$lib/components/ui/table';
+	import { onMount } from 'svelte';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
+
+	let progressValues = {};
+
+	onMount(() => {
+		userData.skills.forEach((skill) => {
+			progressValues[skill.title] = 0;
+			setTimeout(() => {
+				progressValues[skill.title] = getProgressValue(skill.level);
+			}, 100);
+		});
+	});
 </script>
 
 <!-- Main Profile Content -->
@@ -127,7 +139,12 @@
 						{#each userData.skills as skill}
 							<div class="flex items-center justify-between">
 								<span>{skill.title}</span>
-								<Progress value={getProgressValue(skill.level)} max={100} class="w-[60%]" />
+								<Progress
+									value={progressValues[skill.title]}
+									max={100}
+									class="w-[60%] transition-all ease-in-out"
+									style="transition-duration: 3000ms;"
+								/>
 							</div>
 						{/each}
 					{:else}
