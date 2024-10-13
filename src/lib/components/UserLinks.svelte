@@ -5,28 +5,10 @@
 	import { formatDate } from '$lib/utils/formatDate';
 	import { Button } from '$lib/components/ui/button';
 	import { Trash2, Copy } from 'lucide-svelte';
-	import { toast } from 'svelte-sonner';
+	import { copyToClipboard } from '$lib/utils/copyToClipboard';
+	import { confirmDelete } from '$lib/utils/confirmDelete';
 
 	export let links; // Use the Link type for the links prop
-
-	const copyToClipboard = (url: string) => {
-		navigator.clipboard
-			.writeText(url)
-			.then(() => {
-				console.log('Link copied to clipboard!');
-			})
-			.catch((err) => {
-				console.error('Failed to copy: ', err);
-			});
-
-		toast.success('Link has been copied.', {
-			description: url,
-			action: {
-				label: 'Undo',
-				onClick: () => console.info('Undo')
-			}
-		});
-	};
 </script>
 
 <Card.Root>
@@ -67,7 +49,9 @@
 						<Table.Cell>{formatDate(link.createdAt)}</Table.Cell>
 						<Table.Cell>
 							<form action="?/deleteLink&id={link.id}" method="POST" use:enhance>
-								<Button type="submit" id="deleteLink" variant="ghost"><Trash2 /></Button>
+								<Button type="submit" id="deleteLink" variant="ghost" on:click={confirmDelete}>
+									<Trash2 />
+								</Button>
 							</form>
 						</Table.Cell>
 					</Table.Row>
