@@ -115,10 +115,12 @@
 							</Table.Header>
 							<Table.Body>
 								{#each userData.links as link}
-									<Table.Row class="hover:cursor-pointer">
-										<Table.Cell class="font-medium">{link.title}</Table.Cell>
-										<Table.Cell class="text-muted-foreground"><ArrowUpRight /></Table.Cell>
-									</Table.Row>
+									<a href={link.url} target="_blank">
+										<Table.Row class="hover:cursor-pointer">
+											<Table.Cell class="font-medium">{link.title}</Table.Cell>
+											<Table.Cell class="text-muted-foreground"><ArrowUpRight /></Table.Cell>
+										</Table.Row>
+									</a>
 								{/each}
 							</Table.Body>
 						</Table.Root>
