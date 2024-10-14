@@ -6,6 +6,7 @@
 	import { masteryLevels } from '$lib/constants/masteryLevel';
 	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button';
+	import { confirmDelete } from '$lib/utils/confirmDelete';
 </script>
 
 <div class="grid gap-4">
@@ -20,7 +21,9 @@
 			</div>
 			<div class="ml-auto font-medium">
 				<form action="?/deleteSkill&id={skill.id}" method="POST" use:enhance>
-					<Button type="submit" id="deleteLink" variant="ghost"><Trash2 /></Button>
+					<Button type="submit" id="deleteLink" variant="ghost" on:click={confirmDelete}
+						><Trash2 /></Button
+					>
 				</form>
 			</div>
 		</div>

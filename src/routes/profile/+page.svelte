@@ -12,6 +12,7 @@
 	import UserSkills from '$lib/components/UserSkills.svelte';
 	import { ArrowUpRight, Trash2 } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
+	import { confirmDelete } from '$lib/utils/confirmDelete';
 </script>
 
 <div class="flex min-h-screen w-full flex-col">
@@ -19,7 +20,9 @@
 		<div class="flex w-full justify-end space-x-2">
 			<div class="flex space-x-2">
 				<form action="?/deleteAccount&id={data.userId}" method="POST" use:enhance>
-					<Button variant="destructive" type="submit"><Trash2 /> Delete Account</Button>
+					<Button variant="destructive" type="submit" on:click={confirmDelete}
+						><Trash2 /> Delete Account</Button
+					>
 				</form>
 			</div>
 			<div class="flex space-x-2">
