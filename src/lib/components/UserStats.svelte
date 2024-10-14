@@ -4,7 +4,6 @@
 	import Folder from 'lucide-svelte/icons/folder'; // For total projects
 	import { ThumbsUp, FolderSync } from 'lucide-svelte';
 	import { formatDate } from '$lib/utils/formatDate';
-	import { dateToLocalTime } from '$lib/utils/dateToLocalTime';
 	import * as Card from '$lib/components/ui/card';
 
 	export let userStats;
@@ -68,7 +67,7 @@
 			</div>
 		</Card.Header>
 		<Card.Content>
-			<div class="text-2xl font-bold">{formatDate(dateToLocalTime(userStats.lastUpdatedAt))}</div>
+			<div class="text-2xl font-bold">{formatDate(userStats.lastUpdatedAt)}</div>
 		</Card.Content>
 	</Card.Root>
 </div>
