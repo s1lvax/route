@@ -1,25 +1,25 @@
 # Route
 
-Route is a platform that allows users to easily connect and share their projects, skills, and resources in one centralized place.
+Route is a platform that allows users to easily share their favourite links, tech skills and GitHub stats in one centralized place.
 
 ![Route Logo](https://i.imgur.com/KtVWxtM.png)
 
 [![Chat](https://img.shields.io/discord/1003691521280856084?label=chat&logo=discord&color=7289da)](https://discord.gg/m69DSNbu)
 
-## Features
+## 🎮 Features
 
 - Showcase your favorite links like Linktree
 - Showcase your Tech Stack with a cool design
 - Automatically show your Github stats
 - Shareable link at `https://route2.dev/yourusername`
 
-## Tech Stack
+## 🔮 Tech Stack
 
 - **FullStack Framework**: SvelteKit
 - **Styling**: Shadcn-Svelte && Tailwind
 - **Database**: PostgresQL (Prisma as ORM)
 
-## How to Contribute
+## 🫂 How to Contribute
 
 1. Clone the project
 
