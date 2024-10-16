@@ -2,7 +2,7 @@
 
 Route is a platform that allows users to easily connect and share their projects, skills, and resources in one centralized place.
 
-![Route Logo](https://i.imgur.com/PElr7en.png)
+![Route Logo](https://i.imgur.com/KtVWxtM.png)
 
 ## Features
 
