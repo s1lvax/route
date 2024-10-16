@@ -36,10 +36,6 @@ export const load: PageServerLoad = async ({ params }) => {
 	const userData = {
 		links,
 		skills,
-		repoCount: user.repoCount,
-		contributionsCount: user.contributionsCount,
-		pfp: user.pfp,
-		praises: user.praises,
 		username: username
 	};
 

@@ -3,8 +3,6 @@
 	import { Button } from '$lib/components/ui/button';
 	import type { PageData } from './$types';
 
-	export let data: PageData;
-
 	import LinkForm from '$lib/components/LinkForm.svelte';
 	import UserStats from '$lib/components/UserStats.svelte';
 	import UserLinks from '$lib/components/UserLinks.svelte';
@@ -13,6 +11,33 @@
 	import { ArrowUpRight, Trash2 } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
 	import { confirmDelete } from '$lib/utils/confirmDelete';
+	import { getGithubData } from '$lib/utils/getGithubData';
+	import type { GithubData } from '$lib/types/GithubData';
+	import { onMount } from 'svelte';
+	import type { PrivateProfileData } from '$lib/types/PrivateProfileData';
+
+	let githubData: GithubData | null = null;
+	let privateProfileData: PrivateProfileData | null = null;
+	export let data: PageData;
+
+	// Fetch GitHub data on component mount
+	onMount(async () => {
+		try {
+			githubData = await getGithubData(data.userData.username);
+
+			// Now that githubData is available, assign to privateProfileData
+			if (githubData) {
+				privateProfileData = {
+					views: data.userData.views,
+					followers: githubData.followers,
+					repoCount: githubData.repoCount,
+					contributionsCount: githubData.contributionsCount
+				};
+			}
+		} catch (error) {
+			console.error('Error fetching GitHub data:', error);
+		}
+	});
 </script>
 
 <div class="flex min-h-screen w-full flex-col">
@@ -26,14 +51,16 @@
 				</form>
 			</div>
 			<div class="flex space-x-2">
-				<Button variant="outline" href="/{data.userStats.username}"
+				<Button variant="outline" href="/{data.userData.username}"
 					>View Public Profile <ArrowUpRight /></Button
 				>
 			</div>
 		</div>
 
-		<UserStats userStats={data.userStats} />
-		<!-- Use UserStats component and pass userStats -->
+		<!-- Conditionally render UserStats only when privateProfileData is available -->
+		{#if privateProfileData}
+			<UserStats {privateProfileData} />
+		{/if}
 
 		<div class="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
 			<Card.Root class="xl:col-span-2">
@@ -46,7 +73,6 @@
 				</Card.Header>
 				<Card.Content>
 					<UserLinks links={data.links} />
-					<!-- Use UserLinks component and pass links -->
 				</Card.Content>
 			</Card.Root>
 
