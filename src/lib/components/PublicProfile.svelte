@@ -10,6 +10,7 @@
 	import * as Table from '$lib/components/ui/table';
 	import { onMount } from 'svelte';
 	import type { GithubData } from '$lib/types/GithubData';
+	import LightDarkMode from './LightDarkMode.svelte';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
@@ -185,10 +186,11 @@
 				</Card.Content>
 			</Card.Root>
 		</div>
-		<div class="flex justify-center">
+		<div class="flex flex-col items-center justify-center gap-4">
 			<p class="text-sm text-muted-foreground">
 				Do you want one? <a href="/" class="text-blue-600 underline">Create yours here.</a>
 			</p>
+			<LightDarkMode />
 		</div>
 	</main>
 </div>
