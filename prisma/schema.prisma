@@ -18,10 +18,6 @@ model User {
   githubId           Int      @unique
   githubUsername     String   @unique
   views              Int      @default(0)
-  praises            Int      @default(0)
-  contributionsCount Int      @default(0)
-  repoCount          Int      @default(0)
-  pfp                String?
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
   Link               Link[]

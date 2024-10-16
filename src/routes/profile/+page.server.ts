@@ -1,8 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { countGithubProjects } from '$lib/utils/countGithubProjects';
 import { getGithubUsername } from '$lib/utils/getGithubUsername';
-import { fetchGitHubContributionsCount } from '$lib/utils/getGithubContributions';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
 import { prisma } from '$lib/server/prisma';
 import { fail, superValidate } from 'sveltekit-superforms';
@@ -10,7 +8,6 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { linksSchema } from '$lib/schemas/links';
 import type { User } from '$lib/types/User';
 import { skillsSchema } from '$lib/schemas/skills';
-import { formatDate } from '$lib/utils/formatDate';
 import { deleteUser } from '$lib/utils/deleteUser';
 
 // Define the user variable with a possible null
@@ -28,64 +25,19 @@ export const load: PageServerLoad = async (event) => {
 		where: { githubId: userId }
 	});
 
-	let repoCount = 0;
-	let contributionsCount = 0;
-
 	// If the user does not exist, create a new user
 	if (!user) {
 		const username = await getGithubUsername(session.user.image);
 		if (!username) throw new Error('Username could not be determined from image URL');
-
-		// Fetch repository and contributions count
-		repoCount = await countGithubProjects(username);
-		contributionsCount = await fetchGitHubContributionsCount(username);
 
 		// Create new user in the database
 		user = await prisma.user.create({
 			data: {
 				githubId: userId,
 				githubUsername: username,
-				pfp: session.user.image,
-				repoCount,
-				contributionsCount,
 				updatedAt: new Date()
 			}
 		});
-	} else {
-		// Update profile picture if necessary
-		if (!user.pfp || user.pfp !== session.user.image) {
-			await prisma.user.update({
-				where: { githubId: userId },
-				data: { pfp: session.user.image }
-			});
-		}
-
-		const now = new Date();
-		const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000);
-
-		// Fetch new counts if `updatedAt` is older than 10 minutes
-		if (!user.updatedAt || user.updatedAt < tenMinutesAgo) {
-			repoCount = await countGithubProjects(user.githubUsername);
-			contributionsCount = await fetchGitHubContributionsCount(user.githubUsername);
-
-			await prisma.user.update({
-				where: { githubId: userId },
-				data: {
-					repoCount,
-					contributionsCount,
-					updatedAt: now
-				}
-			});
-
-			// Update user object with new values
-			user.repoCount = repoCount;
-			user.contributionsCount = contributionsCount;
-			user.updatedAt = now;
-		} else {
-			// Use existing counts if recently updated
-			repoCount = user.repoCount;
-			contributionsCount = user.contributionsCount;
-		}
 	}
 
 	// Ensure user is not null before accessing properties
@@ -101,13 +53,9 @@ export const load: PageServerLoad = async (event) => {
 	});
 
 	// Create userStats object
-	const userStats = {
-		repoCount: user.repoCount,
+	const userData = {
 		username: user.githubUsername,
-		contributionsCount: user.contributionsCount,
-		views: user.views || 0,
-		praises: user.praises || 0,
-		lastUpdatedAt: formatDate(user.updatedAt)
+		views: user.views || 0
 	};
 
 	// Initialize forms using superValidate
@@ -117,7 +65,7 @@ export const load: PageServerLoad = async (event) => {
 	// Return data to the frontend
 	return {
 		userId: user.id,
-		userStats,
+		userData,
 		links,
 		skills,
 		form: linksForm,

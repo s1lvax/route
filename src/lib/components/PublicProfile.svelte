@@ -1,20 +1,25 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import * as Avatar from '$lib/components/ui/avatar';
-	import GitHub from 'lucide-svelte/icons/github'; // For GitHub contributions and GitHub link
-	import Folder from 'lucide-svelte/icons/folder'; // For total projects
-	import { ArrowUpRight, ThumbsUp } from 'lucide-svelte'; // For praises
+	import GitHub from 'lucide-svelte/icons/github';
+	import { IdCard, Folder, Github } from 'lucide-svelte';
 	import { Progress } from '$lib/components/ui/progress';
 	import { Button } from '$lib/components/ui/button';
 	import type { PublicProfile } from '$lib/types/PublicProfile';
 	import { getProgressValue } from '$lib/utils/getProgressValue';
 	import * as Table from '$lib/components/ui/table';
 	import { onMount } from 'svelte';
+	import type { GithubData } from '$lib/types/GithubData';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
 
-	let progressValues = {};
+	//Accept githubData as a prop
+	export let githubData: GithubData;
+
+	console.log(githubData);
+
+	let progressValues: { [key: string]: number } = {};
 
 	onMount(() => {
 		userData.skills.forEach((skill) => {
@@ -33,22 +38,49 @@
 		<!-- User Avatar and Basic Info -->
 		<div class="flex items-center justify-center space-x-4">
 			<Avatar.Root class="h-24 w-24 rounded-full">
-				<Avatar.Image src={userData.pfp} alt="User Avatar" />
-				<Avatar.Fallback>{userData.pfp ? '' : '?'}</Avatar.Fallback>
+				<Avatar.Image src={githubData.avatarUrl} alt="User Avatar" />
+				<Avatar.Fallback>?</Avatar.Fallback>
 			</Avatar.Root>
-			<div class="text-center">
-				<p class="text-xl font-bold">{userData.username}</p>
-				<p class="text-muted-foreground">Public Developer Profile</p>
+			<div class="flex flex-col space-y-4 text-center">
+				{#if githubData.name}
+					<p class="text-2xl font-bold">{githubData.name}</p>
+				{:else}
+					<p class="text-xl font-bold">{userData.username}</p>
+				{/if}
 
-				<!-- GitHub Profile Link with Icon -->
-				<Button
-					href={`https://github.com/${userData.username}`}
-					target="_blank"
-					class="mt-2 flex justify-center rounded-full"
-					variant="ghost"
-				>
-					<GitHub />
-				</Button>
+				{#if githubData.bio}
+					<p class="text-muted-foreground">{githubData.bio}</p>
+				{:else}
+					<p class="text-muted-foreground">Public Developer Profile</p>
+				{/if}
+
+				{#if githubData.company}
+					<p class="text-muted-foreground">Currently working at {githubData.company}</p>
+				{/if}
+				<div class="flex flex-row items-center justify-center gap-4">
+					<div>
+						<Button
+							href={githubData.url}
+							target="_blank"
+							class="mt-2 flex justify-center rounded-full"
+							variant="outline"
+						>
+							<GitHub />
+						</Button>
+					</div>
+					{#if githubData.blog}
+						<div>
+							<Button
+								href={githubData.blog}
+								target="_blank"
+								class="mt-2 flex justify-center rounded-full"
+								variant="outline"
+							>
+								<IdCard />
+							</Button>
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
 
@@ -63,7 +95,7 @@
 					</div>
 				</Card.Header>
 				<Card.Content>
-					<div class="text-2xl font-bold">{userData.repoCount}</div>
+					<div class="text-2xl font-bold">{githubData.repoCount}</div>
 				</Card.Content>
 			</Card.Root>
 
@@ -72,11 +104,11 @@
 				<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 					<div class="flex items-center space-x-2">
 						<GitHub class="h-4 w-4 text-muted-foreground" />
-						<Card.Title class="text-sm font-medium">GitHub Contributions</Card.Title>
+						<Card.Title class="text-sm font-medium">GitHub Contributions (Past 30 Days)</Card.Title>
 					</div>
 				</Card.Header>
 				<Card.Content>
-					<div class="text-2xl font-bold">{userData.contributionsCount}</div>
+					<div class="text-2xl font-bold">{githubData.contributionsCount}</div>
 				</Card.Content>
 			</Card.Root>
 
@@ -84,12 +116,12 @@
 			<Card.Root>
 				<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 					<div class="flex items-center space-x-2">
-						<ThumbsUp class="h-4 w-4 text-muted-foreground" />
-						<Card.Title class="text-sm font-medium">Praise Received</Card.Title>
+						<GitHub class="h-4 w-4 text-muted-foreground" />
+						<Card.Title class="text-sm font-medium">Github Followers</Card.Title>
 					</div>
 				</Card.Header>
 				<Card.Content>
-					<div class="text-2xl font-bold">{userData.praises}</div>
+					<div class="text-2xl font-bold">{githubData.followers}</div>
 				</Card.Content>
 			</Card.Root>
 		</div>
@@ -155,7 +187,7 @@
 		</div>
 		<div class="flex justify-center">
 			<p class="text-sm text-muted-foreground">
-				Do you like this? <a href="/" class="text-blue-600 underline">Create yours here.</a>
+				Do you want one? <a href="/" class="text-blue-600 underline">Create yours here.</a>
 			</p>
 		</div>
 	</main>
