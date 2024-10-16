@@ -55,7 +55,7 @@
 				{/if}
 
 				{#if githubData.company}
-					<p class="text-muted-foreground">Currently working at {githubData.company}</p>
+					<p class="text-muted-foreground">Currently at {githubData.company}</p>
 				{/if}
 				<div class="flex flex-row items-center justify-center gap-4">
 					<div>
