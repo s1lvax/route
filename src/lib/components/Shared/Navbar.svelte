@@ -7,7 +7,7 @@
 	import { page } from '$app/stores';
 
 	import * as Avatar from '$lib/components/ui/avatar';
-	import LightDarkMode from './LightDarkMode.svelte';
+	import LightDarkMode from '$lib/components/Shared/LightDarkMode.svelte';
 </script>
 
 <header class="sticky top-0 z-10 items-center border-b bg-background">

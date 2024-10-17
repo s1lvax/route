@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PublicProfile from '$lib/components/PublicProfile.svelte';
+	import PublicProfile from '$lib/components/PublicProfile/PublicProfile.svelte';
 	import type { GithubData } from '$lib/types/GithubData';
 	import { getGithubData } from '$lib/utils/getGithubData';
 	import type { PageData } from './$types';
