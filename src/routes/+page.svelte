@@ -1,7 +1,7 @@
 <script>
-	import Features from '$lib/components/Features.svelte';
-	import Introduction from '$lib/components/Introduction.svelte';
-	import Navbar from '$lib/components/Navbar.svelte';
+	import Features from '$lib/components/Index/Features.svelte';
+	import Introduction from '$lib/components/Index/Introduction.svelte';
+	import Navbar from '$lib/components/Shared/Navbar.svelte';
 </script>
 
 <Navbar />

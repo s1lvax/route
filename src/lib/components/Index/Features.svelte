@@ -1,5 +1,5 @@
 <script>
-	import NewSection from '$lib/components/NewSection.svelte';
+	import NewSection from '$lib/components/Shared/NewSection.svelte';
 	import { features } from '$lib/constants/features';
 	import * as Card from '$lib/components/ui/card';
 </script>
