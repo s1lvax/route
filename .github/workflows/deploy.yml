@@ -13,6 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Get previous commit hash
+        id: get_last_commit
+        run: echo "::set-output name=hash::$(git rev-parse HEAD^1)"
+
+      - name: Get changelog from commits
+        id: changelog
+        run: |
+          echo "::set-output name=changelog::$(git log --pretty=format:'%h - %s' ${{ steps.get_last_commit.outputs.hash }}..HEAD)"
+
       - name: Copy repository to SFTP
         uses: appleboy/scp-action@master
         with:
@@ -48,3 +57,12 @@ jobs:
             docker stop route || true
             docker rm route || true
             docker run -d --name route --restart always --env-file .env -p 3002:3000 route
+
+      - name: Send Discord notification
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST \
+          -d '{
+            "content": "**New deployment for '${{ github.repository }}'**\n\n**Branch**: `${{ github.ref }}`\n**Commit Message**: `${{ github.event.head_commit.message }}`\n**Committer**: `${{ github.event.head_commit.committer.name }}`\n**View Changes**: `${{ github.event.head_commit.url }}`\n\n**Changelog**:\n'${{ steps.changelog.outputs.changelog }}'"
+          }' \
+          https://discord.com/api/webhooks/1296731239658553386/O5cJLDsmkxL_XLDAEqcolq75ImOqvpS2B-M5KXXecBXjMqfS8kUYNTf4FtXyS8gqDXC4
