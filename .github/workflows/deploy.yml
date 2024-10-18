@@ -63,6 +63,6 @@ jobs:
           curl -H "Content-Type: application/json" \
           -X POST \
           -d '{
-            "content": "**New deployment for '${{ github.repository }}'**\n\n**Branch**: `${{ github.ref }}`\n**Commit Message**: `${{ github.event.head_commit.message }}`\n**Committer**: `${{ github.event.head_commit.committer.name }}`\n**View Changes**: `${{ github.event.head_commit.url }}`\n\n**Changelog**:\n'${{ steps.changelog.outputs.changelog }}'"
+            "content": "## New deployment for '${{ github.repository }}'\n\n**Branch**: `${{ github.ref }}`\n**Commit Message**: `${{ github.event.head_commit.message }}`\n**Committer**: `${{ github.event.head_commit.committer.name }}`\n**View Changes**: `${{ github.event.head_commit.url }}`"
           }' \
-          https://discord.com/api/webhooks/1296731239658553386/O5cJLDsmkxL_XLDAEqcolq75ImOqvpS2B-M5KXXecBXjMqfS8kUYNTf4FtXyS8gqDXC4
+          ${{ secrets.DISCORD_WEBHOOK }}
