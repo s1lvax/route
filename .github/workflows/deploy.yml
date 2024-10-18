@@ -63,6 +63,6 @@ jobs:
           curl -H "Content-Type: application/json" \
           -X POST \
           -d '{
-            "content": "## New deployment for '${{ github.repository }}'\n\n**Branch**: `${{ github.ref }}`\n**Commit Message**: `${{ github.event.head_commit.message }}`\n**Committer**: `${{ github.event.head_commit.committer.name }}`\n**View Changes**: <${{ github.event.head_commit.url }}>"
+            "content": "## New deployment for '${{ github.repository }}'\n\n**Branch**: `${{ github.ref }}`\n**Commit Message**: `${{ github.event.head_commit.message }}`\n**Committer**: `${{ github.event.head_commit.committer.name }}`\n**[View Changes](${{ github.event.head_commit.url }})**"
           }' \
           ${{ secrets.DISCORD_WEBHOOK }}
