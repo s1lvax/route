@@ -1,5 +1,5 @@
 <script lang="ts">
-	import NewSection from '$lib/components/NewSection.svelte';
+	import NewSection from '$lib/components/Shared/NewSection.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { GitPullRequestCreate, UserPen, Github, LogOut } from 'lucide-svelte';
 
@@ -30,7 +30,7 @@
 		{/if}
 
 		<Button
-			href="https://github.com/s1lvax/connekt"
+			href="https://github.com/s1lvax/route"
 			target="_blank"
 			variant="outline"
 			class="flex items-center space-x-2"><GitPullRequestCreate /> <span>Contribute</span></Button

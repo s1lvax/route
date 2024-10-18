@@ -3,11 +3,11 @@
 	import { Button } from '$lib/components/ui/button';
 	import type { PageData } from './$types';
 
-	import LinkForm from '$lib/components/LinkForm.svelte';
-	import UserStats from '$lib/components/UserStats.svelte';
-	import UserLinks from '$lib/components/UserLinks.svelte';
-	import SkillsForm from '$lib/components/SkillsForm.svelte';
-	import UserSkills from '$lib/components/UserSkills.svelte';
+	import LinkForm from '$lib/components/MyProfile/LinkForm.svelte';
+	import UserStats from '$lib/components/MyProfile/UserStats.svelte';
+	import UserLinks from '$lib/components/MyProfile/UserLinks.svelte';
+	import SkillsForm from '$lib/components/MyProfile/SkillsForm.svelte';
+	import UserSkills from '$lib/components/MyProfile/UserSkills.svelte';
 	import { ArrowUpRight, Trash2 } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
 	import { confirmDelete } from '$lib/utils/confirmDelete';
