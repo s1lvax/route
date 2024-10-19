@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BriefcaseBusiness, Trash2 } from 'lucide-svelte';
+	import { BriefcaseBusiness, Trash2, AlignJustify } from 'lucide-svelte';
 	import { masteryLevels } from '$lib/constants/masteryLevel';
 	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button';
@@ -10,7 +10,7 @@
 	export let skills: Skill[];
 
 	let dragDisabled = false;
-	async function handleDrop() {
+	const handleDrop = async () => {
 		dragDisabled = true;
 		await fetch('/profile/skills/order', {
 			method: 'PATCH',
@@ -32,6 +32,7 @@
 >
 	{#each skills as skill(skill.id)}
 		<div class="flex items-center gap-4">
+			<AlignJustify />
 			<BriefcaseBusiness />
 			<div class="grid gap-1">
 				<p class="text-sm font-medium leading-none">{skill.title}</p>

@@ -67,7 +67,9 @@
 				<Card.Header class="flex flex-row items-center">
 					<div class="grid gap-2">
 						<Card.Title>Links</Card.Title>
-						<Card.Description>The links visible on your profile</Card.Description>
+						<Card.Description>
+							The links visible on your profile. You can drag links around to modify the order
+						</Card.Description>
 						<LinkForm data={data.form} linksLength={data.links.length} />
 					</div>
 				</Card.Header>
@@ -79,6 +81,7 @@
 			<Card.Root>
 				<Card.Header>
 					<Card.Title>Tech Stack</Card.Title>
+					<Card.Description>You can drag skills around to modify the order</Card.Description>
 					<SkillsForm data={data.skillsForm} skillsLength={data.skills.length} />
 				</Card.Header>
 				<Card.Content class="grid gap-8">
