@@ -27,6 +27,8 @@ COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY package.json .
 
+#Make sure prisma is generated
+RUN npx prisma generate
 
 # Set the environment and expose the port
 EXPOSE 3000
