@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import * as Card from '$lib/components/ui/card';
 	import * as Table from '$lib/components/ui/table';
 	import { formatDate } from '$lib/utils/formatDate';
 	import { Button } from '$lib/components/ui/button';
@@ -18,11 +17,11 @@
 			method: 'PATCH',
 			body: JSON.stringify({ links }),
 			headers: {
-				'content-type': 'application/json',
-			},
+				'content-type': 'application/json'
+			}
 		});
 		dragDisabled = false;
-	}
+	};
 </script>
 
 <Table.Root>
@@ -35,8 +34,15 @@
 			<Table.Head>Actions</Table.Head>
 		</Table.Row>
 	</Table.Header>
-	<DnD items={links} dndOptions={{ dragDisabled }} updateNewItems={(newLinks) => links = newLinks} containerTag="tbody" class="[&_tr:last-child]:border-0" onDrop={handleDrop}>
-		{#each links as link(link.id)}
+	<DnD
+		items={links}
+		dndOptions={{ dragDisabled }}
+		updateNewItems={(newLinks) => (links = newLinks)}
+		containerTag="tbody"
+		class="[&_tr:last-child]:border-0"
+		onDrop={handleDrop}
+	>
+		{#each links as link (link.id)}
 			<Table.Row>
 				<Table.Cell>
 					<AlignJustify />
@@ -45,18 +51,19 @@
 					<div class="font-medium">{link.title}</div>
 				</Table.Cell>
 				<Table.Cell>
-					<a
-						href={link.url}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="text-blue-600 hover:underline">Link is available here</a
-					>
-
-					<Button variant="ghost" on:click={() => copyToClipboard(link.url)}>
-						<Copy
-							class="h-4 w-4 transform transition-transform duration-300 hover:scale-110 hover:cursor-pointer"
-						/>
-					</Button>
+					<div class="flex items-center">
+						<a
+							href={link.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-blue-600 hover:underline">Link is available here</a
+						>
+						<Button variant="ghost" on:click={() => copyToClipboard(link.url)}>
+							<Copy
+								class="h-4 w-4 transform transition-transform duration-300 hover:scale-110 hover:cursor-pointer"
+							/>
+						</Button>
+					</div>
 				</Table.Cell>
 				<Table.Cell>{formatDate(link.createdAt)}</Table.Cell>
 				<Table.Cell>
