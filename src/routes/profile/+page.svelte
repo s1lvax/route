@@ -68,7 +68,7 @@
 					<div class="grid gap-2">
 						<Card.Title>Links</Card.Title>
 						<Card.Description>The links visible on your profile</Card.Description>
-						<LinkForm data={data.form} />
+						<LinkForm data={data.form} linksLength={data.links.length} />
 					</div>
 				</Card.Header>
 				<Card.Content>
@@ -79,7 +79,7 @@
 			<Card.Root>
 				<Card.Header>
 					<Card.Title>Tech Stack</Card.Title>
-					<SkillsForm data={data.skillsForm} />
+					<SkillsForm data={data.skillsForm} skillsLength={data.skills.length} />
 				</Card.Header>
 				<Card.Content class="grid gap-8">
 					<UserSkills skills={data.skills} />

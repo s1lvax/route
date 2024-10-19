@@ -8,7 +8,8 @@ export const linksSchema = z.object({
 		.max(200)
 		.refine((val) => val.startsWith('http://') || val.startsWith('https://'), {
 			message: 'Oops! URLs usually start with http:// or https:// :P'
-		})
+		}),
+	order: z.number()
 });
 
 export type LinksSchema = typeof linksSchema;

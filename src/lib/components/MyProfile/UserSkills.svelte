@@ -1,16 +1,36 @@
 <script lang="ts">
 	import { BriefcaseBusiness, Trash2 } from 'lucide-svelte';
-
-	export let skills;
-
 	import { masteryLevels } from '$lib/constants/masteryLevel';
 	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button';
 	import { confirmDelete } from '$lib/utils/confirmDelete';
+	import DnD from '$lib/components/Shared/DnD.svelte';
+	import type { Skill } from '@prisma/client/wasm';
+
+	export let skills: Skill[];
+
+	let dragDisabled = false;
+	async function handleDrop() {
+		dragDisabled = true;
+		await fetch('/profile/skills/order', {
+			method: 'PATCH',
+			body: JSON.stringify({ skills }),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+		dragDisabled = false;
+	}
 </script>
 
-<div class="grid gap-4">
-	{#each skills as skill}
+<DnD
+	items={skills}
+	dndOptions={{ dragDisabled }}
+	updateNewItems={(newSkills) => (skills = newSkills)}
+	class="grid gap-4"
+	onDrop={handleDrop}
+>
+	{#each skills as skill(skill.id)}
 		<div class="flex items-center gap-4">
 			<BriefcaseBusiness />
 			<div class="grid gap-1">
@@ -28,4 +48,4 @@
 			</div>
 		</div>
 	{/each}
-</div>
+</DnD>

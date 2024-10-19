@@ -7,6 +7,7 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
 	export let data: SuperValidated<Infer<SkillsSchema>>;
+	export let skillsLength: number;
 
 	const form = superForm(data, {
 		validators: zodClient(skillsSchema),
@@ -21,6 +22,7 @@
 
 	const { form: formData, enhance } = form;
 
+	$: $formData.order = skillsLength;
 	$: selectedLevel = $formData.level
 		? {
 				label: $formData.level,
@@ -72,6 +74,12 @@
 			<Form.FieldErrors />
 		</Form.Field>
 	</div>
+
+	<Form.Field {form} name="order">
+		<Form.Control let:attrs>
+			<Input {...attrs} bind:value={$formData.order} type="hidden" />
+		</Form.Control>
+	</Form.Field>
 
 	<Form.Button>Add</Form.Button>
 </form>
