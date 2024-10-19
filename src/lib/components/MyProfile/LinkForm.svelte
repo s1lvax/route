@@ -6,12 +6,15 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
 	export let data: SuperValidated<Infer<LinksSchema>>;
+	export let linksLength: number;
 
 	const form = superForm(data, {
 		validators: zodClient(linksSchema)
 	});
 
 	const { form: formData, enhance } = form;
+
+	$: $formData.order = linksLength;
 </script>
 
 <form
@@ -39,6 +42,12 @@
 			<Form.FieldErrors />
 		</Form.Field>
 	</div>
+
+	<Form.Field {form} name="order">
+		<Form.Control let:attrs>
+			<Input {...attrs} bind:value={$formData.order} type="hidden" />
+		</Form.Control>
+	</Form.Field>
 
 	<Form.Button class="mt-5 flex align-bottom">Add</Form.Button>
 </form>

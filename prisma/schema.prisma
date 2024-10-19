@@ -30,6 +30,7 @@ model Link {
   url       String
   postedBy  User     @relation(fields: [userId], references: [githubId])
   userId    Int
+  order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -40,6 +41,7 @@ model Skill {
   level     String
   postedBy  User     @relation(fields: [userId], references: [githubId])
   userId    Int
+  order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

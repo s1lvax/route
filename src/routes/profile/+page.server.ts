@@ -45,11 +45,13 @@ export const load: PageServerLoad = async (event) => {
 
 	// Fetch links and skills related to the user
 	const links = await prisma.link.findMany({
-		where: { userId: user.githubId }
+		where: { userId: user.githubId },
+		orderBy: [{ order: 'asc' }]
 	});
 
 	const skills = await prisma.skill.findMany({
-		where: { userId: user.githubId }
+		where: { userId: user.githubId },
+		orderBy: [{ order: 'asc' }]
 	});
 
 	// Create userStats object
@@ -83,7 +85,7 @@ export const actions: Actions = {
 		}
 
 		// If no errors, get data
-		const { title, url } = form.data;
+		const { title, url, order } = form.data;
 
 		if (user) {
 			try {
@@ -91,7 +93,8 @@ export const actions: Actions = {
 					data: {
 						title,
 						url,
-						userId: user.githubId
+						userId: user.githubId,
+						order
 					}
 				});
 			} catch (error) {
@@ -137,7 +140,7 @@ export const actions: Actions = {
 		}
 
 		// If no errors, get data
-		const { title, level } = form.data;
+		const { title, level, order } = form.data;
 
 		if (user) {
 			try {
@@ -145,7 +148,8 @@ export const actions: Actions = {
 					data: {
 						title,
 						level,
-						userId: user.githubId
+						userId: user.githubId,
+						order
 					}
 				});
 			} catch (error) {
