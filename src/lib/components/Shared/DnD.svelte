@@ -5,9 +5,9 @@
 	type T = $$Generic<Item>;
 	export let items: T[];
 	export let updateNewItems: (newItems: T[]) => void;
-	export let onDrop: ((e: CustomEvent<DndEvent<Item>>) => void) | undefined = undefined;
+	export let onDrop: ((e: CustomEvent<DndEvent<T>>) => void) | undefined = undefined;
 	export let containerTag: string = 'div';
-	export let dndOptions: Omit<Options<Item>, 'items' | 'type'> = {};
+	export let dndOptions: Omit<Options<T>, 'items' | 'type'> = {};
 	export let type: string = crypto.randomUUID(); // By default DnD will have different types, to prevent dragging between DnD zones.
 
 	const handleDndConsider = (e: CustomEvent<DndEvent<T>>) => {
@@ -28,4 +28,3 @@
 >
 	<slot></slot>
 </svelte:element>
-

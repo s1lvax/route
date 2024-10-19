@@ -12,6 +12,7 @@
 
 	export let links: Link[]; // Use the Link type for the links prop
 	let dragDisabled = false;
+
 	const handleDrop = async () => {
 		dragDisabled = true;
 		await fetch('/profile/links/order', {
