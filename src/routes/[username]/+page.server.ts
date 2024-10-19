@@ -26,11 +26,13 @@ export const load: PageServerLoad = async ({ params }) => {
 	});
 
 	const links = await prisma.link.findMany({
-		where: { userId: user.githubId }
+		where: { userId: user.githubId },
+		orderBy: [{ order: 'asc' }]
 	});
 
 	const skills = await prisma.skill.findMany({
-		where: { userId: user.githubId }
+		where: { userId: user.githubId },
+		orderBy: [{ order: 'asc' }]
 	});
 
 	const userData = {
