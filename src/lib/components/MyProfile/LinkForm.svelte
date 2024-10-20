@@ -4,15 +4,19 @@
 	import { linksSchema, type LinksSchema } from '$lib/schemas/links';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
+	import type { Link } from '@prisma/client';
 
 	export let data: SuperValidated<Infer<LinksSchema>>;
 	export let linksLength: number;
+	export let links: Link[] = []; 
+	let isLimitReached = false;
+	$: isLimitReached = links.length >= 15;
 
 	const form = superForm(data, {
 		validators: zodClient(linksSchema)
 	});
 
-	const { form: formData, enhance } = form;
+	const { form: formData, enhance, message } = form;
 
 	$: $formData.order = linksLength;
 </script>
@@ -49,5 +53,11 @@
 		</Form.Control>
 	</Form.Field>
 
-	<Form.Button class="mt-5 flex align-bottom">Add</Form.Button>
+	<Form.Button disabled = {isLimitReached} class="mt-5 flex align-bottom">Add</Form.Button>
 </form>
+
+{#if isLimitReached}
+  <p class="text-red-500 mt-2 text-center">You have reached the maximum limit of 15 links.</p>
+{:else if $message}
+  <p class="text-red-500 mt-2 text-center">{$message}</p>
+{/if}

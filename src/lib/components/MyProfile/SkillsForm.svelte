@@ -5,10 +5,13 @@
 	import { Select } from 'bits-ui';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
+	import type { Skill } from '@prisma/client';
 
 	export let data: SuperValidated<Infer<SkillsSchema>>;
 	export let skillsLength: number;
-
+	export let skills: Skill[] = [];
+	let isLimitReached = false;
+	$: isLimitReached = skills.length >= 15;
 	const form = superForm(data, {
 		validators: zodClient(skillsSchema),
 		resetForm: false,
@@ -20,7 +23,7 @@
 		}
 	});
 
-	const { form: formData, enhance } = form;
+	const { form: formData, enhance ,message} = form;
 
 	$: $formData.order = skillsLength;
 	$: selectedLevel = $formData.level
@@ -81,5 +84,11 @@
 		</Form.Control>
 	</Form.Field>
 
-	<Form.Button>Add</Form.Button>
+	<Form.Button disabled = {isLimitReached}>Add</Form.Button>
 </form>
+
+{#if isLimitReached}
+  <p class="text-red-500 mt-2 text-center">You have reached the maximum limit of 15 skills.</p>
+{:else if $message}
+  <p class="text-red-500 mt-2 text-center">{$message}</p>
+{/if}
