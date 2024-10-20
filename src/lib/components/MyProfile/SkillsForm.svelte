@@ -88,7 +88,7 @@
 </form>
 
 {#if isLimitReached}
-  <p class="text-red-500 mt-2 text-center">You have reached the maximum limit of 15 links.</p>
+  <p class="text-red-500 mt-2 text-center">You have reached the maximum limit of 15 skills.</p>
 {:else if $message}
   <p class="text-red-500 mt-2 text-center">{$message}</p>
 {/if}
