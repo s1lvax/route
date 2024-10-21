@@ -89,6 +89,10 @@ export const actions: Actions = {
 
 		if (user) {
 			try {
+				const linkCount = await prisma.link.count({where: { userId: user.githubId }});	
+				if (linkCount >= 15) {
+				return fail(400, {form, message: 'You have reached the maximum limit of 15 links.'});
+				}
 				await prisma.link.create({
 					data: {
 						title,
@@ -144,6 +148,10 @@ export const actions: Actions = {
 
 		if (user) {
 			try {
+				const skillCount = await prisma.skill.count({where :{userId:user.githubId}});
+				if (skillCount >= 15) {
+					return fail(400, {form,message:'You have reached the maximum limit of 15 skills'})
+				}
 				await prisma.skill.create({
 					data: {
 						title,

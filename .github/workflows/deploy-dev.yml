@@ -1,0 +1,50 @@
+name: Deploy Dev App
+#deploy dev branch
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Copy repository to SFTP
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT }}
+          source: '.'
+          target: '/opt/route-dev'
+
+      - name: Build and deploy Docker container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT }}
+          script: |
+            cd '/opt/route-dev'
+
+            # Overwrite the .env file to recreate it during each deployment
+            rm -f .env
+            echo "AUTH_SECRET=${{ secrets.AUTH_SECRET_TESTING }}" >> .env
+            echo "CLIENT_ID=${{ secrets.CLIENT_ID_TESTING }}" >> .env
+            echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_TESTING }}" >> .env
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL_TESTING }}" >> .env
+            echo "AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST }}" >> .env
+
+            #Prisma
+            npx prisma generate
+
+            docker build -t route-dev .
+            docker stop route-dev || true
+            docker rm route-dev || true
+            docker run -d --name route-dev --restart always --env-file .env -p 3003:3000 route-dev

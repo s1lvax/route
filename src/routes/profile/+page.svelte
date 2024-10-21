@@ -70,7 +70,7 @@
 						<Card.Description>
 							The links visible on your profile. You can drag links around to modify the order
 						</Card.Description>
-						<LinkForm data={data.form} linksLength={data.links.length} />
+						<LinkForm data={data.form} linksLength={data.links.length} links = {data.links} />
 					</div>
 				</Card.Header>
 				<Card.Content>
@@ -82,7 +82,7 @@
 				<Card.Header>
 					<Card.Title>Tech Stack</Card.Title>
 					<Card.Description>You can drag skills around to modify the order</Card.Description>
-					<SkillsForm data={data.skillsForm} skillsLength={data.skills.length} />
+					<SkillsForm data={data.skillsForm} skillsLength={data.skills.length} skills = {data.skills} />
 				</Card.Header>
 				<Card.Content class="grid gap-8">
 					<UserSkills skills={data.skills} />
