@@ -20,10 +20,10 @@
 	});
 </script>
 
-<!-- Tech Stack Section -->
+<!-- Skills Section -->
 <Card.Root>
 	<Card.Header>
-		<Card.Title>Tech Stack</Card.Title>
+		<Card.Title>Skills</Card.Title>
 		<Card.Description>Explore the developer's skills and expertise</Card.Description>
 	</Card.Header>
 	<Card.Content class="grid gap-4">

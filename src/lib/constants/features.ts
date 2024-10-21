@@ -12,7 +12,7 @@ export const features = [
 		icon: Github
 	},
 	{
-		name: 'Tech Stack',
+		name: 'Skills',
 		description: 'Showcase your preferred tools and technologies with sleek graphs.',
 		icon: ChartArea
 	},

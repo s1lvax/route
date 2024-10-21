@@ -77,7 +77,7 @@
 
 			<Card.Root>
 				<Card.Header>
-					<Card.Title>Tech Stack</Card.Title>
+					<Card.Title>Skills</Card.Title>
 					<Card.Description>You can drag skills around to modify the order</Card.Description>
 					<SkillsForm
 						data={data.skillsForm}
