@@ -35,10 +35,16 @@ export const load: PageServerLoad = async ({ params }) => {
 		orderBy: [{ order: 'asc' }]
 	});
 
+	const isOpenToCollaborating = await prisma.user.findUnique({
+		where: { githubId: user.githubId },
+		select: { openToCollaborating: true }
+	});
+
 	const userData = {
 		links,
 		skills,
-		username: username
+		username: username,
+		isOpenToCollaborating: isOpenToCollaborating?.openToCollaborating
 	};
 
 	return {
