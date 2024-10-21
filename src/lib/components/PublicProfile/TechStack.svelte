@@ -23,7 +23,7 @@
 <!-- Tech Stack Section -->
 <Card.Root>
 	<Card.Header>
-		<Card.Title>Tech Stack</Card.Title>
+		<Card.Title>Skills & Tools</Card.Title>
 		<Card.Description>Explore the developer's skills and expertise</Card.Description>
 	</Card.Header>
 	<Card.Content class="grid gap-4">
