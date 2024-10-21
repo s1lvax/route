@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { GitPullRequestCreate, UserPen, Github, LogOut } from 'lucide-svelte';
-
+	import { UserPen, Github, LogOut } from 'lucide-svelte';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
+	import { version } from '$app/environment';
 </script>
 
 <div class="relative isolate overflow-hidden">
@@ -16,7 +16,7 @@
 						>What's new</span
 					>
 					<span class="inline-flex items-center space-x-2 text-sm font-medium leading-6">
-						<span>Just shipped v1.0.0</span>
+						<span>{'Just shipped ' + version}</span>
 						<svg
 							class="h-5 w-5 text-gray-500"
 							viewBox="0 0 20 20"
