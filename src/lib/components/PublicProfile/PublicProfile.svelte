@@ -21,7 +21,7 @@
 		<BasicInfo {githubData} {userData} />
 		<GithubStats {githubData} />
 
-		<!-- Links and Tech Stack Side by Side -->
+		<!-- Links and Skills Side by Side -->
 		<div class="mt-8 grid gap-4 md:grid-cols-2">
 			<Links {userData} />
 			<TechStack {userData} />

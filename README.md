@@ -9,11 +9,11 @@ Route is a platform that allows users to easily share their favourite links, tec
 ## 🎮 Features
 
 - Showcase your favorite links like Linktree
-- Showcase your Tech Stack with a cool design
+- Showcase your Skills with a cool design
 - Automatically show your Github stats
 - Shareable link at `https://route2.dev/yourusername`
 
-## 🔮 Tech Stack
+## 🔮 Skills
 
 - **FullStack Framework**: SvelteKit
 - **Styling**: Shadcn-Svelte && Tailwind
