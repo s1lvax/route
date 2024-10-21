@@ -12,7 +12,7 @@
 	export let userData: PublicProfile;
 
 	//Accept githubData as a prop
-	export let githubData: GithubData;
+	export let githubData: GithubData | null;
 </script>
 
 <!-- Main Profile Content -->

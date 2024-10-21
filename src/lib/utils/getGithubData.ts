@@ -53,7 +53,8 @@ export const getGithubData = async (username: string): Promise<GithubData> => {
 			company: userData.company,
 			blog: userData.blog,
 			followers: userData.followers,
-			bio: userData.bio
+			bio: userData.bio,
+			twitter: userData.twitter_username
 		};
 	} catch (error) {
 		console.error('Failed to fetch GitHub data:', error);
