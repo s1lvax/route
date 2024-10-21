@@ -6,6 +6,7 @@
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import type { GithubData } from '$lib/types/GithubData';
 	import type { PublicProfile } from '$lib/types/PublicProfile';
+	import { Badge } from '$lib/components/ui/badge';
 
 	export let githubData: GithubData | null;
 	export let userData: PublicProfile;
@@ -24,7 +25,20 @@
 	<div class="flex flex-col space-y-4 text-center">
 		{#if githubData}
 			{#if githubData.name}
-				<p class="text-2xl font-bold">{githubData.name}</p>
+				<div class="flex flex-col items-center justify-center gap-2">
+					<p class="text-2xl font-bold">{githubData.name}</p>
+					<div class="badge">
+						{#if userData.isOpenToCollaborating}
+							<Badge variant="outline" class="border-green-700 text-green-700"
+								>Open to Collaborating</Badge
+							>
+						{:else}
+							<Badge variant="outline" class="border-red-700 text-red-700"
+								>Not Open to Collaborating</Badge
+							>
+						{/if}
+					</div>
+				</div>
 			{:else}
 				<p class="text-2xl font-bold">{userData.username}</p>
 			{/if}
