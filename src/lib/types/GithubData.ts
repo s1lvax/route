@@ -8,6 +8,7 @@ export interface GithubData {
 	blog: string | null;
 	followers: number;
 	bio: string | null;
+	twitter: string | null;
 }
 
 export interface GitHubEvent {
