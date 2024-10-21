@@ -2,16 +2,19 @@
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { skillsSchema, type SkillsSchema } from '$lib/schemas/skills';
-	import { Select } from 'bits-ui';
+	import { Select, type Selected } from 'bits-ui';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import type { Skill } from '@prisma/client';
+	import { masteryLevels } from '$lib/constants/masteryLevel';
+	import { getMasteryLevelFromLabel, getMasteryLevelFromLevel } from '$lib/utils/getMasteryLevel';
 
 	export let data: SuperValidated<Infer<SkillsSchema>>;
 	export let skillsLength: number;
 	export let skills: Skill[] = [];
 	let isLimitReached = false;
 	$: isLimitReached = skills.length >= 15;
+
 	const form = superForm(data, {
 		validators: zodClient(skillsSchema),
 		resetForm: false,
@@ -23,15 +26,28 @@
 		}
 	});
 
-	const { form: formData, enhance ,message} = form;
+	const { form: formData, enhance, message } = form;
 
 	$: $formData.order = skillsLength;
-	$: selectedLevel = $formData.level
-		? {
-				label: $formData.level,
-				value: $formData.level
+	$: selectedLevel = {
+		value: '',
+		label: ''
+	};
+
+	const onSelectedChange = (selected: Selected<string> | undefined) => {
+		if (selected) {
+			const level = getMasteryLevelFromLabel(selected.value);
+			if (level) {
+				$formData.level = level.value;
 			}
-		: undefined;
+		}
+	};
+
+	formData.subscribe((current) => {
+		if (!selectedLevel) selectedLevel = { label: '', value: '' };
+		selectedLevel.label = getMasteryLevelFromLevel(current.level)?.label ?? '';
+		selectedLevel.value = current.level;
+	});
 </script>
 
 <form
@@ -40,7 +56,7 @@
 	action="?/createSkill"
 	class="flex items-center justify-center space-x-4"
 >
-	<div class="flex flex-col">
+	<div class="flex items-center space-x-2">
 		<Form.Field {form} name="title">
 			<Form.Control let:attrs>
 				<Form.Label>Title</Form.Label>
@@ -48,47 +64,38 @@
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
-	</div>
 
-	<div class="flex flex-col">
 		<Form.Field {form} name="level">
 			<Form.Control let:attrs>
 				<Form.Label>Level of mastery</Form.Label>
-				<Select.Root
-					selected={selectedLevel}
-					onSelectedChange={(v) => {
-						v && ($formData.level = v.value);
-					}}
-				>
+				<Select.Root selected={selectedLevel} {onSelectedChange}>
 					<Select.Trigger {...attrs}>
 						<Select.Value placeholder="Select the level of your skill" />
 					</Select.Trigger>
 					<Select.Content>
-						<Select.Item value="1" label="Novice" />
-						<Select.Item value="2" label="Intermediate" />
-						<Select.Item value="3" label="Competent" />
-						<Select.Item value="4" label="Proficient" />
-						<Select.Item value="5" label="Expert" />
+						{#each masteryLevels as mastery}
+							<Select.Item value={mastery.label} label={mastery.label} />
+						{/each}
 					</Select.Content>
 				</Select.Root>
 				<input hidden bind:value={$formData.level} name={attrs.name} />
 			</Form.Control>
-
 			<Form.FieldErrors />
 		</Form.Field>
+
+		<Form.Field {form} name="order">
+			<Form.Control let:attrs>
+				<Input {...attrs} bind:value={$formData.order} type="hidden" />
+			</Form.Control>
+		</Form.Field>
+
+		<Form.Button disabled={isLimitReached}>Add</Form.Button>
 	</div>
-
-	<Form.Field {form} name="order">
-		<Form.Control let:attrs>
-			<Input {...attrs} bind:value={$formData.order} type="hidden" />
-		</Form.Control>
-	</Form.Field>
-
-	<Form.Button disabled = {isLimitReached}>Add</Form.Button>
 </form>
 
 {#if isLimitReached}
-  <p class="text-red-500 mt-2 text-center">You have reached the maximum limit of 15 skills.</p>
+	<p class="mt-2 text-center text-red-500">You have reached the maximum limit of 15 skills.</p>
 {:else if $message}
-  <p class="text-red-500 mt-2 text-center">{$message}</p>
+	<p class="mt-2 text-center text-red-500">{$message}</p>
 {/if}
+
