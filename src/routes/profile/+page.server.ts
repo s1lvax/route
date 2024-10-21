@@ -9,6 +9,7 @@ import { linksSchema } from '$lib/schemas/links';
 import type { User } from '$lib/types/User';
 import { skillsSchema } from '$lib/schemas/skills';
 import { deleteUser } from '$lib/utils/deleteUser';
+import { updateOpenToCollaborating } from '$lib/utils/updateOpenToCollaborating';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -57,7 +58,8 @@ export const load: PageServerLoad = async (event) => {
 	// Create userStats object
 	const userData = {
 		username: user.githubUsername,
-		views: user.views || 0
+		views: user.views || 0,
+		openToCollaborating: user.openToCollaborating
 	};
 
 	// Initialize forms using superValidate
@@ -89,9 +91,9 @@ export const actions: Actions = {
 
 		if (user) {
 			try {
-				const linkCount = await prisma.link.count({where: { userId: user.githubId }});	
+				const linkCount = await prisma.link.count({ where: { userId: user.githubId } });
 				if (linkCount >= 15) {
-				return fail(400, {form, message: 'You have reached the maximum limit of 15 links.'});
+					return fail(400, { form, message: 'You have reached the maximum limit of 15 links.' });
 				}
 				await prisma.link.create({
 					data: {
@@ -148,9 +150,9 @@ export const actions: Actions = {
 
 		if (user) {
 			try {
-				const skillCount = await prisma.skill.count({where :{userId:user.githubId}});
+				const skillCount = await prisma.skill.count({ where: { userId: user.githubId } });
 				if (skillCount >= 15) {
-					return fail(400, {form,message:'You have reached the maximum limit of 15 skills'})
+					return fail(400, { form, message: 'You have reached the maximum limit of 15 skills' });
 				}
 				await prisma.skill.create({
 					data: {
@@ -214,5 +216,18 @@ export const actions: Actions = {
 			}
 		}
 		throw redirect(303, '/');
+	},
+	updateOpenToCollaborating: async () => {
+		console.log('Updating openToCollaborating status');
+		//delete user
+		if (user) {
+			try {
+				// update value
+				updateOpenToCollaborating(user.githubId);
+			} catch (error) {
+				console.log(error);
+				throw Error('Failed to delete user');
+			}
+		}
 	}
 };

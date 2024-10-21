@@ -12,7 +12,7 @@ export const features = [
 		icon: Github
 	},
 	{
-		name: 'Tech Stack',
+		name: 'Skills & Tools',
 		description: 'Showcase your preferred tools and technologies with sleek graphs.',
 		icon: ChartArea
 	},
@@ -24,8 +24,7 @@ export const features = [
 	},
 	{
 		name: 'Open Source',
-		description:
-			'Join a thriving open-source community, contribute to projects, and showcase your own contributions.',
+		description: 'Join a thriving open-source community and help us make all software open-source.',
 		icon: GitPullRequestArrow
 	}
 ];
