@@ -13,6 +13,4 @@
 	});
 </script>
 
-{#if githubData}
-	<PublicProfile userData={data.userData} {githubData} />
-{/if}
+<PublicProfile userData={data.userData} {githubData} />

@@ -57,10 +57,7 @@
 			</div>
 		</div>
 
-		<!-- Conditionally render UserStats only when privateProfileData is available -->
-		{#if privateProfileData}
-			<UserStats {privateProfileData} />
-		{/if}
+		<UserStats {privateProfileData} />
 
 		<div class="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
 			<Card.Root class="xl:col-span-2">
@@ -70,7 +67,7 @@
 						<Card.Description>
 							The links visible on your profile. You can drag links around to modify the order
 						</Card.Description>
-						<LinkForm data={data.form} linksLength={data.links.length} links = {data.links} />
+						<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
 					</div>
 				</Card.Header>
 				<Card.Content>
@@ -82,7 +79,11 @@
 				<Card.Header>
 					<Card.Title>Tech Stack</Card.Title>
 					<Card.Description>You can drag skills around to modify the order</Card.Description>
-					<SkillsForm data={data.skillsForm} skillsLength={data.skills.length} skills = {data.skills} />
+					<SkillsForm
+						data={data.skillsForm}
+						skillsLength={data.skills.length}
+						skills={data.skills}
+					/>
 				</Card.Header>
 				<Card.Content class="grid gap-8">
 					<UserSkills skills={data.skills} />
