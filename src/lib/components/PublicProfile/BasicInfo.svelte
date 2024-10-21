@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { Button } from '$lib/components/ui/button';
-	import { IdCard } from 'lucide-svelte';
+	import { IdCard, Twitter } from 'lucide-svelte';
 	import GitHub from 'lucide-svelte/icons/github';
 
 	import type { GithubData } from '$lib/types/GithubData';
@@ -52,6 +52,18 @@
 						variant="outline"
 					>
 						<IdCard />
+					</Button>
+				</div>
+			{/if}
+			{#if githubData.twitter}
+				<div>
+					<Button
+						href="https://x.com/{githubData.twitter}"
+						target="_blank"
+						class="mt-2 flex justify-center rounded-full"
+						variant="outline"
+					>
+						<Twitter />
 					</Button>
 				</div>
 			{/if}
