@@ -56,7 +56,7 @@
 	action="?/createSkill"
 	class="flex items-center justify-center space-x-4"
 >
-	<div class="flex items-stretch space-x-2">
+	<div class="flex items-center space-x-2">
 		<Form.Field {form} name="title">
 			<Form.Control let:attrs>
 				<Form.Label>Title</Form.Label>
