@@ -4,6 +4,8 @@
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { version } from '$app/environment';
+
+	export let releaseVersion: string | null;
 </script>
 
 <div class="relative isolate overflow-hidden">
@@ -15,22 +17,24 @@
 						class="rounded-full px-3 py-1 text-sm font-semibold leading-6 ring-1 ring-inset ring-indigo-500/20"
 						>What's new</span
 					>
-					<span class="inline-flex items-center space-x-2 text-sm font-medium leading-6">
-						<span>{'Just shipped ' + version}</span>
-						<svg
-							class="h-5 w-5 text-gray-500"
-							viewBox="0 0 20 20"
-							fill="currentColor"
-							aria-hidden="true"
-							data-slot="icon"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</span>
+					{#if releaseVersion}
+						<span class="inline-flex items-center space-x-2 text-sm font-medium leading-6">
+							<span>{'Just shipped ' + releaseVersion}</span>
+							<svg
+								class="h-5 w-5 text-gray-500"
+								viewBox="0 0 20 20"
+								fill="currentColor"
+								aria-hidden="true"
+								data-slot="icon"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+									clip-rule="evenodd"
+								/>
+							</svg>
+						</span>
+					{/if}
 				</a>
 			</div>
 			<h1 class="mt-10 text-pretty text-5xl font-semibold tracking-tight sm:text-7xl">
