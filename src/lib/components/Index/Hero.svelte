@@ -19,7 +19,7 @@
 					>
 					{#if releaseVersion}
 						<span class="inline-flex items-center space-x-2 text-sm font-medium leading-6">
-							<span>{'Just shipped ' + releaseVersion}</span>
+							<span>Just shipped {releaseVersion}</span>
 							<svg
 								class="h-5 w-5 text-gray-500"
 								viewBox="0 0 20 20"
