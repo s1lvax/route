@@ -1,11 +1,17 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { UserPen, Github, LogOut } from 'lucide-svelte';
+	import { Loader2, UserPen, Github, LogOut } from 'lucide-svelte';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
-	import { version } from '$app/environment';
+	import { onMount } from 'svelte';
+	import { getReleaseVersion } from '$lib/utils/getReleaseVersion';
 
-	export let releaseVersion: string | null;
+	// undefined means that we haven't received the result from getReleaseVersion
+	// null means that getReleaseVersion couldn't find the release version
+	let releaseVersion: string | null | undefined = undefined;
+	onMount(async () => {
+		releaseVersion = await getReleaseVersion();
+	});
 </script>
 
 <div class="relative isolate overflow-hidden">
@@ -17,9 +23,16 @@
 						class="rounded-full px-3 py-1 text-sm font-semibold leading-6 ring-1 ring-inset ring-indigo-500/20"
 						>What's new</span
 					>
-					{#if releaseVersion}
+					{#if releaseVersion !== null}
 						<span class="inline-flex items-center space-x-2 text-sm font-medium leading-6">
-							<span>Just shipped {releaseVersion}</span>
+							<span>Just shipped</span>
+							{#if releaseVersion === undefined}
+								<div class="animate-spin">
+									<Loader2 />
+								</div>
+							{:else}
+								<span>{releaseVersion}</span>
+							{/if}
 							<svg
 								class="h-5 w-5 text-gray-500"
 								viewBox="0 0 20 20"

@@ -1,6 +1,4 @@
-import type { PageServerLoad } from './$types';
-
-export const load: PageServerLoad = async () => {
+export const getReleaseVersion = async () => {
   const repository = 's1lvax/route';
   let releaseVersion: string | null = null;
 
@@ -15,5 +13,5 @@ export const load: PageServerLoad = async () => {
     console.error(`Failed to fetch release info for ${repository}`);
   }
 
-  return { releaseVersion };
+  return releaseVersion;
 };
