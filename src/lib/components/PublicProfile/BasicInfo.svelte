@@ -10,7 +10,6 @@
 
 	export let githubData: GithubData | null;
 	export let userData: PublicProfile;
-	console.log(githubData);
 </script>
 
 <!-- User Avatar and Basic Info -->
@@ -90,8 +89,9 @@
 				{/if}
 			</div>
 		{:else}
-			<div class="flex w-[300px] justify-center">
+			<div class="flex w-[300px] flex-col items-center space-y-2">
 				<Skeleton class="h-8 w-[75px]"></Skeleton>
+				<Skeleton class="h-6 w-[100px]"></Skeleton>
 			</div>
 			<Skeleton class="h-6 w-[300px]"></Skeleton>
 
