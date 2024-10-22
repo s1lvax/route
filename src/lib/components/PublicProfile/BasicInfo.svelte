@@ -24,24 +24,24 @@
 	</Avatar.Root>
 	<div class="flex flex-col space-y-4 text-center">
 		{#if githubData}
-			{#if githubData.name}
-				<div class="flex flex-col items-center justify-center gap-2">
+			<div class="flex flex-col items-center justify-center gap-2">
+				{#if githubData.name}
 					<p class="text-2xl font-bold">{githubData.name}</p>
-					<div class="badge">
-						{#if userData.isOpenToCollaborating}
-							<Badge variant="outline" class="border-green-700 text-green-700"
-								>Open to Collaborating</Badge
-							>
-						{:else}
-							<Badge variant="outline" class="border-red-700 text-red-700"
-								>Not Open to Collaborating</Badge
-							>
-						{/if}
-					</div>
+				{:else}
+					<p class="text-2xl font-bold">{userData.username}</p>
+				{/if}
+				<div class="badge">
+					{#if userData.isOpenToCollaborating}
+						<Badge variant="outline" class="border-green-700 text-green-700"
+							>Open to Collaborating</Badge
+						>
+					{:else}
+						<Badge variant="outline" class="border-red-700 text-red-700"
+							>Not Open to Collaborating</Badge
+						>
+					{/if}
 				</div>
-			{:else}
-				<p class="text-2xl font-bold">{userData.username}</p>
-			{/if}
+			</div>
 
 			{#if githubData.bio}
 				<p class="text-muted-foreground">{githubData.bio}</p>
@@ -89,8 +89,9 @@
 				{/if}
 			</div>
 		{:else}
-			<div class="flex w-[300px] justify-center">
+			<div class="flex w-[300px] flex-col items-center space-y-2">
 				<Skeleton class="h-8 w-[75px]"></Skeleton>
+				<Skeleton class="h-6 w-[100px]"></Skeleton>
 			</div>
 			<Skeleton class="h-6 w-[300px]"></Skeleton>
 
