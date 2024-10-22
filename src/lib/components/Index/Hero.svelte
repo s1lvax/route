@@ -1,9 +1,17 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { GitPullRequestCreate, UserPen, Github, LogOut } from 'lucide-svelte';
-
+	import { Loader2, UserPen, Github, LogOut } from 'lucide-svelte';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import { getReleaseVersion } from '$lib/utils/getReleaseVersion';
+
+	// undefined means that we haven't received the result from getReleaseVersion
+	// null means that getReleaseVersion couldn't find the release version
+	let releaseVersion: string | null | undefined = undefined;
+	onMount(async () => {
+		releaseVersion = await getReleaseVersion();
+	});
 </script>
 
 <div class="relative isolate overflow-hidden">
@@ -15,22 +23,31 @@
 						class="rounded-full px-3 py-1 text-sm font-semibold leading-6 ring-1 ring-inset ring-indigo-500/20"
 						>What's new</span
 					>
-					<span class="inline-flex items-center space-x-2 text-sm font-medium leading-6">
-						<span>Just shipped v1.0.0</span>
-						<svg
-							class="h-5 w-5 text-gray-500"
-							viewBox="0 0 20 20"
-							fill="currentColor"
-							aria-hidden="true"
-							data-slot="icon"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</span>
+					{#if releaseVersion !== null}
+						<span class="inline-flex items-center space-x-2 text-sm font-medium leading-6">
+							<span>Just shipped</span>
+							{#if releaseVersion === undefined}
+								<div class="animate-spin">
+									<Loader2 />
+								</div>
+							{:else}
+								<span>{releaseVersion}</span>
+							{/if}
+							<svg
+								class="h-5 w-5 text-gray-500"
+								viewBox="0 0 20 20"
+								fill="currentColor"
+								aria-hidden="true"
+								data-slot="icon"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+									clip-rule="evenodd"
+								/>
+							</svg>
+						</span>
+					{/if}
 				</a>
 			</div>
 			<h1 class="mt-10 text-pretty text-5xl font-semibold tracking-tight sm:text-7xl">

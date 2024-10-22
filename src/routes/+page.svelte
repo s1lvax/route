@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Contributors from '$lib/components/Index/Contributors.svelte';
 	import Features from '$lib/components/Index/Features.svelte';
 	import Footer from '$lib/components/Index/Footer.svelte';
