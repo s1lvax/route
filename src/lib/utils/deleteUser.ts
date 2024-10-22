@@ -17,7 +17,7 @@ export const deleteUser = async (githubId: number, userId: number) => {
 			where: { githubId, id: userId }
 		});
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		throw Error('Failed to delete user');
 	}
 };
