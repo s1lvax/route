@@ -218,7 +218,6 @@ export const actions: Actions = {
 		throw redirect(303, '/');
 	},
 	updateOpenToCollaborating: async () => {
-		console.log('Updating openToCollaborating status');
 		//delete user
 		if (user) {
 			try {
