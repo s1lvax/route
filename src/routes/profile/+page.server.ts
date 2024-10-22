@@ -133,7 +133,7 @@ export const actions: Actions = {
 				});
 			}
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 			return fail(500, { message: 'Something went wrong.' });
 		}
 	},
@@ -192,7 +192,7 @@ export const actions: Actions = {
 				});
 			}
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 			return fail(500, { message: 'Something went wrong.' });
 		}
 	},
@@ -211,7 +211,7 @@ export const actions: Actions = {
 				//make sure it's the correct user
 				deleteUser(user.githubId, Number(id));
 			} catch (error) {
-				console.log(error);
+				console.error(error);
 				throw Error('Failed to delete user');
 			}
 		}
@@ -225,7 +225,7 @@ export const actions: Actions = {
 				// update value
 				updateOpenToCollaborating(user.githubId);
 			} catch (error) {
-				console.log(error);
+				console.error(error);
 				throw Error('Failed to delete user');
 			}
 		}
