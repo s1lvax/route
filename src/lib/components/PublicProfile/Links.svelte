@@ -22,11 +22,13 @@
 				</Table.Header>
 				<Table.Body>
 					{#each userData.links as link}
-						<a href={link.url} target="_blank">
-							<Table.Row class="flex flex-row space-x-4 hover:cursor-pointer">
-								<Table.Cell class="font-medium">{link.title}</Table.Cell>
-							</Table.Row>
-						</a>
+						<Table.Row class="space-x-4 border-b-0 hover:cursor-pointer">
+							<Table.Cell class="p-0 font-medium">
+								<a class="block p-4" href={link.url} target="_blank">
+									<span>{link.title}</span>
+								</a>
+							</Table.Cell>
+						</Table.Row>
 					{/each}
 				</Table.Body>
 			</Table.Root>

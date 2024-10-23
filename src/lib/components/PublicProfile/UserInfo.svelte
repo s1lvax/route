@@ -70,42 +70,53 @@
 					<Table.Header>
 						<Table.Row>
 							<Table.Head>Socials</Table.Head>
-							<Table.Head></Table.Head>
 						</Table.Row>
 					</Table.Header>
-					<Table.Body>
+					<Table.Body class="[&>*]:border-b-0">
 						<!-- GitHub Profile -->
-						<a href={githubData?.url ?? '#'} target="_blank">
-							<Table.Row>
-								<Table.Cell>
+						<Table.Row>
+							<Table.Cell class="p-0">
+								<a
+									class="flex items-center space-x-8 p-4"
+									href={githubData?.url ?? '#'}
+									target="_blank"
+								>
 									<GitHub />
-								</Table.Cell>
-								<Table.Cell>GitHub Profile</Table.Cell>
-							</Table.Row>
-						</a>
+									<span>GitHub Profile</span>
+								</a>
+							</Table.Cell>
+						</Table.Row>
 
 						<!-- Blog Profile -->
 						{#if githubData?.blog}
-							<a href={githubData?.blog ?? '#'} target="_blank">
-								<Table.Row>
-									<Table.Cell>
+							<Table.Row>
+								<Table.Cell class="p-0">
+									<a
+										class="flex items-center space-x-8 p-4"
+										href={githubData?.blog ?? '#'}
+										target="_blank"
+									>
 										<IdCard />
-									</Table.Cell>
-									<Table.Cell>Personal Website</Table.Cell>
-								</Table.Row>
-							</a>
+										<span>Personal Website</span>
+									</a>
+								</Table.Cell>
+							</Table.Row>
 						{/if}
 
 						<!-- Twitter Profile -->
 						{#if githubData?.twitter}
-							<a href={`https://x.com/${githubData?.twitter}`} target="_blank">
-								<Table.Row>
-									<Table.Cell>
+							<Table.Row>
+								<Table.Cell class="p-0">
+									<a
+										class="flex items-center space-x-8 p-4"
+										href={`https://x.com/${githubData?.twitter}`}
+										target="_blank"
+									>
 										<Twitter />
-									</Table.Cell>
-									<Table.Cell>Twitter Profile</Table.Cell>
-								</Table.Row>
-							</a>
+										<span>Twitter Profile</span>
+									</a>
+								</Table.Cell>
+							</Table.Row>
 						{/if}
 						<!-- Socials will be here when we implement it -->
 					</Table.Body>
