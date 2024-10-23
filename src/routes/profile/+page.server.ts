@@ -10,6 +10,7 @@ import type { User } from '$lib/types/User';
 import { skillsSchema } from '$lib/schemas/skills';
 import { deleteUser } from '$lib/utils/deleteUser';
 import { updateOpenToCollaborating } from '$lib/utils/updateOpenToCollaborating';
+import { hobbiesSchema } from '$lib/schemas/hobbies';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -44,7 +45,7 @@ export const load: PageServerLoad = async (event) => {
 	// Ensure user is not null before accessing properties
 	if (!user) throw new Error('User creation failed or user is null');
 
-	// Fetch links and skills related to the user
+	// Fetch links, skills and hobbies related to the user
 	const links = await prisma.link.findMany({
 		where: { userId: user.githubId },
 		orderBy: [{ order: 'asc' }]
@@ -53,6 +54,10 @@ export const load: PageServerLoad = async (event) => {
 	const skills = await prisma.skill.findMany({
 		where: { userId: user.githubId },
 		orderBy: [{ order: 'asc' }]
+	});
+
+	const hobbies = await prisma.hobby.findMany({
+		where: { userId: user.githubId },
 	});
 
 	// Create userStats object
@@ -65,6 +70,7 @@ export const load: PageServerLoad = async (event) => {
 	// Initialize forms using superValidate
 	const linksForm = await superValidate(zod(linksSchema));
 	const skillsForm = await superValidate(zod(skillsSchema));
+	const hobbiesForm = await superValidate(zod(hobbiesSchema))
 
 	// Return data to the frontend
 	return {
@@ -72,8 +78,10 @@ export const load: PageServerLoad = async (event) => {
 		userData,
 		links,
 		skills,
+		hobbies,
 		form: linksForm,
-		skillsForm: skillsForm
+		skillsForm: skillsForm,
+		hobbiesForm: hobbiesForm,
 	};
 };
 
@@ -228,5 +236,58 @@ export const actions: Actions = {
 				throw Error('Failed to delete user');
 			}
 		}
-	}
+	},
+	createHobby: async (event) => {
+		const form = await superValidate(event, zod(hobbiesSchema));
+		if (!form.valid) {
+			return fail(400, {
+				form
+			});
+		}
+
+		// If no errors, get data
+		const { hobby } = form.data;
+
+		if (user) {
+			try {
+				await prisma.hobby.create({
+					data: {
+						hobby,
+						userId: user.githubId,
+					}
+				});
+			} catch (error) {
+				console.error(error);
+				throw Error('Failed to create hobby');
+			}
+		}
+
+		return {
+			form
+		};
+	},
+	deleteHobby: async ({ url, locals }) => {
+		//get hobby id from url
+		const id = url.searchParams.get('id');
+
+		//if no id found, return error
+		if (!id) {
+			return fail(400, { message: 'Invalid request' });
+		}
+
+		//delete hobby
+		try {
+			if (user) {
+				await prisma.hobby.delete({
+					where: {
+						id: Number(id),
+						userId: user.githubId
+					}
+				});
+			}
+		} catch (err) {
+			console.log(err);
+			return fail(500, { message: 'Something went wrong.' });
+		}
+	  }
 };

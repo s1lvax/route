@@ -3,4 +3,5 @@ export interface PublicProfile {
 	skills: Array<{ title: string; level: string }>;
 	username: string;
 	isOpenToCollaborating: boolean;
+	hobbies: Array<{hobby:string}>;
 }
