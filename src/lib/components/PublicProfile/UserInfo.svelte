@@ -74,9 +74,9 @@
 					<Table.Body class="[&>*]:border-b-0">
 						<!-- GitHub Profile -->
 						<Table.Row>
-							<Table.Cell>
+							<Table.Cell class="p-0">
 								<a
-									class="flex items-center space-x-8"
+									class="flex items-center space-x-8 p-4"
 									href={githubData?.url ?? '#'}
 									target="_blank"
 								>
@@ -89,9 +89,9 @@
 						<!-- Blog Profile -->
 						{#if githubData?.blog}
 							<Table.Row>
-								<Table.Cell>
+								<Table.Cell class="p-0">
 									<a
-										class="flex items-center space-x-8"
+										class="flex items-center space-x-8 p-4"
 										href={githubData?.blog ?? '#'}
 										target="_blank"
 									>
@@ -105,9 +105,9 @@
 						<!-- Twitter Profile -->
 						{#if githubData?.twitter}
 							<Table.Row>
-								<Table.Cell>
+								<Table.Cell class="p-0">
 									<a
-										class="flex items-center space-x-8"
+										class="flex items-center space-x-8 p-4"
 										href={`https://x.com/${githubData?.twitter}`}
 										target="_blank"
 									>
