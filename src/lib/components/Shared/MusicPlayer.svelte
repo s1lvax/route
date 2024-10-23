@@ -42,7 +42,6 @@
 				<AudioLines class="mr-2 text-green-700" /> Music
 			</div>
 		</Card.Title>
-		<Card.Description>The developer is currently listening to</Card.Description>
 	</Card.Header>
 
 	<Card.Content>
@@ -77,7 +76,7 @@
 			</div>
 		{:else}
 			<div class="flex items-center">
-				<p>Not listening to anything currently</p>
+				<p>N/A</p>
 			</div>
 		{/if}
 	</Card.Content>
