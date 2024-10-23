@@ -5,7 +5,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { copyToClipboard } from '$lib/utils/copyToClipboard';
 	import { confirmDelete } from '$lib/utils/confirmDelete';
-	import { ArrowUpRight, Trash2, CircleChevronDown, Github, Copy } from 'lucide-svelte';
+	import { ArrowUpRight, Trash2, CircleChevronDown, Github, Copy, AudioLines } from 'lucide-svelte';
 
 	import { enhance } from '$app/forms';
 	import type { PageData } from '../../../routes/profile/$types';
@@ -14,7 +14,16 @@
 </script>
 
 <div class="flex w-full justify-end space-x-2">
-	<div class="flex space-x-2">
+	<div class="flex flex-row space-x-2">
+		{#if data.spotifyToken}
+			<form action="?/unlinkSpotify" method="POST" use:enhance>
+				<Button variant="destructive"><AudioLines class="mr-2" /> Unlink Spotify</Button>
+			</form>
+		{:else}
+			<Button href="/api/spotify/login"
+				><AudioLines class="mr-2 text-green-700" /> Link Spotify</Button
+			>
+		{/if}
 		<form action="?/updateOpenToCollaborating" method="POST" use:enhance>
 			<div class="flex flex-row items-center">
 				<Button type="submit" variant="ghost">
