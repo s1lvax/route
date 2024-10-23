@@ -17,9 +17,9 @@
 	<Avatar.Root class="h-24 w-24 rounded-full">
 		{#if githubData}
 			<Avatar.Image src={githubData.avatarUrl} alt="User Avatar" />
-			<Avatar.Fallback>?</Avatar.Fallback>
+			<Avatar.Fallback><Skeleton class="h-full w-full rounded-full" /></Avatar.Fallback>
 		{:else}
-			<Skeleton class="h-full w-full rounded-full"></Skeleton>
+			<Skeleton class="h-full w-full rounded-full" />
 		{/if}
 	</Avatar.Root>
 	<div class="flex flex-col space-y-4 text-center">
