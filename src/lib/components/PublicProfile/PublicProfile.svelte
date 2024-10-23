@@ -7,6 +7,7 @@
 	import ProfileFooter from '$lib/components/PublicProfile/ProfileFooter.svelte';
 	import Hobbies from '$lib/components/PublicProfile/Hobbies.svelte';
 	import ProfileHero from '$lib/components/PublicProfile/ProfileHero.svelte';
+	import { Separator } from '$lib/components//ui/separator';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
@@ -20,11 +21,14 @@
 	<main class="flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
 		<ProfileHero {githubData} {userData} />
 
+		<Separator class="my-4" />
+
 		<!-- Links and Tech Stack Side by Side -->
 		<div class="mt-8 grid gap-4 md:grid-cols-2">
 			<Links {userData} />
 			<TechStack {userData} />
 		</div>
+		<Separator class="my-4" />
 		<div class="mt-8 grid gap-4 md:grid-cols-2">
 			<Hobbies {userData} />
 		</div>
