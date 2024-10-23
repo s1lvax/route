@@ -27,7 +27,7 @@
 					<a href="/profile">
 						<Avatar.Root>
 							<Avatar.Image src={$page.data.session.user.image} alt="@github.user" />
-							<Avatar.Fallback><Skeleton class="h-10 w-10 rounded-full" /></Avatar.Fallback>
+							<Avatar.Fallback><Skeleton class="h-full w-full rounded-full" /></Avatar.Fallback>
 						</Avatar.Root>
 					</a>
 				{/if}
