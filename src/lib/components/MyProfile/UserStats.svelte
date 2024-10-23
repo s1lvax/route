@@ -2,9 +2,7 @@
 	import GitHub from 'lucide-svelte/icons/github';
 	import Users from 'lucide-svelte/icons/users';
 	import Folder from 'lucide-svelte/icons/folder';
-	import * as Card from '$lib/components/ui/card';
 	import type { PrivateProfileData } from '$lib/types/PrivateProfileData';
-	import { Skeleton } from '$lib/components/ui/skeleton';
 	import StatsCard from '$lib/components/Shared/StatsCard.svelte';
 	import StatsCardSkeleton from '../Shared/StatsCardSkeleton.svelte';
 
