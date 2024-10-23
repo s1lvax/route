@@ -40,11 +40,16 @@ export const load: PageServerLoad = async ({ params }) => {
 		select: { openToCollaborating: true }
 	});
 
+	const hobbies = await prisma.hobby.findMany({
+		where:{userId: user.githubId},
+	});
+
 	const userData = {
 		links,
 		skills,
 		username: username,
-		isOpenToCollaborating: isOpenToCollaborating?.openToCollaborating
+		isOpenToCollaborating: isOpenToCollaborating?.openToCollaborating,
+		hobbies,
 	};
 
 	return {

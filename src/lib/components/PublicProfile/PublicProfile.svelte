@@ -7,6 +7,7 @@
 	import Links from '$lib/components/PublicProfile/Links.svelte';
 	import TechStack from '$lib/components/PublicProfile/TechStack.svelte';
 	import ProfileFooter from '$lib/components/PublicProfile/ProfileFooter.svelte';
+	import Hobbies from './Hobbies.svelte';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
@@ -26,6 +27,10 @@
 			<Links {userData} />
 			<TechStack {userData} />
 		</div>
+		<div class="mt-8 grid gap-4 md:grid-cols-2">
+			<Hobbies {userData} /> 
+		</div>
+
 		<div class="flex flex-col items-center justify-center gap-4">
 			<ProfileFooter />
 		</div>
