@@ -11,6 +11,7 @@ import { skillsSchema } from '$lib/schemas/skills';
 import { deleteUser } from '$lib/utils/deleteUser';
 import { updateOpenToCollaborating } from '$lib/utils/updateOpenToCollaborating';
 import { hobbiesSchema } from '$lib/schemas/hobbies';
+import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -45,7 +46,7 @@ export const load: PageServerLoad = async (event) => {
 	// Ensure user is not null before accessing properties
 	if (!user) throw new Error('User creation failed or user is null');
 
-	// Fetch links, skills and hobbies related to the user
+	// Fetch links, skills, hobbies, spotifyTokens related to the user
 	const links = await prisma.link.findMany({
 		where: { userId: user.githubId },
 		orderBy: [{ order: 'asc' }]
@@ -57,7 +58,11 @@ export const load: PageServerLoad = async (event) => {
 	});
 
 	const hobbies = await prisma.hobby.findMany({
-		where: { userId: user.githubId },
+		where: { userId: user.githubId }
+	});
+
+	const spotifyToken = await prisma.spotifyToken.findFirst({
+		where: { userId: user.githubId }
 	});
 
 	// Create userStats object
@@ -70,7 +75,7 @@ export const load: PageServerLoad = async (event) => {
 	// Initialize forms using superValidate
 	const linksForm = await superValidate(zod(linksSchema));
 	const skillsForm = await superValidate(zod(skillsSchema));
-	const hobbiesForm = await superValidate(zod(hobbiesSchema))
+	const hobbiesForm = await superValidate(zod(hobbiesSchema));
 
 	// Return data to the frontend
 	return {
@@ -79,9 +84,10 @@ export const load: PageServerLoad = async (event) => {
 		links,
 		skills,
 		hobbies,
+		spotifyToken,
 		form: linksForm,
 		skillsForm: skillsForm,
-		hobbiesForm: hobbiesForm,
+		hobbiesForm: hobbiesForm
 	};
 };
 
@@ -253,7 +259,7 @@ export const actions: Actions = {
 				await prisma.hobby.create({
 					data: {
 						hobby,
-						userId: user.githubId,
+						userId: user.githubId
 					}
 				});
 			} catch (error) {
@@ -289,5 +295,16 @@ export const actions: Actions = {
 			console.log(err);
 			return fail(500, { message: 'Something went wrong.' });
 		}
-	  }
+	},
+	unlinkSpotify: async () => {
+		if (user) {
+			try {
+				// delete
+				unlinkSpotify(user.githubId);
+			} catch (error) {
+				console.error(error);
+				throw Error('Failed to delete user');
+			}
+		}
+	}
 };

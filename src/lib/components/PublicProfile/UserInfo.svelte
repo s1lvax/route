@@ -1,14 +1,15 @@
 <script lang="ts">
 	import * as Avatar from '$lib/components/ui/avatar';
-	import { Button } from '$lib/components/ui/button';
-	import { IdCard, Twitter } from 'lucide-svelte';
+	import { IdCard, Twitter, AudioLines } from 'lucide-svelte';
 	import GitHub from 'lucide-svelte/icons/github';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { Badge } from '$lib/components/ui/badge';
-	import type { GithubData } from '$lib/types/GithubData';
-	import type { PublicProfile } from '$lib/types/PublicProfile';
 	import * as Card from '$lib/components/ui/card';
 	import * as Table from '$lib/components/ui/table';
+
+	import type { GithubData } from '$lib/types/GithubData';
+	import type { PublicProfile } from '$lib/types/PublicProfile';
+	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
 
 	export let githubData: GithubData | null;
 	export let userData: PublicProfile;
@@ -64,11 +65,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="information">
+			<div class="information flex flex-col space-y-4">
 				<Table.Root>
 					<Table.Header>
 						<Table.Row>
-							<Table.Head>Platform</Table.Head>
+							<Table.Head>Socials</Table.Head>
 							<Table.Head></Table.Head>
 						</Table.Row>
 					</Table.Header>
@@ -109,6 +110,7 @@
 						<!-- Socials will be here when we implement it -->
 					</Table.Body>
 				</Table.Root>
+				<MusicPlayer githubUsername={userData.username} />
 			</div>
 		</div></Card.Content
 	>

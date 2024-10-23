@@ -49,6 +49,9 @@ jobs:
             echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
             echo "AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST }}" >> .env
+            echo "SPOTIFY_ID=${{ secrets.SPOTIFY_ID }}" >> .env
+            echo "SPOTIFY_SECRET=${{ secrets.SPOTIFY_SECRET }}" >> .env
+            echo "SPOTIFY_REDIRECT=${{ secrets.SPOTIFY_REDIRECT }}" >> .env
 
             #Prisma
             npx prisma generate
