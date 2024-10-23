@@ -8,6 +8,7 @@
 
 	import * as Avatar from '$lib/components/ui/avatar';
 	import LightDarkMode from '$lib/components/Shared/LightDarkMode.svelte';
+	import { Skeleton } from '$lib/components/ui/skeleton';
 </script>
 
 <header class="sticky top-0 z-10 items-center border-b bg-background">
@@ -26,7 +27,7 @@
 					<a href="/profile">
 						<Avatar.Root>
 							<Avatar.Image src={$page.data.session.user.image} alt="@github.user" />
-							<Avatar.Fallback>X</Avatar.Fallback>
+							<Avatar.Fallback><Skeleton class="h-full w-full rounded-full" /></Avatar.Fallback>
 						</Avatar.Root>
 					</a>
 				{/if}
