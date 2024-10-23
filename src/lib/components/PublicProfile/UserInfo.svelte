@@ -1,15 +1,15 @@
 <script lang="ts">
 	import * as Avatar from '$lib/components/ui/avatar';
-	import { IdCard, Twitter, AudioLines } from 'lucide-svelte';
-	import GitHub from 'lucide-svelte/icons/github';
+
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { Badge } from '$lib/components/ui/badge';
 	import * as Card from '$lib/components/ui/card';
-	import * as Table from '$lib/components/ui/table';
 
 	import type { GithubData } from '$lib/types/GithubData';
 	import type { PublicProfile } from '$lib/types/PublicProfile';
 	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
+	import Hobbies from '$lib/components/PublicProfile/Hobbies.svelte';
+	import Socials from '$lib/components/PublicProfile/Socials.svelte';
 
 	export let githubData: GithubData | null;
 	export let userData: PublicProfile;
@@ -66,61 +66,14 @@
 				</div>
 			</div>
 			<div class="information flex flex-col space-y-4">
-				<Table.Root>
-					<Table.Header>
-						<Table.Row>
-							<Table.Head>Socials</Table.Head>
-						</Table.Row>
-					</Table.Header>
-					<Table.Body class="[&>*]:border-b-0">
-						<!-- GitHub Profile -->
-						<Table.Row>
-							<Table.Cell class="p-0">
-								<a
-									class="flex items-center space-x-8 p-4"
-									href={githubData?.url ?? '#'}
-									target="_blank"
-								>
-									<GitHub />
-									<span>GitHub Profile</span>
-								</a>
-							</Table.Cell>
-						</Table.Row>
-
-						<!-- Blog Profile -->
-						{#if githubData?.blog}
-							<Table.Row>
-								<Table.Cell class="p-0">
-									<a
-										class="flex items-center space-x-8 p-4"
-										href={githubData?.blog ?? '#'}
-										target="_blank"
-									>
-										<IdCard />
-										<span>Personal Website</span>
-									</a>
-								</Table.Cell>
-							</Table.Row>
-						{/if}
-
-						<!-- Twitter Profile -->
-						{#if githubData?.twitter}
-							<Table.Row>
-								<Table.Cell class="p-0">
-									<a
-										class="flex items-center space-x-8 p-4"
-										href={`https://x.com/${githubData?.twitter}`}
-										target="_blank"
-									>
-										<Twitter />
-										<span>Twitter Profile</span>
-									</a>
-								</Table.Cell>
-							</Table.Row>
-						{/if}
-						<!-- Socials will be here when we implement it -->
-					</Table.Body>
-				</Table.Root>
+				<div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+					<div class="socials">
+						<Socials {githubData} />
+					</div>
+					<div class="hobbies">
+						<Hobbies {userData} />
+					</div>
+				</div>
 				<MusicPlayer githubUsername={userData.username} />
 			</div>
 		</div></Card.Content

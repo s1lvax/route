@@ -28,10 +28,6 @@
 			<Links {userData} />
 			<TechStack {userData} />
 		</div>
-		<Separator class="my-4" />
-		<div class="mt-8 grid gap-4 md:grid-cols-2">
-			<Hobbies {userData} />
-		</div>
 
 		<div class="flex flex-col items-center justify-center gap-4">
 			<ProfileFooter />
