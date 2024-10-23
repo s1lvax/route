@@ -9,6 +9,8 @@ export const fetchSpotifyCurrentlyPlaying = async (accessToken: string) => {
 		}
 	});
 
+	console.log('Response from fetchSpotifyCurrentlyPlaying: ', response);
+
 	if (response.status === 204 || !response.ok) {
 		// Return null if no content (204) or if there's an error
 		return null;
