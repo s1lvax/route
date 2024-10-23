@@ -39,7 +39,7 @@
 	<Card.Header>
 		<Card.Title>
 			<div class="flex flex-row items-center">
-				<AudioLines class="mr-2 text-green-700" /> Music
+				<AudioLines class="mr-2 text-green-700" /> Now listening to..
 			</div>
 		</Card.Title>
 	</Card.Header>

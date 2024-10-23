@@ -6,30 +6,25 @@
 	export let userData: PublicProfile;
 </script>
 
-<Card.Root>
-	<Card.Header>
-		<Card.Title>Hobbies</Card.Title>
-		<Card.Description>Discover the developer's hobbies</Card.Description>
-	</Card.Header>
-	<Card.Content class="grid gap-4">
+<Table.Root>
+	<Table.Header>
+		<Table.Row>
+			<Table.Head>Hobbies</Table.Head>
+		</Table.Row>
+	</Table.Header>
+	<Table.Body>
 		{#if userData.hobbies.length > 0}
-			<Table.Root>
-				<Table.Header>
-					<Table.Row>
-						<Table.Head>Hobby</Table.Head>
-					</Table.Row>
-				</Table.Header>
-				<Table.Body>
-					{#each userData.hobbies as hobby}
-            <Table.Row class="flex flex-row space-x-4 hover:cursor-pointer">
-                <Table.Cell class="font-medium">{hobby.hobby}</Table.Cell>
-            </Table.Row>
-					{/each}
-				</Table.Body>
-			</Table.Root>
+			{#each userData.hobbies as hobby}
+				<Table.Row class="flex flex-row space-x-4 hover:cursor-pointer">
+					<Table.Cell class="font-medium">{hobby.hobby}</Table.Cell>
+				</Table.Row>
+			{/each}
 		{:else}
-			<p class="text-muted-foreground">No hobbies available</p>
+			<Table.Row class="flex flex-row space-x-4 hover:cursor-pointer">
+				<Table.Cell class="font-medium">
+					<p class="text-muted-foreground">No hobbies available</p></Table.Cell
+				>
+			</Table.Row>
 		{/if}
-	</Card.Content>
-</Card.Root>
-
+	</Table.Body>
+</Table.Root>
