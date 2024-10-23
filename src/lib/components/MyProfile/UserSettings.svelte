@@ -17,7 +17,9 @@
 	<div class="flex flex-row space-x-2">
 		{#if data.spotifyToken}
 			<form action="?/unlinkSpotify" method="POST" use:enhance>
-				<Button variant="destructive"><AudioLines class="mr-2" /> Unlink Spotify</Button>
+				<Button variant="destructive" type="submit"
+					><AudioLines class="mr-2" /> Unlink Spotify</Button
+				>
 			</form>
 		{:else}
 			<Button href="/api/spotify/login"
