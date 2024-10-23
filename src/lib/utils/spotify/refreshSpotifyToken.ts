@@ -1,12 +1,11 @@
-// src/lib/utils/spotify/refreshSpotifyToken.ts
+import { SPOTIFY_ID, SPOTIFY_SECRET } from '$env/static/private';
+
 export const refreshSpotifyToken = async (refreshToken: string) => {
 	const response = await fetch('https://accounts.spotify.com/api/token', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded',
-			Authorization: `Basic ${Buffer.from(
-				`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
-			).toString('base64')}`
+			Authorization: `Basic ${Buffer.from(`${SPOTIFY_ID}:${SPOTIFY_SECRET}`).toString('base64')}`
 		},
 		body: new URLSearchParams({
 			grant_type: 'refresh_token',

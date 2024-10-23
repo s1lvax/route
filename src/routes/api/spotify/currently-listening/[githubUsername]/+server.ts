@@ -19,6 +19,8 @@ export const GET = async ({ params }) => {
 
 	const { accessToken, refreshToken, expiresAt } = user.spotifyToken;
 
+	const refreshedTokens = await refreshSpotifyToken(refreshToken);
+
 	// Check if the token is expired, and refresh if necessary
 	let tokenToUse = accessToken;
 	if (new Date() > expiresAt) {
