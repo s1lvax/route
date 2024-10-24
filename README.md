@@ -4,7 +4,7 @@ Route is a platform that allows users to easily share their favourite links, tec
 
 ![Route Logo](https://i.imgur.com/KtVWxtM.png)
 
-[![Chat](https://img.shields.io/discord/1003691521280856084?label=chat&logo=discord&color=7289da)](https://discord.gg/m69DSNbu)
+[![Chat](https://img.shields.io/discord/1003691521280856084?label=chat&logo=discord&color=7289da)](https://discord.gg/9XuRcaZR)
 
 ## 🎮 Features
 
