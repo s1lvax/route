@@ -1,4 +1,4 @@
-## How to Contribute
+## 🫂 How to Contribute
 
 1. Clone the project
 
@@ -12,7 +12,7 @@ git clone https://github.com/s1lvax/route
 pnpm i
 ```
 
-3. Run a Postgres instance (I recommend using Docker)
+3. Run a Postgres instance (I recommend using Docker CLI on Linux/Mac or Docker Desktop on Windows)
 
 ```bash
 docker run --name your_postgres_container -e POSTGRES_USER=your_username -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=your_database -p 5432:5432 -d postgres
