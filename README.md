@@ -53,6 +53,10 @@ pnpm dev
 ```
 
 7. Develop the change using a separate branch, either `bugfix/name` or `feature/name`
-8. Push your changes and open a Pull Request with details about your changes
+8. Push your changes and open a Pull Request with details about your changes. Pull requests must be made to the `dev` branch
+
+A deployment of the `dev` branch exists at [https://testing.route2.dev/](https://testing.route2.dev/)
+
+The `dev` branch is merged into `main` for each new release, and the latest release is deployed at [https://route2.dev/](https://route2.dev/)
 
 #### All Pull Requests are very appreciated :D
