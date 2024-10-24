@@ -15,7 +15,7 @@
 	export let userData: PublicProfile;
 </script>
 
-<Card.Root>
+<Card.Root class="flex h-full flex-col">
 	<!-- Card Header -->
 	<Card.Header>
 		<Card.Title>User Information</Card.Title>
@@ -23,8 +23,8 @@
 	</Card.Header>
 
 	<!-- Card Content -->
-	<Card.Content>
-		<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+	<Card.Content class="flex-grow">
+		<div class="grid h-full grid-cols-1 gap-6 md:grid-cols-2">
 			<div class="introduction flex flex-col space-y-4">
 				<div class="flex flex-col items-center justify-center gap-2">
 					<Avatar.Root class="h-40 w-40 rounded-full">
@@ -65,9 +65,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="information flex flex-col space-y-4">
+			<div class="information flex flex-col justify-between">
 				<div class="grid grid-cols-1 gap-2 md:grid-cols-2">
-					<div class="socials">
+					<div class="socials max-h-full">
 						<Socials {githubData} />
 					</div>
 					<div class="hobbies">

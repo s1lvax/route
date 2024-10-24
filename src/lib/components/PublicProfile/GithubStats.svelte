@@ -9,7 +9,7 @@
 </script>
 
 <!-- GitHub Stats Cards -->
-<div class="flex flex-col space-y-4">
+<div class="flex h-full flex-col justify-between space-y-4">
 	{#if githubData}
 		<StatsCard icon={Folder} title="Projects on Github" data={githubData.repoCount.toString()} />
 		<StatsCard

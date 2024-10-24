@@ -13,7 +13,7 @@
 			<Table.Head>Socials</Table.Head>
 		</Table.Row>
 	</Table.Header>
-	<Table.Body class="[&>*]:border-b-0">
+	<Table.Body class="block max-h-28 overflow-y-scroll [&>*]:border-b-0">
 		<!-- GitHub Profile -->
 		<Table.Row>
 			<Table.Cell class="p-0">
