@@ -5,7 +5,6 @@
 	import Links from '$lib/components/PublicProfile/Links.svelte';
 	import TechStack from '$lib/components/PublicProfile/TechStack.svelte';
 	import ProfileFooter from '$lib/components/PublicProfile/ProfileFooter.svelte';
-	import Hobbies from '$lib/components/PublicProfile/Hobbies.svelte';
 	import ProfileHero from '$lib/components/PublicProfile/ProfileHero.svelte';
 	import { Separator } from '$lib/components//ui/separator';
 
