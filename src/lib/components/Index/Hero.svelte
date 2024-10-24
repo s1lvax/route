@@ -108,7 +108,7 @@
 		>
 			<div class="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
 				<img
-					src="https://i.imgur.com/KtVWxtM.png"
+					src="https://i.imgur.com/mSXJ4E3.png"
 					alt="App screenshot"
 					width="2432"
 					height="1442"
