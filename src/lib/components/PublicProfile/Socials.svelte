@@ -14,7 +14,7 @@
 			<Table.Head>Socials</Table.Head>
 		</Table.Row>
 	</Table.Header>
-	<Table.Body class="[&>*]:border-b-0">
+	<Table.Body class="block max-h-28 overflow-y-scroll [&>*]:border-b-0">
 		{#if githubData}
 			<!-- GitHub Profile -->
 			<Table.Row>
@@ -60,7 +60,7 @@
 			<!-- Socials will be here when we implement it -->
 		{:else}
 			{#each { length: 2 } as _}
-				<Table.Row>
+				<Table.Row class="block">
 					<Table.Cell class="flex space-x-8">
 						<Skeleton class="h-6 w-6 rounded-full" />
 						<Skeleton class="h-6 flex-grow" />

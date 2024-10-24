@@ -1,6 +1,5 @@
 <script lang="ts">
 	import * as Table from '$lib/components/ui/table';
-	import * as Card from '$lib/components/ui/card';
 	import type { PublicProfile } from '$lib/types/PublicProfile';
 
 	export let userData: PublicProfile;
@@ -12,7 +11,7 @@
 			<Table.Head>Hobbies</Table.Head>
 		</Table.Row>
 	</Table.Header>
-	<Table.Body>
+	<Table.Body class="block max-h-28 overflow-y-scroll [&>*]:border-b-0">
 		{#if userData.hobbies.length > 0}
 			{#each userData.hobbies as hobby}
 				<Table.Row class="flex flex-row space-x-4 hover:cursor-pointer">

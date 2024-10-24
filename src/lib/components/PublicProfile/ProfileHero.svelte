@@ -10,10 +10,10 @@
 
 <!-- User Avatar and Basic Info -->
 <div class="grid items-center gap-4 sm:grid-cols-1 md:grid-cols-[70%_30%]">
-	<div class="user-info">
+	<div class="user-info h-full">
 		<UserInfo {githubData} {userData} />
 	</div>
-	<div class="stats">
+	<div class="stats h-full">
 		<GithubStats {githubData} />
 	</div>
 </div>
