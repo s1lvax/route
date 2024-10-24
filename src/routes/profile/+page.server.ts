@@ -12,6 +12,7 @@ import { deleteUser } from '$lib/utils/deleteUser';
 import { updateOpenToCollaborating } from '$lib/utils/updateOpenToCollaborating';
 import { hobbiesSchema } from '$lib/schemas/hobbies';
 import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
+import { socialsSchema } from '$lib/schemas/socials';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -65,6 +66,10 @@ export const load: PageServerLoad = async (event) => {
 		where: { userId: user.githubId }
 	});
 
+	const socials = await prisma.social.findMany({
+		where: { userId: user.githubId }
+	});
+
 	// Create userStats object
 	const userData = {
 		username: user.githubUsername,
@@ -76,6 +81,7 @@ export const load: PageServerLoad = async (event) => {
 	const linksForm = await superValidate(zod(linksSchema));
 	const skillsForm = await superValidate(zod(skillsSchema));
 	const hobbiesForm = await superValidate(zod(hobbiesSchema));
+	const socialsForm = await superValidate(zod(socialsSchema));
 
 	// Return data to the frontend
 	return {
@@ -84,10 +90,12 @@ export const load: PageServerLoad = async (event) => {
 		links,
 		skills,
 		hobbies,
+		socials,
 		spotifyToken,
 		form: linksForm,
 		skillsForm: skillsForm,
-		hobbiesForm: hobbiesForm
+		hobbiesForm: hobbiesForm,
+		socialsForm: socialsForm
 	};
 };
 
@@ -305,6 +313,60 @@ export const actions: Actions = {
 				console.error(error);
 				throw Error('Failed to delete user');
 			}
+		}
+	},
+	createSocial: async (event) => {
+		const form = await superValidate(event, zod(socialsSchema));
+		if (!form.valid) {
+			return fail(400, {
+				form
+			});
+		}
+
+		// If no errors, get data
+		const { social, socialURL } = form.data;
+
+		if (user) {
+			try {
+				await prisma.social.create({
+					data: {
+						social,
+						socialURL,
+						userId: user.githubId
+					}
+				});
+			} catch (error) {
+				console.error(error);
+				throw Error('Failed to create social');
+			}
+		}
+
+		return {
+			form
+		};
+	},
+	deleteSocial: async ({ url }) => {
+		//get hobby id from url
+		const id = url.searchParams.get('id');
+
+		//if no id found, return error
+		if (!id) {
+			return fail(400, { message: 'Invalid request' });
+		}
+
+		//delete social
+		try {
+			if (user) {
+				await prisma.social.delete({
+					where: {
+						id: Number(id),
+						userId: user.githubId
+					}
+				});
+			}
+		} catch (err) {
+			console.log(err);
+			return fail(500, { message: 'Something went wrong.' });
 		}
 	}
 };

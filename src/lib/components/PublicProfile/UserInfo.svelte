@@ -10,9 +10,11 @@
 	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
 	import Hobbies from '$lib/components/PublicProfile/Hobbies.svelte';
 	import Socials from '$lib/components/PublicProfile/Socials.svelte';
+	import type { Social } from '@prisma/client';
 
 	export let githubData: GithubData | null;
 	export let userData: PublicProfile;
+	export let socials: Social[];
 </script>
 
 <Card.Root class="flex h-full flex-col">
@@ -74,7 +76,7 @@
 			<div class="information flex flex-col justify-between">
 				<div class="grid grid-cols-1 gap-2 md:grid-cols-2">
 					<div class="socials max-h-full">
-						<Socials {githubData} />
+						<Socials {githubData} {socials} />
 					</div>
 					<div class="hobbies">
 						<Hobbies {userData} />

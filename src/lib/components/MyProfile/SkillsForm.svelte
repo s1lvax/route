@@ -98,4 +98,3 @@
 {:else if $message}
 	<p class="mt-2 text-center text-red-500">{$message}</p>
 {/if}
-

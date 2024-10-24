@@ -15,6 +15,8 @@
 	import UserSettings from '$lib/components/MyProfile/UserSettings.svelte';
 	import HobbyForm from '$lib/components/MyProfile/HobbyForm.svelte';
 	import UserHobbies from '$lib/components/MyProfile/UserHobbies.svelte';
+	import SocialsForm from '$lib/components/MyProfile/SocialsForm.svelte';
+	import UserSocials from '$lib/components/MyProfile/UserSocials.svelte';
 
 	let githubData: GithubData | null = null;
 	let privateProfileData: PrivateProfileData | null = null;
@@ -80,10 +82,21 @@
 				<Card.Header>
 					<Card.Title>Hobbies</Card.Title>
 					<Card.Description>You can add your hobbies here</Card.Description>
-					<HobbyForm data={data.hobbiesForm}/> 
+					<HobbyForm data={data.hobbiesForm} />
 				</Card.Header>
 				<Card.Content class="grid gap-8">
 					<UserHobbies hobbies={data.hobbies} />
+				</Card.Content>
+			</Card.Root>
+
+			<Card.Root>
+				<Card.Header>
+					<Card.Title>Socials</Card.Title>
+					<Card.Description>You can add your social media presence here</Card.Description>
+					<SocialsForm data={data.socialsForm} />
+				</Card.Header>
+				<Card.Content class="grid gap-8">
+					<UserSocials socials={data.socials} />
 				</Card.Content>
 			</Card.Root>
 		</div>
