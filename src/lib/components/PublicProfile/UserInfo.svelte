@@ -37,30 +37,36 @@
 					</Avatar.Root>
 
 					<div class="flex flex-col items-center justify-center space-y-4 text-center">
-						{#if githubData?.name}
-							<p class="text-4xl font-bold">{githubData.name}</p>
-						{:else}
-							<p class="text-4xl font-bold">{userData.username}</p>
-						{/if}
-						<!-- Collaborating Badge -->
-						{#if userData?.isOpenToCollaborating}
-							<Badge variant="outline" class="border-green-700 text-green-700"
-								>Open to Collaborating</Badge
-							>
-						{:else}
-							<Badge variant="outline" class="border-red-700 text-red-700"
-								>Not Open to Collaborating</Badge
-							>
-						{/if}
+						{#if githubData}
+							{#if githubData?.name}
+								<p class="text-4xl font-bold">{githubData.name}</p>
+							{:else}
+								<p class="text-4xl font-bold">{userData.username}</p>
+							{/if}
+							<!-- Collaborating Badge -->
+							{#if userData?.isOpenToCollaborating}
+								<Badge variant="outline" class="border-green-700 text-green-700"
+									>Open to Collaborating</Badge
+								>
+							{:else}
+								<Badge variant="outline" class="border-red-700 text-red-700"
+									>Not Open to Collaborating</Badge
+								>
+							{/if}
 
-						{#if githubData?.bio}
-							<p class="text-muted-foreground">{githubData?.bio ?? 'Public Developer Profile'}</p>
-						{:else}
-							<p class="text-muted-foreground">Public Developer Profile</p>
-						{/if}
+							{#if githubData?.bio}
+								<p class="text-muted-foreground">{githubData?.bio ?? 'Public Developer Profile'}</p>
+							{:else}
+								<p class="text-muted-foreground">Public Developer Profile</p>
+							{/if}
 
-						{#if githubData?.company}
-							<p class="text-muted-foreground">Currently at {githubData?.company}</p>
+							{#if githubData?.company}
+								<p class="text-muted-foreground">Currently at {githubData?.company}</p>
+							{/if}
+						{:else}
+							<Skeleton class="h-10 w-[200px]" />
+							<Skeleton class="h-[22px] w-[150px] rounded-full" />
+							<Skeleton class="h-6 w-[150px]" />
 						{/if}
 					</div>
 				</div>

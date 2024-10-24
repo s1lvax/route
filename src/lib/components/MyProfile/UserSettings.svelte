@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { Label } from '$lib/components/ui/label/index.js';
-	import { Switch } from '$lib/components/ui/switch/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
 	import { copyToClipboard } from '$lib/utils/copyToClipboard';
@@ -27,21 +25,13 @@
 			>
 		{/if}
 		<form action="?/updateOpenToCollaborating" method="POST" use:enhance>
-			<div class="flex flex-row items-center">
-				<Button type="submit" variant="ghost">
-					<Label for="open-to-collaborating" class="mr-2 hover:cursor-pointer"
-						>Open to Collaborating</Label
-					>
-					<!-- The switch is disabled so that the user is forced to click the button to trigger the function -->
-					<Switch
-						id="open-to-collaborating"
-						bind:checked={data.userData.openToCollaborating}
-						name="openToCollaborating"
-						includeInput
-						disabled
-					/>
-				</Button>
-			</div>
+			{#if data.userData.openToCollaborating}
+				<Button variant="destructive" type="submit"
+					><Github class="mr-2" /> Disallow Collaborations</Button
+				>
+			{:else}
+				<Button type="submit"><Github class="mr-2" /> Allow Collaborations</Button>
+			{/if}
 		</form>
 	</div>
 	<DropdownMenu.Root>
