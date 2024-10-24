@@ -41,15 +41,20 @@ export const load: PageServerLoad = async ({ params }) => {
 	});
 
 	const hobbies = await prisma.hobby.findMany({
-		where:{userId: user.githubId},
+		where: { userId: user.githubId }
+	});
+
+	const socials = await prisma.social.findMany({
+		where: { userId: user.githubId }
 	});
 
 	const userData = {
 		links,
 		skills,
+		socials,
 		username: username,
 		isOpenToCollaborating: isOpenToCollaborating?.openToCollaborating,
-		hobbies,
+		hobbies
 	};
 
 	return {
