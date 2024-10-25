@@ -11,8 +11,8 @@ import { skillsSchema } from '$lib/schemas/skills';
 import { deleteUser } from '$lib/utils/deleteUser';
 import { updateOpenToCollaborating } from '$lib/utils/updateOpenToCollaborating';
 import { hobbiesSchema } from '$lib/schemas/hobbies';
-import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
 import { socialsSchema } from '$lib/schemas/socials';
+import { toast } from 'svelte-sonner';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -62,10 +62,6 @@ export const load: PageServerLoad = async (event) => {
 		where: { userId: user.githubId }
 	});
 
-	const spotifyToken = await prisma.spotifyToken.findFirst({
-		where: { userId: user.githubId }
-	});
-
 	const socials = await prisma.social.findMany({
 		where: { userId: user.githubId }
 	});
@@ -91,7 +87,6 @@ export const load: PageServerLoad = async (event) => {
 		skills,
 		hobbies,
 		socials,
-		spotifyToken,
 		form: linksForm,
 		skillsForm: skillsForm,
 		hobbiesForm: hobbiesForm,
@@ -237,6 +232,7 @@ export const actions: Actions = {
 				throw Error('Failed to delete user');
 			}
 		}
+
 		throw redirect(303, '/');
 	},
 	updateOpenToCollaborating: async () => {
@@ -302,17 +298,6 @@ export const actions: Actions = {
 		} catch (err) {
 			console.log(err);
 			return fail(500, { message: 'Something went wrong.' });
-		}
-	},
-	unlinkSpotify: async () => {
-		if (user) {
-			try {
-				// delete
-				unlinkSpotify(user.githubId);
-			} catch (error) {
-				console.error(error);
-				throw Error('Failed to delete user');
-			}
 		}
 	},
 	createSocial: async (event) => {

@@ -7,7 +7,6 @@
 
 	import type { GithubData } from '$lib/types/GithubData';
 	import type { PublicProfile } from '$lib/types/PublicProfile';
-	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
 	import Hobbies from '$lib/components/PublicProfile/Hobbies.svelte';
 	import Socials from '$lib/components/PublicProfile/Socials.svelte';
 	import type { Social } from '@prisma/client';
@@ -82,7 +81,6 @@
 						<Hobbies {userData} />
 					</div>
 				</div>
-				<MusicPlayer githubUsername={userData.username} />
 			</div>
 		</div></Card.Content
 	>

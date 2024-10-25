@@ -17,11 +17,6 @@ export const deleteUser = async (githubId: number, userId: number) => {
 			where: { userId: githubId }
 		});
 
-		//delete all the spotify tokens
-		await prisma.spotifyToken.deleteMany({
-			where: { userId: githubId }
-		});
-
 		//delete all the socials tokens
 		await prisma.social.deleteMany({
 			where: { userId: githubId }
