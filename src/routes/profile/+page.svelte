@@ -17,6 +17,7 @@
 	import UserHobbies from '$lib/components/MyProfile/UserHobbies.svelte';
 	import SocialsForm from '$lib/components/MyProfile/SocialsForm.svelte';
 	import UserSocials from '$lib/components/MyProfile/UserSocials.svelte';
+	import FormCardHeader from '$lib/components/MyProfile/FormCardHeader.svelte';
 
 	let githubData: GithubData | null = null;
 	let privateProfileData: PrivateProfileData | null = null;
@@ -49,52 +50,46 @@
 
 		<div class="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
 			<Card.Root class="xl:col-span-2">
-				<Card.Header class="flex flex-row items-center">
-					<div class="grid gap-2">
-						<Card.Title>Links</Card.Title>
-						<Card.Description>
-							The links visible on your profile. You can drag links around to modify the order
-						</Card.Description>
-						<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
-					</div>
-				</Card.Header>
+				<FormCardHeader
+					description="The links visible on your profile. You can drag links around to modify the order"
+					title="Links"
+				>
+					<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
+				</FormCardHeader>
 				<Card.Content>
 					<UserLinks links={data.links} />
 				</Card.Content>
 			</Card.Root>
 
 			<Card.Root>
-				<Card.Header>
-					<Card.Title>Skills & Tools</Card.Title>
-					<Card.Description>You can drag skills around to modify the order</Card.Description>
+				<FormCardHeader
+					description="You can drag skills around to modify the order"
+					title="Skills & Tools"
+				>
 					<SkillsForm
 						data={data.skillsForm}
 						skillsLength={data.skills.length}
 						skills={data.skills}
 					/>
-				</Card.Header>
+				</FormCardHeader>
 				<Card.Content class="grid gap-8">
 					<UserSkills skills={data.skills} />
 				</Card.Content>
 			</Card.Root>
 
 			<Card.Root>
-				<Card.Header>
-					<Card.Title>Hobbies</Card.Title>
-					<Card.Description>You can add your hobbies here</Card.Description>
+				<FormCardHeader title="Hobbies" description="You can add your hobbies here">
 					<HobbyForm data={data.hobbiesForm} />
-				</Card.Header>
+				</FormCardHeader>
 				<Card.Content class="grid gap-8">
 					<UserHobbies hobbies={data.hobbies} />
 				</Card.Content>
 			</Card.Root>
 
 			<Card.Root>
-				<Card.Header>
-					<Card.Title>Socials</Card.Title>
-					<Card.Description>You can add your social media presence here</Card.Description>
+				<FormCardHeader title="Socials" description="You can add your social media presence here">
 					<SocialsForm data={data.socialsForm} />
-				</Card.Header>
+				</FormCardHeader>
 				<Card.Content class="grid gap-8">
 					<UserSocials socials={data.socials} />
 				</Card.Content>
