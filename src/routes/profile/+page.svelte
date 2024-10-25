@@ -17,6 +17,7 @@
 	import UserHobbies from '$lib/components/MyProfile/UserHobbies.svelte';
 	import SocialsForm from '$lib/components/MyProfile/SocialsForm.svelte';
 	import UserSocials from '$lib/components/MyProfile/UserSocials.svelte';
+	import FormCardHeader from '$lib/components/MyProfile/FormCardHeader.svelte';
 
 	let githubData: GithubData | null = null;
 	let privateProfileData: PrivateProfileData | null = null;
@@ -64,15 +65,16 @@
 			</Card.Root>
 
 			<Card.Root>
-				<Card.Header>
-					<Card.Title>Skills & Tools</Card.Title>
-					<Card.Description>You can drag skills around to modify the order</Card.Description>
+				<FormCardHeader
+					description="You can drag skills around to modify the order"
+					title="Skills & Tools"
+				>
 					<SkillsForm
 						data={data.skillsForm}
 						skillsLength={data.skills.length}
 						skills={data.skills}
 					/>
-				</Card.Header>
+				</FormCardHeader>
 				<Card.Content class="grid gap-8">
 					<UserSkills skills={data.skills} />
 				</Card.Content>
