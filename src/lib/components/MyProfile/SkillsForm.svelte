@@ -1,8 +1,9 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form';
+	import * as Select from '$lib/components/ui/select';
+	import { type Selected } from 'bits-ui';
 	import { Input } from '$lib/components/ui/input';
 	import { skillsSchema, type SkillsSchema } from '$lib/schemas/skills';
-	import { Select, type Selected } from 'bits-ui';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import type { Skill } from '@prisma/client';
@@ -56,7 +57,7 @@
 	action="?/createSkill"
 	class="flex items-center justify-center space-x-4"
 >
-	<div class="flex items-center space-x-2">
+	<div class="flex flex-grow items-end space-x-2">
 		<Form.Field {form} name="title">
 			<Form.Control let:attrs>
 				<Form.Label>Title</Form.Label>
@@ -64,8 +65,7 @@
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
-
-		<Form.Field {form} name="level">
+		<Form.Field {form} name="level" class="w-3/5">
 			<Form.Control let:attrs>
 				<Form.Label>Level of mastery</Form.Label>
 				<Select.Root selected={selectedLevel} {onSelectedChange}>
@@ -89,7 +89,7 @@
 			</Form.Control>
 		</Form.Field>
 
-		<Form.Button disabled={isLimitReached}>Add</Form.Button>
+		<Form.Button class="mb-2" disabled={isLimitReached}>Add</Form.Button>
 	</div>
 </form>
 

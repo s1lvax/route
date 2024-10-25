@@ -31,14 +31,14 @@
 	action="?/createSocial"
 	class="flex items-center justify-between space-x-4"
 >
-	<div class="flex items-end space-x-2">
-		<Form.Field {form} name="social">
+	<div class="flex flex-grow items-end space-x-2">
+		<Form.Field {form} name="social" class="w-1/2">
 			<Form.Control let:attrs>
 				<Form.Label>Social Media</Form.Label>
 				<Select.Root
 					selected={selectedSocial}
 					onSelectedChange={(v) => {
-						v && ($formData.social = v.value);
+						if (v) $formData.social = v.value;
 					}}
 				>
 					<Select.Trigger {...attrs}>
@@ -65,6 +65,6 @@
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
-		<Form.Button>Add</Form.Button>
+		<Form.Button class="mb-2">Add</Form.Button>
 	</div>
 </form>
