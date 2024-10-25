@@ -21,7 +21,7 @@ export const updateOpenToCollaborating = async (githubId: number) => {
 			data: { openToCollaborating: newOpenToCollaboratingValue }
 		});
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		throw new Error('Failed to update openToCollaborating status');
 	}
 };

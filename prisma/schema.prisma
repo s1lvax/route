@@ -14,15 +14,17 @@ datasource db {
 }
 
 model User {
-  id                  Int      @id @default(autoincrement())
-  githubId            Int      @unique
-  githubUsername      String   @unique
-  views               Int      @default(0)
-  openToCollaborating Boolean  @default(false)
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id                  Int           @id @default(autoincrement())
+  githubId            Int           @unique
+  githubUsername      String        @unique
+  views               Int           @default(0)
+  openToCollaborating Boolean       @default(false)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
   Link                Link[]
   Skill               Skill[]
+  Hobby               Hobby[]
+  Social              Social[]
 }
 
 model Link {
@@ -45,4 +47,21 @@ model Skill {
   order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Hobby {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  hobby     String
+  createdAt DateTime @default(now())
+  postedBy  User     @relation(fields: [userId], references: [githubId])
+}
+
+model Social {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  social    String
+  socialURL String
+  createdAt DateTime @default(now())
+  postedBy  User     @relation(fields: [userId], references: [githubId])
 }

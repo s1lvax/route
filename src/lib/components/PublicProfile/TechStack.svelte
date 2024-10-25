@@ -1,15 +1,15 @@
 <script lang="ts">
+	import * as Table from '$lib/components/ui/table';
 	import * as Card from '$lib/components/ui/card';
 	import { Progress } from '$lib/components/ui/progress';
 	import type { PublicProfile } from '$lib/types/PublicProfile';
 	import { getProgressValue } from '$lib/utils/getProgressValue';
 	import { onMount } from 'svelte';
 
-	let progressValues: { [key: string]: number } = {};
-
 	export let userData: PublicProfile;
 
-	//for the progress bar animation
+	let progressValues: { [key: string]: number } = {};
+
 	onMount(() => {
 		userData.skills.forEach((skill) => {
 			progressValues[skill.title] = 0;
@@ -28,17 +28,29 @@
 	</Card.Header>
 	<Card.Content class="grid gap-4">
 		{#if userData.skills.length > 0}
-			{#each userData.skills as skill}
-				<div class="flex items-center justify-between">
-					<span>{skill.title}</span>
-					<Progress
-						value={progressValues[skill.title]}
-						max={100}
-						class="w-[60%] transition-all ease-in-out"
-						style="transition-duration: 3000ms;"
-					/>
-				</div>
-			{/each}
+			<Table.Root>
+				<Table.Header>
+					<Table.Row>
+						<Table.Head>Skill</Table.Head>
+						<Table.Head>Proficiency</Table.Head>
+					</Table.Row>
+				</Table.Header>
+				<Table.Body>
+					{#each userData.skills as skill}
+						<Table.Row>
+							<Table.Cell>{skill.title}</Table.Cell>
+							<Table.Cell class="w-[60%]">
+								<Progress
+									value={progressValues[skill.title]}
+									max={100}
+									class="w-full transition-all ease-in-out"
+									style="transition-duration: 3000ms;"
+								/>
+							</Table.Cell>
+						</Table.Row>
+					{/each}
+				</Table.Body>
+			</Table.Root>
 		{:else}
 			<p class="text-muted-foreground">No skills available</p>
 		{/if}

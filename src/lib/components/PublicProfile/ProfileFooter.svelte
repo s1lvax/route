@@ -3,6 +3,6 @@
 </script>
 
 <p class="text-sm text-muted-foreground">
-	Do you want one? <a href="/" class="text-blue-600 underline">Create yours here.</a>
+	Ready to showcase ? <a href="/" class="text-blue-600 underline">Create your profile now.</a>
 </p>
 <LightDarkMode />
