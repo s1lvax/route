@@ -50,15 +50,12 @@
 
 		<div class="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
 			<Card.Root class="xl:col-span-2">
-				<Card.Header class="flex flex-row items-center">
-					<div class="grid gap-2">
-						<Card.Title>Links</Card.Title>
-						<Card.Description>
-							The links visible on your profile. You can drag links around to modify the order
-						</Card.Description>
-						<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
-					</div>
-				</Card.Header>
+				<FormCardHeader
+					description="The links visible on your profile. You can drag links around to modify the order"
+					title="Links"
+				>
+					<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
+				</FormCardHeader>
 				<Card.Content>
 					<UserLinks links={data.links} />
 				</Card.Content>
@@ -81,22 +78,18 @@
 			</Card.Root>
 
 			<Card.Root>
-				<Card.Header>
-					<Card.Title>Hobbies</Card.Title>
-					<Card.Description>You can add your hobbies here</Card.Description>
+				<FormCardHeader title="Hobbies" description="You can add your hobbies here">
 					<HobbyForm data={data.hobbiesForm} />
-				</Card.Header>
+				</FormCardHeader>
 				<Card.Content class="grid gap-8">
 					<UserHobbies hobbies={data.hobbies} />
 				</Card.Content>
 			</Card.Root>
 
 			<Card.Root>
-				<Card.Header>
-					<Card.Title>Socials</Card.Title>
-					<Card.Description>You can add your social media presence here</Card.Description>
+				<FormCardHeader title="Socials" description="You can add your social media presence here">
 					<SocialsForm data={data.socialsForm} />
-				</Card.Header>
+				</FormCardHeader>
 				<Card.Content class="grid gap-8">
 					<UserSocials socials={data.socials} />
 				</Card.Content>
