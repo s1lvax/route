@@ -7,10 +7,9 @@
 
 	export let data: SuperValidated<Infer<HobbiesSchema>>;
 
-
 	const form = superForm(data, {
 		validators: zodClient(hobbiesSchema),
-		resetForm: true,
+		resetForm: true
 	});
 
 	const { form: formData, enhance } = form;
@@ -20,14 +19,19 @@
 	method="POST"
 	use:enhance
 	action="?/createHobby"
-	class="flex items-center justify-between space-x-4">
-	<div class="flex items-end space-x-2">  
+	class="flex items-center justify-between space-x-4"
+>
+	<div class="flex items-start space-x-2">
 		<Form.Field {form} name="hobby">
-		<Form.Control let:attrs>
-			<Form.Label>Hobby</Form.Label>
-			<Input {...attrs} bind:value={$formData.hobby} />
-		</Form.Control>
+			<Form.Control let:attrs>
+				<Form.Label>Hobby</Form.Label>
+				<Input {...attrs} bind:value={$formData.hobby} />
+			</Form.Control>
+			<Form.FieldErrors />
 		</Form.Field>
-		<Form.Button>Add</Form.Button>  
+		<div class="space-y-2">
+			<span class="invisible block">a</span>
+			<Form.Button>Add</Form.Button>
+		</div>
 	</div>
 </form>
