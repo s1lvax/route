@@ -8,7 +8,7 @@
 
 	export let data: SuperValidated<Infer<LinksSchema>>;
 	export let linksLength: number;
-	export let links: Link[] = []; 
+	export let links: Link[] = [];
 	let isLimitReached = false;
 	$: isLimitReached = links.length >= 15;
 
@@ -25,7 +25,7 @@
 	method="POST"
 	use:enhance
 	action="?/createLink"
-	class="flex w-full max-w-lg items-center justify-start space-x-4"
+	class="flex w-full max-w-lg items-start justify-start space-x-4"
 >
 	<div class="flex flex-col">
 		<Form.Field {form} name="title">
@@ -47,17 +47,20 @@
 		</Form.Field>
 	</div>
 
+	<div class="space-y-2">
+		<span class="invisible block">a</span>
+		<Form.Button disabled={isLimitReached} class="mt-5 flex align-bottom">Add</Form.Button>
+	</div>
+
 	<Form.Field {form} name="order">
 		<Form.Control let:attrs>
 			<Input {...attrs} bind:value={$formData.order} type="hidden" />
 		</Form.Control>
 	</Form.Field>
-
-	<Form.Button disabled = {isLimitReached} class="mt-5 flex align-bottom">Add</Form.Button>
 </form>
 
 {#if isLimitReached}
-  <p class="text-red-500 mt-2 text-center">You have reached the maximum limit of 15 links.</p>
+	<p class="mt-2 text-center text-red-500">You have reached the maximum limit of 15 links.</p>
 {:else if $message}
-  <p class="text-red-500 mt-2 text-center">{$message}</p>
+	<p class="mt-2 text-center text-red-500">{$message}</p>
 {/if}

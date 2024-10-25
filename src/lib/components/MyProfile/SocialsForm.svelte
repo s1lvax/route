@@ -31,7 +31,7 @@
 	action="?/createSocial"
 	class="flex items-center justify-between space-x-4"
 >
-	<div class="flex flex-grow items-end space-x-2">
+	<div class="flex flex-grow items-start space-x-2">
 		<Form.Field {form} name="social" class="w-1/2">
 			<Form.Control let:attrs>
 				<Form.Label>Social Media</Form.Label>
@@ -65,6 +65,9 @@
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
-		<Form.Button class="mb-2">Add</Form.Button>
+		<div class="space-y-2">
+			<span class="invisible block">a</span>
+			<Form.Button class="mb-2">Add</Form.Button>
+		</div>
 	</div>
 </form>

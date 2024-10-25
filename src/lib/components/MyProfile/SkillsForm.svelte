@@ -57,7 +57,7 @@
 	action="?/createSkill"
 	class="flex items-center justify-center space-x-4"
 >
-	<div class="flex flex-grow items-end space-x-2">
+	<div class="flex flex-grow items-start space-x-2">
 		<Form.Field {form} name="title">
 			<Form.Control let:attrs>
 				<Form.Label>Title</Form.Label>
@@ -83,13 +83,16 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
+		<div class="space-y-2">
+			<span class="invisible block">a</span>
+			<Form.Button class="mb-2" disabled={isLimitReached}>Add</Form.Button>
+		</div>
+
 		<Form.Field {form} name="order">
 			<Form.Control let:attrs>
 				<Input {...attrs} bind:value={$formData.order} type="hidden" />
 			</Form.Control>
 		</Form.Field>
-
-		<Form.Button class="mb-2" disabled={isLimitReached}>Add</Form.Button>
 	</div>
 </form>
 
