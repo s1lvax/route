@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import * as Table from '$lib/components/ui/table';
-	import { formatDate } from '$lib/utils/formatDate';
 	import { Button } from '$lib/components/ui/button';
 	import { Trash2, Copy, AlignJustify } from 'lucide-svelte';
 	import { copyToClipboard } from '$lib/utils/copyToClipboard';
@@ -31,7 +30,6 @@
 			<Table.Head></Table.Head>
 			<Table.Head>Title</Table.Head>
 			<Table.Head>URL</Table.Head>
-			<Table.Head>Created At</Table.Head>
 			<Table.Head>Actions</Table.Head>
 		</Table.Row>
 	</Table.Header>
@@ -66,7 +64,6 @@
 						</Button>
 					</div>
 				</Table.Cell>
-				<Table.Cell>{formatDate(link.createdAt)}</Table.Cell>
 				<Table.Cell>
 					<form action="?/deleteLink&id={link.id}" method="POST" use:enhance>
 						<Button type="submit" id="deleteLink" variant="ghost" on:click={confirmDelete}>

@@ -12,7 +12,6 @@ import { deleteUser } from '$lib/utils/deleteUser';
 import { updateOpenToCollaborating } from '$lib/utils/updateOpenToCollaborating';
 import { hobbiesSchema } from '$lib/schemas/hobbies';
 import { socialsSchema } from '$lib/schemas/socials';
-import { toast } from 'svelte-sonner';
 
 // Define the user variable with a possible null
 let user: User | null = null;
