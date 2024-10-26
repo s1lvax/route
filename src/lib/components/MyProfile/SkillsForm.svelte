@@ -73,7 +73,7 @@
 						{/each}
 					</Select.Content>
 				</Select.Root>
-				<input hidden bind:value={$formData.level} name={attrs.name} />
+				<input hidden bind:value={$formData.level} name={attrs.name} required/>
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
