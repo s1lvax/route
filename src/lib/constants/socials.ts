@@ -4,17 +4,17 @@
 //If the user should be redirected to a profile, make redirect true if not make redirect false and it will copy the contents to the clipboard
 
 import {
-	IconBrandDiscord,
+	IconBrandDiscordFilled,
 	IconBrandLinkedin,
 	IconBrandTelegram,
-	IconBrandSpotify,
-	IconBrandGitlab
+	IconBrandGitlab,
+	IconBrandSpotifyFilled
 } from '@tabler/icons-svelte';
 
 export const socials = [
 	{
 		name: 'Discord',
-		icon: IconBrandDiscord,
+		icon: IconBrandDiscordFilled,
 		redirect: false
 	},
 	{
@@ -29,7 +29,7 @@ export const socials = [
 	},
 	{
 		name: 'Spotify',
-		icon: IconBrandSpotify,
+		icon: IconBrandSpotifyFilled,
 		redirect: true
 	},
 	{

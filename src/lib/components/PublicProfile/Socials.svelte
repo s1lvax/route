@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { IdCard, Twitter } from 'lucide-svelte';
-	import GitHub from 'lucide-svelte/icons/github';
+	import { IdCard } from 'lucide-svelte';
 	import * as Table from '$lib/components/ui/table';
 	import type { GithubData } from '$lib/types/GithubData';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import type { Social } from '@prisma/client';
 	import { findSocialIcon } from '$lib/utils/findSocialIcon';
 	import { handleSocialClick } from '$lib/utils/handleSocialClick';
+	import { IconBrandGithub, IconBrandTwitter } from '@tabler/icons-svelte';
 
 	export let githubData: GithubData | null;
 	export let socials: Social[] = [];
@@ -24,7 +24,7 @@
 			<Table.Row>
 				<Table.Cell class="p-0">
 					<a class="flex items-center space-x-8 p-4" href={githubData?.url ?? '#'} target="_blank">
-						<GitHub />
+						<IconBrandGithub />
 						<span>GitHub Profile</span>
 					</a>
 				</Table.Cell>
@@ -55,7 +55,7 @@
 							href={`https://x.com/${githubData?.twitter}`}
 							target="_blank"
 						>
-							<Twitter />
+							<IconBrandTwitter />
 							<span>Twitter Profile</span>
 						</a>
 					</Table.Cell>

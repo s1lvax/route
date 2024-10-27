@@ -3,10 +3,11 @@
 	import { Button } from '$lib/components/ui/button';
 	import { copyToClipboard } from '$lib/utils/copyToClipboard';
 	import { confirmDelete } from '$lib/utils/confirmDelete';
-	import { ArrowUpRight, Trash2, CircleChevronDown, Github, Copy, AudioLines } from 'lucide-svelte';
+	import { ArrowUpRight, Trash2, CircleChevronDown, Copy, AudioLines } from 'lucide-svelte';
 
 	import { enhance } from '$app/forms';
 	import type { PageData } from '../../../routes/profile/$types';
+	import { IconBrandGithub } from '@tabler/icons-svelte';
 
 	export let data: PageData;
 </script>
@@ -27,10 +28,10 @@
 		<form action="?/updateOpenToCollaborating" method="POST" use:enhance>
 			{#if data.userData.openToCollaborating}
 				<Button variant="destructive" type="submit"
-					><Github class="mr-2" /> Disallow Collaborations</Button
+					><IconBrandGithub class="mr-2" /> Disallow Collaborations</Button
 				>
 			{:else}
-				<Button type="submit"><Github class="mr-2" /> Allow Collaborations</Button>
+				<Button type="submit"><IconBrandGithub class="mr-2" /> Allow Collaborations</Button>
 			{/if}
 		</form>
 	</div>

@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { Loader2, UserPen, Github, LogOut } from 'lucide-svelte';
+	import { Loader2, UserPen } from 'lucide-svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { getReleaseVersion } from '$lib/utils/getReleaseVersion';
+	import { IconBrandGithub } from '@tabler/icons-svelte';
 
 	// undefined means that we haven't received the result from getReleaseVersion
 	// null means that getReleaseVersion couldn't find the release version
@@ -81,7 +82,7 @@
 					>
 				{:else}
 					<Button on:click={() => signIn('github')} class="flex items-center space-x-2"
-						><Github /> <span>Sign in with Github</span></Button
+						><IconBrandGithub /> <span>Sign in with Github</span></Button
 					>
 					<Button
 						href="https://discord.gg/9XuRcaZR"

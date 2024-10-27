@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { GitPullRequestCreate, UserPen, Github, LogOut } from 'lucide-svelte';
-	import { signIn, signOut } from '@auth/sveltekit/client';
+	import { UserPen } from 'lucide-svelte';
+	import { signIn } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
+	import { IconBrandGithub } from '@tabler/icons-svelte';
 </script>
 
 <div>
@@ -39,7 +40,7 @@
 					>
 				{:else}
 					<Button on:click={() => signIn('github')} class="flex items-center space-x-2"
-						><Github /> <span>Sign in with Github</span></Button
+						><IconBrandGithub /> <span>Sign in with Github</span></Button
 					>
 					<Button
 						href="https://discord.gg/9XuRcaZR"
