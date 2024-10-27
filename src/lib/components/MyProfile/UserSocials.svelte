@@ -6,7 +6,7 @@
 
 	import type { Social } from '@prisma/client';
 	import { copyToClipboard } from '$lib/utils/copyToClipboard';
-	import { findSocialSvg } from '$lib/utils/findSocialSvg';
+	import { findSocialIcon } from '$lib/utils/findSocialIcon';
 
 	export let socials: Social[];
 </script>
@@ -14,7 +14,9 @@
 <div class="grid gap-4">
 	{#each socials as social}
 		<div class="flex items-center gap-4">
-			<span class="flex items-center">{@html findSocialSvg(social.social)}</span>
+			<span class="flex items-center">
+				<svelte:component this={findSocialIcon(social.social)} />
+			</span>
 
 			<div class="flex flex-row items-center gap-4">
 				<p class="text-sm font-medium leading-none">{social.social}</p>
