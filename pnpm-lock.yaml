@@ -17,6 +17,9 @@ importers:
       '@prisma/client':
         specifier: 5.21.1
         version: 5.21.1(prisma@5.21.1)
+      '@tabler/icons-svelte':
+        specifier: ^3.20.0
+        version: 3.20.0(svelte@4.2.19)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -822,6 +825,14 @@ packages:
 
   '@swc/helpers@0.5.13':
     resolution: {integrity: sha512-UoKGxQ3r5kYI9dALKJapMmuK+1zWM/H17Z1+iwnNmzcJRnfFuevZs375TA5rW31pu4BS4NoSy1fRsexDXfWn5w==}
+
+  '@tabler/icons-svelte@3.20.0':
+    resolution: {integrity: sha512-wXwztM3YCYGZVBhIs7PbfrxCFzUaei6tActKgp2F9N4t8aHHYnwVJehBV49PzujA1dHxo+nAC6cilUzA8IGeRw==}
+    peerDependencies:
+      svelte: '>=3 <6 || >=5.0.0-next.0'
+
+  '@tabler/icons@3.20.0':
+    resolution: {integrity: sha512-nXSeUzsCOxX/Of+kdUVQfxL9bG+ck8XCWNf9dGSpE+nhVexRwk/4HiDQDxFDysfT7vfgSut6GXnrZsU5M5dSlA==}
 
   '@tailwindcss/typography@0.5.15':
     resolution: {integrity: sha512-AqhlCXl+8grUz8uqExv5OTtgpjuVIwFTSXTrh8y9/pw6q2ek7fJ+Y8ZEVw7EB2DCcuCOtEjf9w3+J3rzts01uA==}
@@ -2833,6 +2844,13 @@ snapshots:
   '@swc/helpers@0.5.13':
     dependencies:
       tslib: 2.7.0
+
+  '@tabler/icons-svelte@3.20.0(svelte@4.2.19)':
+    dependencies:
+      '@tabler/icons': 3.20.0
+      svelte: 4.2.19
+
+  '@tabler/icons@3.20.0': {}
 
   '@tailwindcss/typography@0.5.15(tailwindcss@3.4.13)':
     dependencies:

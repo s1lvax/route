@@ -5,7 +5,7 @@
 	import type { GithubData } from '$lib/types/GithubData';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import type { Social } from '@prisma/client';
-	import { findSocialSvg } from '$lib/utils/findSocialSvg';
+	import { findSocialIcon } from '$lib/utils/findSocialIcon';
 	import { handleSocialClick } from '$lib/utils/handleSocialClick';
 
 	export let githubData: GithubData | null;
@@ -65,7 +65,7 @@
 				<Table.Row>
 					<Table.Cell class="p-0 hover:cursor-pointer" on:click={() => handleSocialClick(social)}>
 						<span class="flex items-center space-x-8 p-4">
-							{@html findSocialSvg(social.social)}
+							<svelte:component this={findSocialIcon(social.social)} />
 							<span>{social.social}</span>
 						</span>
 					</Table.Cell>
