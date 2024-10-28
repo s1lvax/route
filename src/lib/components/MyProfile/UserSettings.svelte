@@ -16,18 +16,23 @@
 	<div class="flex flex-row space-x-2">
 		<form action="?/updateOpenToCollaborating" method="POST" use:enhance>
 			{#if data.userData.openToCollaborating}
-				<Button variant="destructive" type="submit"
-					><IconBrandGithub class="mr-2" /> Disallow Collaborations</Button
-				>
+				<Button variant="destructive" type="submit">
+					<IconBrandGithub class="mr-2" />
+					<span>Disallow Collaborations</span>
+				</Button>
 			{:else}
-				<Button type="submit"><IconBrandGithub class="mr-2" /> Allow Collaborations</Button>
+				<Button type="submit">
+					<IconBrandGithub class="mr-2" />
+					<span>Allow Collaborations</span>
+				</Button>
 			{/if}
 		</form>
 	</div>
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger>
 			<Button variant="default">
-				<CircleChevronDown class="mr-2 h-4 w-4 text-sm" /> Your Profile
+				<CircleChevronDown class="mr-2 h-4 w-4 text-sm" />
+				<span>Your Profile</span>
 			</Button>
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content>
@@ -40,14 +45,16 @@
 						target="_blank"
 						class="flex flex-row items-center space-x-2"
 					>
-						<ArrowUpRight class="text-sm" /> View Public Profile
+						<ArrowUpRight class="text-sm" />
+						<span>View Public Profile</span>
 					</a>
 				</DropdownMenu.Item>
 				<DropdownMenu.Item
 					on:click={() => copyToClipboard(`${window.location.origin}/${data.userData.username}`)}
 				>
 					<div class="flex flex-row items-center space-x-2 hover:cursor-pointer">
-						<Copy class="text-sm" /> Copy Profile's URL
+						<Copy class="text-sm" />
+						<span>Copy Profile's URL</span>
 					</div>
 				</DropdownMenu.Item>
 				<DropdownMenu.Separator />
@@ -58,7 +65,8 @@
 							class="flex flex-row items-center space-x-2 text-red-500"
 							on:click={confirmDelete}
 						>
-							<Trash2 class="text-sm" /> Delete Account
+							<Trash2 class="text-sm" />
+							<span>Delete Account</span>
 						</button>
 					</form>
 				</DropdownMenu.Item>
