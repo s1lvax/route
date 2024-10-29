@@ -38,6 +38,12 @@
 	$: sortedRepos = [...repos].sort((a, b) => b.stargazers_count - a.stargazers_count);
 
 	const importSelectedRepos = async () => {
+		// Return early to avoid wasting bandwidth
+		if (selectedRepos.size == 0) {
+			closeModal();
+			return;
+		}
+
 		const selectedData = Array.from(selectedRepos).map((repo) => ({
 			name: `GitHub - ${repo.name}`,
 			url: repo.html_url
