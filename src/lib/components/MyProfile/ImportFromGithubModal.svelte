@@ -76,7 +76,7 @@
 
 		<div class="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto">
 			<div
-				class="transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:w-full sm:max-w-md"
+				class="h-3/4 transform overflow-scroll rounded-lg bg-white shadow-xl transition-all sm:w-full sm:max-w-md"
 			>
 				<Card.Root>
 					<Card.Header>
@@ -93,7 +93,7 @@
 									<Table.Head>Stars</Table.Head>
 								</Table.Row>
 							</Table.Header>
-							<Table.Body class="max-h-28 overflow-y-scroll">
+							<Table.Body class="max-h-28">
 								{#each sortedRepos as repo}
 									<Table.Row>
 										<Table.Cell>
