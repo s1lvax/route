@@ -18,7 +18,6 @@
 	import SocialsForm from '$lib/components/MyProfile/SocialsForm.svelte';
 	import UserSocials from '$lib/components/MyProfile/UserSocials.svelte';
 	import FormCardHeader from '$lib/components/MyProfile/FormCardHeader.svelte';
-	import { Import } from 'lucide-svelte';
 	import ImportFromGithub from '$lib/components/MyProfile/ImportFromGithub.svelte';
 
 	let githubData: GithubData | null = null;

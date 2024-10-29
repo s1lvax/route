@@ -35,5 +35,5 @@
 </Button>
 
 {#if isModalVisible}
-	<ImportFromGithubModal {repos} {isModalVisible} {closeModal} />
+	<ImportFromGithubModal {repos} {isModalVisible} {closeModal} linksLength={data.links.length} />
 {/if}

@@ -9,9 +9,13 @@
 	export let repos: Repository[] = [];
 	export let isModalVisible: boolean;
 	export let closeModal: () => void;
+	export let linksLength: number;
 
 	// set to track selected repositories
 	let selectedRepos = new Set<Repository>();
+
+	// check if limit is reached
+	$: isLimitReached = linksLength + selectedRepos.size > 15;
 
 	// toggle repository on set
 	const toggleSelection = (repo: Repository) => {
@@ -20,6 +24,8 @@
 		} else {
 			selectedRepos.add(repo);
 		}
+		// Create a new instance to trigger reactivity
+		selectedRepos = new Set(selectedRepos);
 	};
 
 	// handler for clickbox events
@@ -107,9 +113,14 @@
 						</Table.Root>
 					</Card.Content>
 					<div class="flex flex-row items-center gap-2 p-4">
-						<Button type="button" on:click={importSelectedRepos}>Import</Button>
+						<Button type="button" on:click={importSelectedRepos} disabled={isLimitReached}
+							>Import</Button
+						>
 						<Button type="button" variant="secondary" on:click={closeModal}>Cancel</Button>
 					</div>
+					{#if isLimitReached}
+						<p class="p-4 text-sm text-red-500">You have reached the maximum number of 15 links.</p>
+					{/if}
 				</Card.Root>
 			</div>
 		</div>
