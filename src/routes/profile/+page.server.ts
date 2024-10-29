@@ -9,6 +9,7 @@ import { linksSchema } from '$lib/schemas/links';
 import type { User } from '$lib/types/User';
 import { skillsSchema } from '$lib/schemas/skills';
 import { deleteUser } from '$lib/utils/deleteUser';
+import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
 import { updateOpenToCollaborating } from '$lib/utils/updateOpenToCollaborating';
 import { hobbiesSchema } from '$lib/schemas/hobbies';
 import { socialsSchema } from '$lib/schemas/socials';
@@ -57,6 +58,10 @@ export const load: PageServerLoad = async (event) => {
 		orderBy: [{ order: 'asc' }]
 	});
 
+	const spotifyToken = await prisma.spotifyToken.findFirst({
+		where: { userId: user.githubId }
+	});
+
 	const hobbies = await prisma.hobby.findMany({
 		where: { userId: user.githubId }
 	});
@@ -86,6 +91,7 @@ export const load: PageServerLoad = async (event) => {
 		skills,
 		hobbies,
 		socials,
+		spotifyToken,
 		form: linksForm,
 		skillsForm: skillsForm,
 		hobbiesForm: hobbiesForm,
@@ -297,6 +303,17 @@ export const actions: Actions = {
 		} catch (err) {
 			console.log(err);
 			return fail(500, { message: 'Something went wrong.' });
+		}
+	},
+	unlinkSpotify: async () => {
+		if (user) {
+			try {
+				// delete
+				unlinkSpotify(user.githubId);
+			} catch (error) {
+				console.error(error);
+				throw Error('Failed to delete user');
+			}
 		}
 	},
 	createSocial: async (event) => {
