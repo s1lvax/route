@@ -9,49 +9,44 @@
 	import type { Skill } from '@prisma/client';
 	import { masteryLevels } from '$lib/constants/masteryLevel';
 	import { getMasteryLevelFromLabel, getMasteryLevelFromLevel } from '$lib/utils/getMasteryLevel';
-
+	import { Check, ChevronDown } from 'lucide-svelte';
+  
 	export let data: SuperValidated<Infer<SkillsSchema>>;
 	export let skillsLength: number;
 	export let skills: Skill[] = [];
 	let isLimitReached = false;
 	$: isLimitReached = skills.length >= 15;
-
+  
 	const form = superForm(data, {
-		validators: zodClient(skillsSchema),
-		resetForm: false,
-		onUpdated({ form }) {
-			if (form.valid) {
-				// Only reset the title, that way the user doesn't have to specify level of mastery every single time
-				$formData.title = '';
-			}
+	  validators: zodClient(skillsSchema),
+	  resetForm: false,
+	  onUpdated({ form }) {
+		if (form.valid) {
+		  // Only reset the title, that way the user doesn't have to specify level of mastery every single time
+		  $formData.title = '';
+		  $formData.level = '';
+		  selectedLevel = {value:'',label:''};
 		}
+	  }
 	});
-
+  
 	const { form: formData, enhance, message } = form;
-
+  
 	$: $formData.order = skillsLength;
-	$: selectedLevel = {
-		value: '',
-		label: ''
-	};
-
+	let selectedLevel: Selected<string> | undefined = undefined;
+  
 	const onSelectedChange = (selected: Selected<string> | undefined) => {
-		if (selected) {
-			const level = getMasteryLevelFromLabel(selected.value);
-			if (level) {
-				$formData.level = level.value;
-			}
+	  if (selected) {
+		const level = getMasteryLevelFromLabel(selected.value);
+		if (level) {
+		  $formData.level = level.value;
+		  selectedLevel = selected;
 		}
+	  }
 	};
-
-	formData.subscribe((current) => {
-		if (!selectedLevel) selectedLevel = { label: '', value: '' };
-		selectedLevel.label = getMasteryLevelFromLevel(current.level)?.label ?? '';
-		selectedLevel.value = current.level;
-	});
-</script>
-
-<form
+  </script>
+  
+  <form
 	method="POST"
 	use:enhance
 	action="?/createSkill"
@@ -78,7 +73,7 @@
 						{/each}
 					</Select.Content>
 				</Select.Root>
-				<input hidden bind:value={$formData.level} name={attrs.name} />
+				<input hidden bind:value={$formData.level} name={attrs.name} required/>
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
@@ -94,10 +89,10 @@
 			</Form.Control>
 		</Form.Field>
 	</div>
-</form>
-
-{#if isLimitReached}
+  </form>
+  
+  {#if isLimitReached}
 	<p class="mt-2 text-center text-red-500">You have reached the maximum limit of 15 skills.</p>
-{:else if $message}
+  {:else if $message}
 	<p class="mt-2 text-center text-red-500">{$message}</p>
 {/if}

@@ -24,7 +24,6 @@ model User {
   Link                Link[]
   Skill               Skill[]
   Hobby               Hobby[]
-  spotifyToken        SpotifyToken?
   Social              Social[]
 }
 
@@ -56,18 +55,6 @@ model Hobby {
   hobby     String
   createdAt DateTime @default(now())
   postedBy  User     @relation(fields: [userId], references: [githubId])
-}
-
-// prisma/schema.prisma
-model SpotifyToken {
-  id           Int      @id @default(autoincrement())
-  usedBy       User     @relation(fields: [userId], references: [githubId])
-  userId       Int      @unique
-  accessToken  String
-  refreshToken String
-  expiresAt    DateTime
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
 }
 
 model Social {
