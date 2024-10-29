@@ -3,13 +3,9 @@
 	import { onMount } from 'svelte';
 	import * as Card from '$lib/components/ui/card';
 	import type { Artist, CurrentlyPlaying } from '$lib/types/Spotify';
-
 	export let githubUsername;
-
 	let currentlyPlaying: CurrentlyPlaying | null = null;
-
 	let isListening = false;
-
 	// Fetch the currently playing song on mount
 	onMount(async () => {
 		try {

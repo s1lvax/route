@@ -7,9 +7,9 @@
 
 	import type { GithubData } from '$lib/types/GithubData';
 	import type { PublicProfile } from '$lib/types/PublicProfile';
-	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
 	import Hobbies from '$lib/components/PublicProfile/Hobbies.svelte';
 	import Socials from '$lib/components/PublicProfile/Socials.svelte';
+	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
 	import type { Social } from '@prisma/client';
 
 	export let githubData: GithubData | null;

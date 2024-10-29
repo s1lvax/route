@@ -26,9 +26,6 @@ importers:
       formsnap:
         specifier: ^1.0.1
         version: 1.0.1(svelte@4.2.19)(sveltekit-superforms@2.19.1(@sveltejs/kit@2.6.4(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)))(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)))(@types/json-schema@7.0.15)(svelte@4.2.19))
-      lucide-svelte:
-        specifier: ^0.451.0
-        version: 0.451.0(svelte@4.2.19)
       mode-watcher:
         specifier: ^0.4.1
         version: 0.4.1(svelte@4.2.19)
@@ -81,6 +78,9 @@ importers:
       globals:
         specifier: ^15.0.0
         version: 15.11.0
+      lucide-svelte:
+        specifier: ^0.451.0
+        version: 0.451.0(svelte@4.2.19)
       prettier:
         specifier: ^3.1.1
         version: 3.3.3

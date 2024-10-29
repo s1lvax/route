@@ -2,7 +2,7 @@
 
 Route is a platform that allows users to easily share their favourite links, tech skills and GitHub stats in one centralized place.
 
-![Route Logo](https://i.imgur.com/KtVWxtM.png)
+![Route Logo](https://i.imgur.com/mSXJ4E3.png)
 
 [![Chat](https://img.shields.io/discord/1003691521280856084?label=chat&logo=discord&color=7289da)](https://discord.gg/9XuRcaZR)
 

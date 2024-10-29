@@ -24,8 +24,8 @@ model User {
   Link                Link[]
   Skill               Skill[]
   Hobby               Hobby[]
-  spotifyToken        SpotifyToken?
   Social              Social[]
+  spotifyToken        SpotifyToken?
 }
 
 model Link {
@@ -58,7 +58,15 @@ model Hobby {
   postedBy  User     @relation(fields: [userId], references: [githubId])
 }
 
-// prisma/schema.prisma
+model Social {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  social    String
+  socialURL String
+  createdAt DateTime @default(now())
+  postedBy  User     @relation(fields: [userId], references: [githubId])
+}
+
 model SpotifyToken {
   id           Int      @id @default(autoincrement())
   usedBy       User     @relation(fields: [userId], references: [githubId])
@@ -68,13 +76,4 @@ model SpotifyToken {
   expiresAt    DateTime
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-}
-
-model Social {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  social    String
-  socialURL String
-  createdAt DateTime @default(now())
-  postedBy  User     @relation(fields: [userId], references: [githubId])
 }

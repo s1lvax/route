@@ -18,6 +18,7 @@
 	import SocialsForm from '$lib/components/MyProfile/SocialsForm.svelte';
 	import UserSocials from '$lib/components/MyProfile/UserSocials.svelte';
 	import FormCardHeader from '$lib/components/MyProfile/FormCardHeader.svelte';
+	import ImportFromGithub from '$lib/components/MyProfile/ImportFromGithub.svelte';
 
 	let githubData: GithubData | null = null;
 	let privateProfileData: PrivateProfileData | null = null;
@@ -54,7 +55,10 @@
 					description="The links visible on your profile. You can drag links around to modify the order"
 					title="Links"
 				>
-					<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
+					<div class="flex flex-row items-center gap-4">
+						<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
+						<ImportFromGithub {data} />
+					</div>
 				</FormCardHeader>
 				<Card.Content>
 					<UserLinks links={data.links} />

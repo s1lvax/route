@@ -1,4 +1,3 @@
-// src/routes/auth/callback/+server.ts
 import type { RequestHandler } from './$types';
 import { json, redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma'; // Import Prisma client

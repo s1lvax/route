@@ -1,4 +1,3 @@
-// src/routes/auth/login/+server.ts
 import { redirect, type RequestHandler } from '@sveltejs/kit';
 
 import { SPOTIFY_ID, SPOTIFY_REDIRECT } from '$env/static/private';

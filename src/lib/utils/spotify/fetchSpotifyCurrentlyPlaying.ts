@@ -1,4 +1,3 @@
-// src/lib/utils/spotify/fetchSpotifyCurrentlyPlaying.ts
 export const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
 export const fetchSpotifyCurrentlyPlaying = async (accessToken: string) => {

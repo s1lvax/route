@@ -1,4 +1,3 @@
-// src/routes/api/spotify/currently-listening/[githubUsername]/+server.ts
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
 import { refreshSpotifyToken } from '$lib/utils/spotify/refreshSpotifyToken';
