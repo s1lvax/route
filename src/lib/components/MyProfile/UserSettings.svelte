@@ -3,10 +3,11 @@
 	import { Button } from '$lib/components/ui/button';
 	import { copyToClipboard } from '$lib/utils/copyToClipboard';
 	import { confirmDelete } from '$lib/utils/confirmDelete';
-	import { ArrowUpRight, Trash2, CircleChevronDown, Github, Copy, AudioLines } from 'lucide-svelte';
+	import { ArrowUpRight, Trash2, CircleChevronDown, Copy, AudioLines } from 'lucide-svelte';
 
 	import { enhance } from '$app/forms';
 	import type { PageData } from '../../../routes/profile/$types';
+	import { IconBrandGithub } from '@tabler/icons-svelte';
 
 	export let data: PageData;
 </script>
@@ -15,24 +16,26 @@
 	<div class="flex flex-row space-x-2">
 		{#if data.spotifyToken}
 			<form action="?/unlinkSpotify" method="POST" use:enhance>
-				<Button variant="destructive" type="submit"
-					><AudioLines class="mr-2" /> Unlink Spotify</Button
-				>
+				<Button variant="destructive" type="submit">
+					<AudioLines class="mr-2" />
+					<span>Unlink Spotify</span>
+				</Button>
 			</form>
 		{:else}
-			<Button href="/api/spotify/login"
-				><AudioLines class="mr-2 text-green-700" /> Link Spotify</Button
-			>
+			<Button href="/api/spotify/login">
+				<AudioLines class="mr-2 text-green-700" />
+				<span>Link Spotify</span>
+			</Button>
 		{/if}
 		<form action="?/updateOpenToCollaborating" method="POST" use:enhance>
 			{#if data.userData.openToCollaborating}
 				<Button variant="destructive" type="submit">
-					<Github class="mr-2" />
+					<IconBrandGithub class="mr-2" />
 					<span>Disallow Collaborations</span>
 				</Button>
 			{:else}
 				<Button type="submit">
-					<Github class="mr-2" />
+					<IconBrandGithub class="mr-2" />
 					<span>Allow Collaborations</span>
 				</Button>
 			{/if}
