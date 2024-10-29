@@ -5,7 +5,7 @@
 	import * as Table from '$lib/components/ui/table';
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Star } from 'lucide-svelte';
-	import { IconBrandGithub } from '@tabler/icons-svelte';
+	import { IconBrandGithub, IconChecks } from '@tabler/icons-svelte';
 
 	export let repos: Repository[] = [];
 	export let isModalVisible: boolean;
@@ -103,6 +103,7 @@
 												<Checkbox
 													checked={selectedRepos.has(repo)}
 													on:click={(e) => handleCheckboxClick(e, repo)}
+													disabled={isLimitReached && !selectedRepos.has(repo)}
 												/>
 											</div>
 										</Table.Cell>
@@ -124,9 +125,19 @@
 						</Table.Root>
 					</Card.Content>
 					<div class="flex flex-row items-center gap-2 p-4">
-						<Button type="button" on:click={importSelectedRepos} disabled={isLimitReached}
-							>Import</Button
+						<Button
+							type="button"
+							class="space-x-1"
+							on:click={importSelectedRepos}
+							disabled={isLimitReached}
 						>
+							{#if selectedRepos.size > 0}
+								<span>Import {selectedRepos.size}</span>
+								<IconChecks />
+							{:else}
+								<span>Import</span>
+							{/if}
+						</Button>
 						<Button type="button" variant="secondary" on:click={closeModal}>Cancel</Button>
 					</div>
 					{#if isLimitReached}
