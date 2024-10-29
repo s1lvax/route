@@ -4,7 +4,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Table from '$lib/components/ui/table';
 	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { Star, Github } from 'lucide-svelte';
+	import { Star } from 'lucide-svelte';
+	import { IconBrandGithub } from '@tabler/icons-svelte';
 
 	export let repos: Repository[] = [];
 	export let isModalVisible: boolean;
@@ -81,7 +82,8 @@
 				<Card.Root>
 					<Card.Header>
 						<Card.Title class="flex flex-row items-center gap-2">
-							<Github /> Import From Github
+							<IconBrandGithub />
+							<span>Import From Github</span>
 						</Card.Title>
 					</Card.Header>
 					<Card.Content>
@@ -93,7 +95,7 @@
 									<Table.Head>Stars</Table.Head>
 								</Table.Row>
 							</Table.Header>
-							<Table.Body class="max-h-28">
+							<Table.Body class="overflow-scroll">
 								{#each sortedRepos as repo}
 									<Table.Row>
 										<Table.Cell>
@@ -105,7 +107,7 @@
 										<Table.Cell class="font-medium">{repo.name}</Table.Cell>
 										<Table.Cell class="flex flex-row items-center gap-2">
 											<Star class="text-sm" />
-											{repo.stargazers_count}
+											<span>{repo.stargazers_count}</span>
 										</Table.Cell>
 									</Table.Row>
 								{/each}
