@@ -99,13 +99,22 @@
 								{#each sortedRepos as repo}
 									<Table.Row>
 										<Table.Cell>
-											<Checkbox
-												checked={selectedRepos.has(repo)}
-												on:click={(e) => handleCheckboxClick(e, repo)}
-											/>
+											<div class="flex items-center">
+												<Checkbox
+													checked={selectedRepos.has(repo)}
+													on:click={(e) => handleCheckboxClick(e, repo)}
+												/>
+											</div>
 										</Table.Cell>
-										<Table.Cell class="font-medium">{repo.name}</Table.Cell>
-										<Table.Cell class="flex flex-row items-center gap-2">
+										<Table.Cell class="font-medium">
+											<a
+												href={repo.html_url}
+												target="_blank"
+												rel="noopener noreferrer"
+												class="text-blue-600 hover:underline">{repo.name}</a
+											>
+										</Table.Cell>
+										<Table.Cell class="flex items-center gap-2">
 											<Star class="text-sm" />
 											<span>{repo.stargazers_count}</span>
 										</Table.Cell>
