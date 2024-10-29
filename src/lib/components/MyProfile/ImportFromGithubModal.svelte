@@ -83,7 +83,7 @@
 
 		<div class="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto">
 			<div
-				class="h-3/4 transform overflow-scroll rounded-lg bg-white shadow-xl transition-all sm:w-full sm:max-w-md"
+				class="max-h-[75%] transform overflow-scroll rounded-lg bg-white shadow-xl transition-all sm:w-full sm:max-w-md"
 			>
 				<Card.Root>
 					<Card.Header>
