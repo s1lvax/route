@@ -29,7 +29,6 @@
 		<Table.Row>
 			<Table.Head></Table.Head>
 			<Table.Head>Title</Table.Head>
-			<Table.Head>URL</Table.Head>
 			<Table.Head>Actions</Table.Head>
 		</Table.Row>
 	</Table.Header>
@@ -47,16 +46,8 @@
 					<AlignJustify />
 				</Table.Cell>
 				<Table.Cell>
-					<div class="font-medium">{link.title}</div>
-				</Table.Cell>
-				<Table.Cell>
-					<div class="flex items-center">
-						<a
-							href={link.url}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-blue-600 hover:underline">Link is available here</a
-						>
+					<div class="flex flex-row items-center space-x-2 font-medium">
+						{link.title}
 						<Button variant="ghost" on:click={() => copyToClipboard(link.url)}>
 							<Copy
 								class="h-4 w-4 transform transition-transform duration-300 hover:scale-110 hover:cursor-pointer"
