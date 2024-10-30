@@ -2,7 +2,7 @@ import { socials as socialMediaList } from '$lib/constants/socials';
 import type { Social } from '@prisma/client';
 import { copyToClipboard } from './copyToClipboard';
 
-const findSocial = (socialName: string) => {
+export const findSocial = (socialName: string) => {
 	return socialMediaList.find((social) => social.name === socialName);
 };
 
