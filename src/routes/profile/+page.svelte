@@ -55,7 +55,7 @@
 					description="The links visible on your profile. You can drag links around to modify the order"
 					title="Links"
 				>
-					<div class="flex flex-row items-center gap-4">
+					<div class="flex flex-row items-stretch gap-4">
 						<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
 						<ImportFromGithub {data} />
 					</div>

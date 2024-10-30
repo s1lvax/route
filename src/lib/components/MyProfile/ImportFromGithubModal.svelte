@@ -4,7 +4,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Table from '$lib/components/ui/table';
 	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { Star, Github } from 'lucide-svelte';
+	import { Star } from 'lucide-svelte';
+	import { IconBrandGithub, IconChecks } from '@tabler/icons-svelte';
 
 	export let repos: Repository[] = [];
 	export let isModalVisible: boolean;
@@ -37,6 +38,12 @@
 	$: sortedRepos = [...repos].sort((a, b) => b.stargazers_count - a.stargazers_count);
 
 	const importSelectedRepos = async () => {
+		// Return early to avoid wasting bandwidth
+		if (selectedRepos.size == 0) {
+			closeModal();
+			return;
+		}
+
 		const selectedData = Array.from(selectedRepos).map((repo) => ({
 			name: `GitHub - ${repo.name}`,
 			url: repo.html_url
@@ -76,12 +83,13 @@
 
 		<div class="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto">
 			<div
-				class="transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:w-full sm:max-w-md"
+				class="max-h-[75%] transform overflow-scroll rounded-lg bg-white shadow-xl transition-all sm:w-full sm:max-w-md"
 			>
 				<Card.Root>
 					<Card.Header>
 						<Card.Title class="flex flex-row items-center gap-2">
-							<Github /> Import From Github
+							<IconBrandGithub />
+							<span>Import From Github</span>
 						</Card.Title>
 					</Card.Header>
 					<Card.Content>
@@ -93,19 +101,29 @@
 									<Table.Head>Stars</Table.Head>
 								</Table.Row>
 							</Table.Header>
-							<Table.Body class="max-h-28 overflow-y-scroll">
+							<Table.Body class="overflow-scroll">
 								{#each sortedRepos as repo}
 									<Table.Row>
 										<Table.Cell>
-											<Checkbox
-												checked={selectedRepos.has(repo)}
-												on:click={(e) => handleCheckboxClick(e, repo)}
-											/>
+											<div class="flex items-center">
+												<Checkbox
+													checked={selectedRepos.has(repo)}
+													on:click={(e) => handleCheckboxClick(e, repo)}
+													disabled={isLimitReached && !selectedRepos.has(repo)}
+												/>
+											</div>
 										</Table.Cell>
-										<Table.Cell class="font-medium">{repo.name}</Table.Cell>
-										<Table.Cell class="flex flex-row items-center gap-2">
+										<Table.Cell class="font-medium">
+											<a
+												href={repo.html_url}
+												target="_blank"
+												rel="noopener noreferrer"
+												class="text-blue-600 hover:underline">{repo.name}</a
+											>
+										</Table.Cell>
+										<Table.Cell class="flex items-center gap-2">
 											<Star class="text-sm" />
-											{repo.stargazers_count}
+											<span>{repo.stargazers_count}</span>
 										</Table.Cell>
 									</Table.Row>
 								{/each}
@@ -113,9 +131,19 @@
 						</Table.Root>
 					</Card.Content>
 					<div class="flex flex-row items-center gap-2 p-4">
-						<Button type="button" on:click={importSelectedRepos} disabled={isLimitReached}
-							>Import</Button
+						<Button
+							type="button"
+							class="space-x-1"
+							on:click={importSelectedRepos}
+							disabled={isLimitReached}
 						>
+							{#if selectedRepos.size > 0}
+								<span>Import {selectedRepos.size}</span>
+								<IconChecks />
+							{:else}
+								<span>Import</span>
+							{/if}
+						</Button>
 						<Button type="button" variant="secondary" on:click={closeModal}>Cancel</Button>
 					</div>
 					{#if isLimitReached}

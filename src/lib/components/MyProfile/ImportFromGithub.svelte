@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import GitHub from 'lucide-svelte/icons/github';
+	import { IconBrandGithub } from '@tabler/icons-svelte';
 	import type { PageData } from '../../../routes/profile/$types';
 	import type { Repository } from '$lib/types/GithubData';
 	import ImportFromGithubModal from '$lib/components/MyProfile/ImportFromGithubModal.svelte';
@@ -26,13 +26,19 @@
 	};
 </script>
 
-<Button
-	disabled={isLimitReached}
-	class="mt-5 flex align-bottom"
-	on:click={() => fetchGithubRepos(data.userData.username)}
->
-	<GitHub /> Import from GitHub
-</Button>
+<div class="flex w-full space-x-4">
+	<div class="space-y-2">
+		<span class="invisible block">a</span>
+		<Button
+			disabled={isLimitReached}
+			class="flex space-x-2"
+			on:click={() => fetchGithubRepos(data.userData.username)}
+		>
+			<IconBrandGithub />
+			<span>Import from GitHub</span>
+		</Button>
+	</div>
+</div>
 
 {#if isModalVisible}
 	<ImportFromGithubModal {repos} {isModalVisible} {closeModal} linksLength={data.links.length} />
