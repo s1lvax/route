@@ -281,7 +281,7 @@ export const actions: Actions = {
 			form
 		};
 	},
-	deleteHobby: async ({ url, locals }) => {
+	deleteHobby: async ({ url }) => {
 		//get hobby id from url
 		const id = url.searchParams.get('id');
 
