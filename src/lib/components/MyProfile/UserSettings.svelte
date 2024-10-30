@@ -1,89 +1,89 @@
 <script lang="ts">
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
 	import { copyToClipboard } from '$lib/utils/copyToClipboard';
 	import { confirmDelete } from '$lib/utils/confirmDelete';
-	import { ArrowUpRight, Trash2, CircleChevronDown, Copy, AudioLines } from 'lucide-svelte';
-
+	import { AudioLines } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
 	import type { PageData } from '../../../routes/profile/$types';
-	import { IconBrandGithub } from '@tabler/icons-svelte';
+	import { IconBrandGithub, IconTrash, IconCopy } from '@tabler/icons-svelte';
+	import Input from '$lib/components/ui/input/input.svelte';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 </script>
 
-<div class="flex w-full justify-end space-x-2">
-	<div class="flex flex-row space-x-2">
-		{#if data.spotifyToken}
-			<form action="?/unlinkSpotify" method="POST" use:enhance>
-				<Button variant="destructive" type="submit">
-					<AudioLines class="mr-2" />
-					<span>Unlink Spotify</span>
-				</Button>
-			</form>
-		{:else}
-			<Button href="/api/spotify/login">
-				<AudioLines class="mr-2 text-green-700" />
-				<span>Link Spotify</span>
-			</Button>
-		{/if}
-		<form action="?/updateOpenToCollaborating" method="POST" use:enhance>
-			{#if data.userData.openToCollaborating}
-				<Button variant="destructive" type="submit">
-					<IconBrandGithub class="mr-2" />
-					<span>Disallow Collaborations</span>
-				</Button>
-			{:else}
-				<Button type="submit">
-					<IconBrandGithub class="mr-2" />
-					<span>Allow Collaborations</span>
-				</Button>
-			{/if}
-		</form>
-	</div>
-	<DropdownMenu.Root>
-		<DropdownMenu.Trigger>
-			<Button variant="default">
-				<CircleChevronDown class="mr-2 h-4 w-4 text-sm" />
-				<span>Your Profile</span>
-			</Button>
-		</DropdownMenu.Trigger>
-		<DropdownMenu.Content>
-			<DropdownMenu.Group>
-				<DropdownMenu.Label>Profile Settings</DropdownMenu.Label>
-				<DropdownMenu.Separator />
-				<DropdownMenu.Item>
-					<a
-						href="/{data.userData.username}"
-						target="_blank"
-						class="flex flex-row items-center space-x-2"
-					>
-						<ArrowUpRight class="text-sm" />
-						<span>View Public Profile</span>
-					</a>
-				</DropdownMenu.Item>
-				<DropdownMenu.Item
-					on:click={() => copyToClipboard(`${window.location.origin}/${data.userData.username}`)}
-				>
-					<div class="flex flex-row items-center space-x-2 hover:cursor-pointer">
-						<Copy class="text-sm" />
-						<span>Copy Profile's URL</span>
-					</div>
-				</DropdownMenu.Item>
-				<DropdownMenu.Separator />
-				<DropdownMenu.Item>
-					<form action="?/deleteAccount&id={data.userId}" method="POST" use:enhance>
-						<button
-							type="submit"
-							class="flex flex-row items-center space-x-2 text-red-500"
-							on:click={confirmDelete}
-						>
-							<Trash2 class="text-sm" />
-							<span>Delete Account</span>
-						</button>
+<div>
+	<h1
+		class="mb-5 flex flex-row items-center space-x-2 text-2xl font-bold text-muted-foreground md:mb-10 md:text-6xl"
+	>
+		Settings
+	</h1>
+	<div class="mt-6">
+		<dl class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+			<div class="px-4 py-6 sm:col-span-1 sm:px-0">
+				<dt class="text-lg">Spotify Integration</dt>
+				<dd class="mt-2">
+					{#if data.spotifyToken}
+						<form action="?/unlinkSpotify" method="POST" use:enhance>
+							<Button variant="destructive" type="submit" class="flex items-center">
+								<AudioLines class="mr-2" />
+								<span>Unlink Spotify</span>
+							</Button>
+						</form>
+					{:else}
+						<Button href="/api/spotify/login">
+							<AudioLines class="mr-2 text-green-700" />
+							<span>Link Spotify</span>
+						</Button>
+					{/if}
+				</dd>
+			</div>
+			<div class="px-4 py-6 sm:col-span-1 sm:px-0">
+				<dt class="text-lg">Collaboration Status</dt>
+				<dd class="mt-2">
+					<form action="?/updateOpenToCollaborating" method="POST" use:enhance>
+						{#if data.userData.openToCollaborating}
+							<Button variant="destructive" type="submit" class="flex items-center">
+								<IconBrandGithub class="mr-2" />
+								<span>Disallow Collaborations</span>
+							</Button>
+						{:else}
+							<Button type="submit" class="flex items-center">
+								<IconBrandGithub class="mr-2" />
+								<span>Allow Collaborations</span>
+							</Button>
+						{/if}
 					</form>
-				</DropdownMenu.Item>
-			</DropdownMenu.Group>
-		</DropdownMenu.Content>
-	</DropdownMenu.Root>
+				</dd>
+			</div>
+		</dl>
+		<div class="border-t px-4 py-6 sm:col-span-2 sm:px-0">
+			<dt class="text-lg">Public Profile</dt>
+			<dd class="mt-2 flex flex-row space-x-4">
+				<Input value="{$page.url.origin}/{data.userData.username}" disabled class="w-full" />
+				<Button
+					class="flex cursor-pointer items-center"
+					on:click={() => copyToClipboard(`${$page.url.origin}/${data.userData.username}`)}
+				>
+					<IconCopy />
+				</Button>
+			</dd>
+		</div>
+		<div class="border-t px-4 py-6 sm:col-span-2 sm:px-0">
+			<dt class="text-lg">Account Actions</dt>
+			<dd class="mt-2">
+				<form action="?/deleteAccount&id={data.userId}" method="POST" use:enhance>
+					<Button
+						type="submit"
+						variant="destructive"
+						class="flex items-center "
+						on:click={confirmDelete}
+					>
+						<IconTrash class="mr-2" />
+						<span>Delete Account</span>
+					</Button>
+				</form>
+			</dd>
+		</div>
+	</div>
 </div>
