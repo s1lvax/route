@@ -7,6 +7,7 @@ import { redirect } from '@sveltejs/kit';
 import type { User } from '@prisma/client';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
 import { createRecentActivity } from '$lib/utils/createRecentActivity';
+import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -88,6 +89,17 @@ export const actions: Actions = {
 		} catch (err) {
 			console.error(err);
 			return fail(500, { message: 'Something went wrong.' });
+		}
+	},
+	unlinkSpotify: async () => {
+		if (user) {
+			try {
+				// delete
+				unlinkSpotify(user.githubId);
+			} catch (error) {
+				console.error(error);
+				throw Error('Failed to delete user');
+			}
 		}
 	}
 };

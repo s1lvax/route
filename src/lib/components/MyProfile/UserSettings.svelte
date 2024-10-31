@@ -2,7 +2,6 @@
 	import { Button } from '$lib/components/ui/button';
 	import { copyToClipboard } from '$lib/utils/copyToClipboard';
 	import { confirmDelete } from '$lib/utils/confirmDelete';
-	import { AudioLines } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
 	import type { PageData } from '../../../routes/profile/$types';
 	import { IconBrandGithub, IconTrash, IconCopy } from '@tabler/icons-svelte';
@@ -20,24 +19,6 @@
 	</h1>
 	<div class="mt-6">
 		<dl class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
-			<div class="px-4 py-6 sm:col-span-1 sm:px-0">
-				<dt class="text-lg">Spotify Integration</dt>
-				<dd class="mt-2">
-					{#if data.spotifyToken}
-						<form action="?/unlinkSpotify" method="POST" use:enhance>
-							<Button variant="destructive" type="submit" class="flex items-center">
-								<AudioLines class="mr-2" />
-								<span>Unlink Spotify</span>
-							</Button>
-						</form>
-					{:else}
-						<Button href="/api/spotify/login">
-							<AudioLines class="mr-2 text-green-700" />
-							<span>Link Spotify</span>
-						</Button>
-					{/if}
-				</dd>
-			</div>
 			<div class="px-4 py-6 sm:col-span-1 sm:px-0">
 				<dt class="text-lg">Collaboration Status</dt>
 				<dd class="mt-2">
