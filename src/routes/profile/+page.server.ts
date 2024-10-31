@@ -24,7 +24,7 @@ export const load: PageServerLoad = async (event) => {
 	const recentActivity = await prisma.recentActivity.findMany({
 		where: { userId: userId },
 		orderBy: { createdAt: 'desc' },
-		take: 10
+		take: 5
 	});
 
 	return { recentActivity };
