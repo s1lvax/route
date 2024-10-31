@@ -25,13 +25,13 @@
 
 		<!-- Links, Tech Stack, and Chess Stats Side by Side -->
 		<div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-			<!-- Links Section -->
+			{#if userData.links.length > 0}
+				<Links {userData} />
+			{/if}
 
-			<Links {userData} />
-
-			<!-- Tech Stack Section -->
-
-			<TechStack {userData} />
+			{#if userData.skills.length > 0}
+				<TechStack {userData} />
+			{/if}
 
 			<!-- Chess Stats Section -->
 			{#if userData.chessComUsername != null}
