@@ -47,6 +47,7 @@ jobs:
             #Prisma
             npx prisma generate
 
+            docker rmi route-dev || true
             docker build -t route-dev .
             docker stop route-dev || true
             docker rm route-dev || true
