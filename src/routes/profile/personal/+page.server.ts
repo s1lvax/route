@@ -7,6 +7,7 @@ import { socialsSchema } from '$lib/schemas/socials';
 import type { User } from '@prisma/client';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
 import { hobbiesSchema } from '$lib/schemas/hobbies';
+import { createRecentActivity } from '$lib/utils/createRecentActivity';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -45,6 +46,9 @@ export const actions: Actions = {
 						userId: user.githubId
 					}
 				});
+
+				//add the social creation to the recent activity of the user
+				createRecentActivity('SOCIAL_CREATED', `Added a ${social} account`, user.githubId);
 			} catch (error) {
 				console.error(error);
 				throw Error('Failed to create social');
@@ -73,6 +77,9 @@ export const actions: Actions = {
 						userId: user.githubId
 					}
 				});
+
+				//add the social deletion to the recent activity of the user
+				createRecentActivity('SOCIAL_DELETED', `Deleted a social account`, user.githubId);
 			}
 		} catch (err) {
 			console.log(err);
@@ -98,6 +105,9 @@ export const actions: Actions = {
 						userId: user.githubId
 					}
 				});
+
+				//add the hobby creation to the recent activity of the user
+				createRecentActivity('HOBBY_CREATED', `Added a hobby (${hobby})`, user.githubId);
 			} catch (error) {
 				console.error(error);
 				throw Error('Failed to create hobby');
@@ -126,6 +136,9 @@ export const actions: Actions = {
 						userId: user.githubId
 					}
 				});
+
+				//add the hobby deletion to the recent activity of the user
+				createRecentActivity('HOBBY_DELETED', `Deleted a hobby`, user.githubId);
 			}
 		} catch (err) {
 			console.log(err);

@@ -1,4 +1,5 @@
 import { prisma } from '$lib/server/prisma';
+import { createRecentActivity } from '$lib/utils/createRecentActivity';
 
 export const unlinkSpotify = async (githubId: number) => {
 	try {
@@ -15,6 +16,9 @@ export const unlinkSpotify = async (githubId: number) => {
 		await prisma.spotifyToken.delete({
 			where: { userId: githubId }
 		});
+
+		//add unlink to recent activity
+		createRecentActivity('UNLINK_SPOTIFY', 'Unlinked Spotify account', githubId);
 	} catch (error) {
 		console.error(error);
 		throw new Error('Failed to delete Spotify');

@@ -6,6 +6,7 @@ import { linksSchema } from '$lib/schemas/links';
 import { redirect } from '@sveltejs/kit';
 import type { User } from '@prisma/client';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
+import { createRecentActivity } from '$lib/utils/createRecentActivity';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -49,6 +50,9 @@ export const actions: Actions = {
 						order
 					}
 				});
+
+				//add the link creation to the recent activity of the user
+				createRecentActivity('LINK_CREATED', `Added a link (${title})`, user.githubId);
 			} catch (error) {
 				console.error(error);
 				throw Error('Failed to create link');
@@ -77,6 +81,9 @@ export const actions: Actions = {
 						userId: user.githubId
 					}
 				});
+
+				//add the link deletion to the recent activity of the user
+				createRecentActivity('LINK_DELETED', 'Deleted a link', user.githubId);
 			}
 		} catch (err) {
 			console.error(err);

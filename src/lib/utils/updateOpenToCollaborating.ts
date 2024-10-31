@@ -1,4 +1,5 @@
 import { prisma } from '$lib/server/prisma';
+import { createRecentActivity } from './createRecentActivity';
 
 export const updateOpenToCollaborating = async (githubId: number) => {
 	try {
@@ -20,6 +21,13 @@ export const updateOpenToCollaborating = async (githubId: number) => {
 			where: { githubId: githubId },
 			data: { openToCollaborating: newOpenToCollaboratingValue }
 		});
+
+		//update the recent activity of the user
+		createRecentActivity(
+			'UPDATE_OTC',
+			`Open to Collaborating set to ${newOpenToCollaboratingValue}`,
+			githubId
+		);
 	} catch (error) {
 		console.error(error);
 		throw new Error('Failed to update openToCollaborating status');

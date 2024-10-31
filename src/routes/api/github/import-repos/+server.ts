@@ -1,6 +1,7 @@
 import { redirect, type RequestHandler } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
+import { createRecentActivity } from '$lib/utils/createRecentActivity';
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 	const session = await locals.auth();
@@ -21,6 +22,9 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				userId: userId
 			}))
 		});
+
+		//add to recent activity
+		createRecentActivity('LINK_CREATED', `Imported ${links.length} links from Github`, userId);
 
 		return new Response(JSON.stringify({ success: true }), { status: 200 });
 	} catch (error) {
