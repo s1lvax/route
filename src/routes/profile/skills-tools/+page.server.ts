@@ -52,7 +52,7 @@ export const actions: Actions = {
 				});
 
 				//add the skill creation to the recent activity of the user
-				createRecentActivity('SKILL_CREATED', `Added a skill`, user.githubId);
+				createRecentActivity('SKILL_CREATED', `Added a skill (${title})`, user.githubId);
 			} catch (error) {
 				console.error(error);
 				throw Error('Failed to create skill');

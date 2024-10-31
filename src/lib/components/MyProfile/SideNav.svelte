@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { sideNavOpt } from '$lib/constants/sideNavOptions';
-	import Input from '../ui/input/input.svelte';
+	import Search from '$lib/components/MyProfile/Search.svelte';
 
 	let isSidebarOpen = false;
 
 	// Toggle sidebar visibility
-	function toggleSidebar() {
+	const toggleSidebar = () => {
 		isSidebarOpen = !isSidebarOpen;
-	}
+	};
 </script>
 
 <div>
@@ -138,17 +138,7 @@
 			</button>
 
 			<!-- Search Form -->
-			<form class="relative flex flex-1" action="#" method="GET">
-				<label for="search-field" class="sr-only">Search</label>
-
-				<Input
-					id="search-field"
-					placeholder="Search..."
-					type="search"
-					name="search"
-					class="border-0"
-				/>
-			</form>
+			<Search />
 		</div>
 
 		<main class="py-10">
