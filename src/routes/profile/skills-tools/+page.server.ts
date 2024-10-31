@@ -6,6 +6,7 @@ import { prisma } from '$lib/server/prisma';
 import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { skillsSchema } from '$lib/schemas/skills';
+import { createRecentActivity } from '$lib/utils/createRecentActivity';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -49,6 +50,9 @@ export const actions: Actions = {
 						order
 					}
 				});
+
+				//add the skill creation to the recent activity of the user
+				createRecentActivity('SKILL_CREATED', `Added a skill`, user.githubId);
 			} catch (error) {
 				console.error(error);
 				throw Error('Failed to create skill');
@@ -77,6 +81,9 @@ export const actions: Actions = {
 						userId: user.githubId
 					}
 				});
+
+				//add the skill deletion to the recent activity of the user
+				createRecentActivity('SKILL_DELETED', `Deleted a skill`, user.githubId);
 			}
 		} catch (err) {
 			console.error(err);

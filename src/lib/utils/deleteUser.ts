@@ -27,6 +27,11 @@ export const deleteUser = async (githubId: number, userId: number) => {
 			where: { userId: githubId }
 		});
 
+		//delete all the recent activities
+		await prisma.recentActivity.deleteMany({
+			where: { userId: githubId }
+		});
+
 		//delete the user
 		await prisma.user.delete({
 			where: { githubId, id: userId }

@@ -26,6 +26,7 @@ model User {
   Hobby               Hobby[]
   Social              Social[]
   spotifyToken        SpotifyToken?
+  RecentActivity      RecentActivity[]
 }
 
 model Link {
@@ -76,4 +77,13 @@ model SpotifyToken {
   expiresAt    DateTime
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model RecentActivity {
+  id           Int      @id @default(autoincrement())
+  usedBy       User     @relation(fields: [userId], references: [githubId])
+  userId       Int      
+  activityType String
+  activityDescription String
+  createdAt    DateTime @default(now())
 }

@@ -4,6 +4,7 @@ import { prisma } from '$lib/server/prisma'; // Import Prisma client
 
 import { SPOTIFY_ID, SPOTIFY_REDIRECT, SPOTIFY_SECRET } from '$env/static/private';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
+import { createRecentActivity } from '$lib/utils/createRecentActivity';
 
 //Token URL
 const TOKEN_URL = 'https://accounts.spotify.com/api/token';
@@ -49,20 +50,25 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 		const expiresAt = new Date(Date.now() + expiresIn * 1000); // Calculate token expiration time
 
 		// Upsert tokens into the Prisma database (insert if not exists, otherwise update)
-		await prisma.spotifyToken.upsert({
-			where: { userId: userId },
-			update: {
-				accessToken,
-				refreshToken,
-				expiresAt
-			},
-			create: {
-				userId,
-				accessToken,
-				refreshToken,
-				expiresAt
-			}
-		});
+		if (userId) {
+			await prisma.spotifyToken.upsert({
+				where: { userId: userId },
+				update: {
+					accessToken,
+					refreshToken,
+					expiresAt
+				},
+				create: {
+					userId,
+					accessToken,
+					refreshToken,
+					expiresAt
+				}
+			});
+
+			//update to recent activity
+			createRecentActivity('LINK_SPOTIFY', 'Linked Spotify account', userId);
+		}
 
 		throw redirect(302, '/profile');
 	} else {
