@@ -5,7 +5,8 @@ import {
 	IconRollerSkating,
 	IconSocial,
 	IconBrandSpotifyFilled,
-	IconLink
+	IconLink,
+	IconChess
 } from '@tabler/icons-svelte';
 
 // Mapping function for both social names and activity types
@@ -18,7 +19,9 @@ export const findSocialIcon = (activityType: string) => {
 		SOCIAL_CREATED: IconSocial,
 		SOCIAL_DELETED: IconSocial,
 		UNLINK_SPOTIFY: IconBrandSpotifyFilled,
-		LINK_SPOTIFY: IconBrandSpotifyFilled
+		LINK_SPOTIFY: IconBrandSpotifyFilled,
+		CHESS_COM_CREATED: IconChess,
+		CHESS_COM_DELETED: IconChess
 	};
 
 	return icons[activityType] || IconPlus;

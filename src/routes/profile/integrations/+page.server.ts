@@ -8,6 +8,7 @@ import type { User } from '@prisma/client';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
 import { createRecentActivity } from '$lib/utils/createRecentActivity';
 import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
+import { chessComSchema } from '$lib/schemas/integration-chesscom';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -100,6 +101,60 @@ export const actions: Actions = {
 				console.error(error);
 				throw Error('Failed to delete user');
 			}
+		}
+	},
+	createChessCom: async (event) => {
+		const form = await superValidate(event, zod(chessComSchema));
+		if (!form.valid) {
+			return fail(400, {
+				form
+			});
+		}
+
+		// If no errors, get data
+		const { username } = form.data;
+
+		if (user) {
+			try {
+				await prisma.integrationChessCom.create({
+					data: {
+						username,
+						userId: user.githubId
+					}
+				});
+
+				//add the chess com creation to the recent activity of the user
+				createRecentActivity(
+					'CHESS_COM_CREATED',
+					`Linked your Chess.com account (${username})`,
+					user.githubId
+				);
+			} catch (error) {
+				console.error(error);
+				throw Error('Failed to create hobby');
+			}
+		}
+
+		return {
+			form
+		};
+	},
+	deleteChessCom: async ({ url }) => {
+		//delete chess com
+		try {
+			if (user) {
+				await prisma.integrationChessCom.delete({
+					where: {
+						userId: user.githubId
+					}
+				});
+
+				//add the chess com deletion to the recent activity of the user
+				createRecentActivity('CHESS_COM_DELETED', `Unlinked your Chess.com accont`, user.githubId);
+			}
+		} catch (err) {
+			console.log(err);
+			return fail(500, { message: 'Something went wrong.' });
 		}
 	}
 };
