@@ -25,6 +25,7 @@ model User {
   Skill               Skill[]
   Hobby               Hobby[]
   Social              Social[]
+  spotifyToken        SpotifyToken?
 }
 
 model Link {
@@ -64,4 +65,15 @@ model Social {
   socialURL String
   createdAt DateTime @default(now())
   postedBy  User     @relation(fields: [userId], references: [githubId])
+}
+
+model SpotifyToken {
+  id           Int      @id @default(autoincrement())
+  usedBy       User     @relation(fields: [userId], references: [githubId])
+  userId       Int      @unique
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

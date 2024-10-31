@@ -50,9 +50,10 @@
 					<Select.Content>
 						{#each socials as social}
 							<Select.Item value={social.name}>
-								<span class="flex flex-row items-center justify-center gap-4"
-									>{@html social.svg}{social.name}</span
-								>
+								<div class="flex flex-row items-center justify-center gap-4">
+									<svelte:component this={social.icon} />
+									<span>{social.name}</span>
+								</div>
 							</Select.Item>
 						{/each}
 					</Select.Content>
