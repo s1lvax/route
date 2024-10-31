@@ -24,7 +24,7 @@
 		<Separator class="my-4" />
 
 		<!-- Links, Tech Stack, and Chess Stats Side by Side -->
-		<div class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3">
+		<div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
 			<!-- Links Section -->
 
 			<Links {userData} />
