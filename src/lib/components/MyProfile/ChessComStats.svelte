@@ -24,7 +24,7 @@
 <Card.Root class="max-h-[400px] overflow-y-auto">
 	<Card.Header>
 		<Card.Title>Chess.com</Card.Title>
-		<Card.Description>Chess stats</Card.Description>
+		<Card.Description>{chessComUsername}'s chess stats</Card.Description>
 	</Card.Header>
 	<Card.Content>
 		{#if loading}
