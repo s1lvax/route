@@ -21,7 +21,7 @@
 </script>
 
 <!-- Tech Stack Section -->
-<Card.Root>
+<Card.Root class="max-h-[400px] overflow-y-auto">
 	<Card.Header>
 		<Card.Title>Skills & Tools</Card.Title>
 		<Card.Description>Explore the developer's skills and expertise</Card.Description>

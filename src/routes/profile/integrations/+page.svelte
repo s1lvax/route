@@ -9,6 +9,9 @@
 	import { AudioLines } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
 	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
+	import ChessComForm from '$lib/components/MyProfile/ChessComForm.svelte';
+	import { IconChess, IconLink } from '@tabler/icons-svelte';
+	import ChessComStats from '$lib/components/MyProfile/ChessComStats.svelte';
 
 	export let data: PageData;
 </script>
@@ -21,7 +24,7 @@
 
 <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
 	<div class="custom-links">
-		<Card.Root class="max-h-[300px] overflow-y-auto xl:col-span-2">
+		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
 			<FormCardHeader
 				description="The links visible on your profile. You can drag links around to modify the order"
 				title="Links"
@@ -37,9 +40,11 @@
 		</Card.Root>
 	</div>
 	<div class="spotify">
-		<Card.Root class="max-h-[300px] overflow-y-auto xl:col-span-2">
+		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
 			<Card.Header>
-				<Card.Title>Spotify</Card.Title>
+				<Card.Title class="flex flex-row items-center space-x-2">
+					<IconLink /> Spotify</Card.Title
+				>
 				<Card.Description>
 					Connect your Spotify account to display your currently playing song
 				</Card.Description>
@@ -63,6 +68,40 @@
 					</Button>
 				{/if}
 			</Card.Content>
+		</Card.Root>
+	</div>
+	<div class="chess.com">
+		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
+			{#if data.chessComUsername}
+				<Card.Header>
+					<Card.Title class="flex flex-row items-center space-x-2">
+						<IconChess /> Chess.com</Card.Title
+					>
+					<Card.Description>
+						You can unlink your Chess.com account here to showcase your stats.
+					</Card.Description>
+					<Card.Content>
+						<div class="flex flex-col space-y-4">
+							<form action="?/deleteChessCom" method="POST" use:enhance>
+								<Button variant="destructive" type="submit" class="flex items-center">
+									<IconChess />
+									<span>Unlink Chess.com</span>
+								</Button>
+							</form>
+							<ChessComStats chessComUsername={data.chessComUsername.username} />
+						</div>
+					</Card.Content>
+				</Card.Header>
+			{:else}
+				<FormCardHeader
+					description="You can link your Chess.com account here to showcase your stats."
+					title="Chess.com"
+				>
+					<div class="flex flex-row items-stretch gap-4">
+						<ChessComForm data={data.chessComForm} />
+					</div>
+				</FormCardHeader>
+			{/if}
 		</Card.Root>
 	</div>
 </div>

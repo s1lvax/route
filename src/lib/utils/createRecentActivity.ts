@@ -12,7 +12,9 @@ export const createRecentActivity = async (
 		| 'UNLINK_SPOTIFY'
 		| 'LINK_SPOTIFY'
 		| 'SKILL_CREATED'
-		| 'SKILL_DELETED',
+		| 'SKILL_DELETED'
+		| 'CHESS_COM_CREATED'
+		| 'CHESS_COM_DELETED',
 	activityDescription: string,
 	userId: number
 ): Promise<void> => {

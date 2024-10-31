@@ -48,10 +48,15 @@ export const load: PageServerLoad = async ({ params }) => {
 		where: { userId: user.githubId }
 	});
 
+	const chessCom = await prisma.integrationChessCom.findUnique({
+		where: { userId: user.githubId }
+	});
+
 	const userData = {
 		links,
 		skills,
 		socials,
+		chessComUsername: chessCom ? chessCom.username : null,
 		username: username,
 		isOpenToCollaborating: isOpenToCollaborating?.openToCollaborating,
 		hobbies

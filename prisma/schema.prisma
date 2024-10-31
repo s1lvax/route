@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
@@ -15,19 +15,20 @@ datasource db {
 }
 
 model User {
-  id                  Int           @id @default(autoincrement())
-  githubId            Int           @unique
-  githubUsername      String        @unique
-  views               Int           @default(0)
-  openToCollaborating Boolean       @default(false)
-  createdAt           DateTime      @default(now())
-  updatedAt           DateTime      @updatedAt
+  id                  Int                  @id @default(autoincrement())
+  githubId            Int                  @unique
+  githubUsername      String               @unique
+  views               Int                  @default(0)
+  openToCollaborating Boolean              @default(false)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
   Link                Link[]
   Skill               Skill[]
   Hobby               Hobby[]
   Social              Social[]
   spotifyToken        SpotifyToken?
   RecentActivity      RecentActivity[]
+  IntegrationChessCom IntegrationChessCom?
 }
 
 model Link {
@@ -81,10 +82,20 @@ model SpotifyToken {
 }
 
 model RecentActivity {
-  id           Int      @id @default(autoincrement())
-  usedBy       User     @relation(fields: [userId], references: [githubId])
-  userId       Int      
-  activityType String
+  id                  Int      @id @default(autoincrement())
+  usedBy              User     @relation(fields: [userId], references: [githubId])
+  userId              Int
+  activityType        String
   activityDescription String
-  createdAt    DateTime @default(now())
+  createdAt           DateTime @default(now())
+}
+
+model IntegrationChessCom {
+  id        Int      @id @default(autoincrement())
+  usedBy    User     @relation(fields: [userId], references: [githubId])
+  userId    Int      @unique
+  username  String
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

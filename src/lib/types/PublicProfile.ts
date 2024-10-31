@@ -7,4 +7,5 @@ export interface PublicProfile {
 	isOpenToCollaborating: boolean | undefined;
 	hobbies: Array<{ hobby: string }>;
 	socials: Social[];
+	chessComUsername: string | null;
 }

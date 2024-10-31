@@ -7,6 +7,7 @@
 	import ProfileFooter from '$lib/components/PublicProfile/ProfileFooter.svelte';
 	import ProfileHero from '$lib/components/PublicProfile/ProfileHero.svelte';
 	import { Separator } from '$lib/components//ui/separator';
+	import ChessComStats from '$lib/components/MyProfile/ChessComStats.svelte';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
@@ -22,10 +23,20 @@
 
 		<Separator class="my-4" />
 
-		<!-- Links and Tech Stack Side by Side -->
-		<div class="mt-8 grid gap-4 md:grid-cols-2">
+		<!-- Links, Tech Stack, and Chess Stats Side by Side -->
+		<div class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3">
+			<!-- Links Section -->
+
 			<Links {userData} />
+
+			<!-- Tech Stack Section -->
+
 			<TechStack {userData} />
+
+			<!-- Chess Stats Section -->
+			{#if userData.chessComUsername != null}
+				<ChessComStats chessComUsername={userData.chessComUsername} />
+			{/if}
 		</div>
 
 		<div class="flex flex-col items-center justify-center gap-4">
