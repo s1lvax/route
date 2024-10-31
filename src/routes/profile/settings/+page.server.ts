@@ -1,6 +1,5 @@
 import type { Actions, PageServerLoad } from './$types';
 import { deleteUser } from '$lib/utils/deleteUser';
-import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
 import { updateOpenToCollaborating } from '$lib/utils/updateOpenToCollaborating';
 import { fail } from 'sveltekit-superforms';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
@@ -53,17 +52,6 @@ export const actions: Actions = {
 			try {
 				// update value
 				updateOpenToCollaborating(user.githubId);
-			} catch (error) {
-				console.error(error);
-				throw Error('Failed to delete user');
-			}
-		}
-	},
-	unlinkSpotify: async () => {
-		if (user) {
-			try {
-				// delete
-				unlinkSpotify(user.githubId);
 			} catch (error) {
 				console.error(error);
 				throw Error('Failed to delete user');
