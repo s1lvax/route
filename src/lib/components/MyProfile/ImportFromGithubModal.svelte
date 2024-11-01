@@ -4,7 +4,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Table from '$lib/components/ui/table';
 	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { Star } from 'lucide-svelte';
+	import { Star, X } from 'lucide-svelte';
 	import { IconBrandGithub, IconChecks } from '@tabler/icons-svelte';
 
 	export let repos: Repository[] = [];
@@ -87,9 +87,13 @@
 			>
 				<Card.Root>
 					<Card.Header>
-						<Card.Title class="flex flex-row items-center gap-2">
+						<Card.Title class="flex items-center justify-between gap-2">
 							<IconBrandGithub />
 							<span>Import From Github</span>
+							<div class="flex-grow"></div>
+							<Button variant="ghost" on:click={closeModal}>
+								<X />
+							</Button>
 						</Card.Title>
 					</Card.Header>
 					<Card.Content>
