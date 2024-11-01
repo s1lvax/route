@@ -100,7 +100,7 @@
 					description="You can link your Chess.com account here to showcase your stats."
 					title="Chess.com"
 				>
-					<div class="flex flex-row items-stretch gap-4">
+					<div class="flex flex-row items-stretch gap-4 pb-6">
 						<ChessComForm data={data.chessComForm} />
 					</div>
 				</FormCardHeader>
