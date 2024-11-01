@@ -4,7 +4,6 @@
 	import FormCardHeader from '$lib/components/MyProfile/FormCardHeader.svelte';
 	import LinkForm from '$lib/components/MyProfile/LinkForm.svelte';
 	import UserLinks from '$lib/components/MyProfile/UserLinks.svelte';
-	import ImportFromGithub from '$lib/components/MyProfile/ImportFromGithub.svelte';
 	import type { PageData } from '../$types';
 	import { AudioLines } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
@@ -30,8 +29,12 @@
 				title="Links"
 			>
 				<div class="flex flex-row items-stretch gap-4">
-					<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
-					<ImportFromGithub {data} />
+					<LinkForm
+						username={data.userData.username}
+						data={data.form}
+						linksLength={data.links.length}
+						links={data.links}
+					/>
 				</div>
 			</FormCardHeader>
 			<Card.Content>
@@ -97,7 +100,7 @@
 					description="You can link your Chess.com account here to showcase your stats."
 					title="Chess.com"
 				>
-					<div class="flex flex-row items-stretch gap-4">
+					<div class="flex flex-row items-stretch gap-4 pb-6">
 						<ChessComForm data={data.chessComForm} />
 					</div>
 				</FormCardHeader>

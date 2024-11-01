@@ -7,6 +7,7 @@
 
 	import * as Select from '$lib/components/ui/select';
 	import { socials, SocialsInputType } from '$lib/constants/socials';
+	import { findSocialIcon } from '$lib/utils/findSocialIcon';
 
 	export let data: SuperValidated<Infer<SocialsSchema>>;
 
@@ -51,7 +52,7 @@
 						{#each socials as social}
 							<Select.Item value={social.name}>
 								<div class="flex flex-row items-center justify-center gap-4">
-									<svelte:component this={social.icon} />
+									<svelte:component this={findSocialIcon(social.name)} />
 									<span>{social.name}</span>
 								</div>
 							</Select.Item>
@@ -62,7 +63,7 @@
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
-		<Form.Field {form} name="socialURL" >
+		<Form.Field {form} name="socialURL">
 			<Form.Control let:attrs>
 				<Form.Label>{selectedSocialInputType}</Form.Label>
 				<Input {...attrs} bind:value={$formData.socialURL} />

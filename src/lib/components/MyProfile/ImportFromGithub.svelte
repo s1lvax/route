@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { IconBrandGithub } from '@tabler/icons-svelte';
-	import type { PageData } from '../../../routes/profile/$types';
 	import type { Repository } from '$lib/types/GithubData';
 	import ImportFromGithubModal from '$lib/components/MyProfile/ImportFromGithubModal.svelte';
 
-	export let data: PageData;
+	export let username: string;
+	export let linksLength: number;
 
-	$: isLimitReached = data.links.length >= 15;
+	$: isLimitReached = linksLength >= 15;
 	let isModalVisible = false;
 	let repos: Repository[] = [];
 
@@ -26,20 +26,17 @@
 	};
 </script>
 
-<div class="flex w-full space-x-4">
-	<div class="space-y-2">
-		<span class="invisible block">a</span>
-		<Button
-			disabled={isLimitReached}
-			class="flex space-x-2"
-			on:click={() => fetchGithubRepos(data.userData.username)}
-		>
-			<IconBrandGithub />
-			<span>Import from GitHub</span>
-		</Button>
-	</div>
+<div class="flex space-x-4">
+	<Button
+		disabled={isLimitReached}
+		class="flex space-x-2"
+		on:click={() => fetchGithubRepos(username)}
+	>
+		<IconBrandGithub />
+		<span>Import from GitHub</span>
+	</Button>
 </div>
 
 {#if isModalVisible}
-	<ImportFromGithubModal {repos} {isModalVisible} {closeModal} linksLength={data.links.length} />
+	<ImportFromGithubModal {repos} {isModalVisible} {closeModal} {linksLength} />
 {/if}
