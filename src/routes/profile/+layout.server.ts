@@ -9,6 +9,7 @@ import type { User } from '$lib/types/User';
 import { skillsSchema } from '$lib/schemas/skills';
 import { hobbiesSchema } from '$lib/schemas/hobbies';
 import { socialsSchema } from '$lib/schemas/socials';
+import { personalInformationSchema } from '$lib/schemas/personal-information';
 import type { LayoutServerLoad } from '../$types';
 import { chessComSchema } from '$lib/schemas/integration-chesscom';
 
@@ -64,6 +65,10 @@ export const load: LayoutServerLoad = async (event) => {
 		where: { userId: user.githubId }
 	});
 
+	const personalInformation = await prisma.personalInformation.findFirst({
+		where: { userId: user.githubId }
+	});
+
 	const socials = await prisma.social.findMany({
 		where: { userId: user.githubId }
 	});
@@ -84,6 +89,7 @@ export const load: LayoutServerLoad = async (event) => {
 	const skillsForm = await superValidate(zod(skillsSchema));
 	const hobbiesForm = await superValidate(zod(hobbiesSchema));
 	const socialsForm = await superValidate(zod(socialsSchema));
+	const personalInformationForm = await superValidate(zod(personalInformationSchema));
 	const chessComForm = await superValidate(zod(chessComSchema));
 
 	// Return data to the frontend
@@ -93,13 +99,15 @@ export const load: LayoutServerLoad = async (event) => {
 		links,
 		skills,
 		hobbies,
+		personalInformation,
 		socials,
 		spotifyToken,
 		chessComUsername,
 		form: linksForm,
-		skillsForm: skillsForm,
-		hobbiesForm: hobbiesForm,
-		socialsForm: socialsForm,
-		chessComForm: chessComForm
+		skillsForm,
+		hobbiesForm,
+		socialsForm,
+		personalInformationForm,
+		chessComForm
 	};
 };

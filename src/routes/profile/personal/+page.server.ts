@@ -8,6 +8,7 @@ import type { User } from '@prisma/client';
 import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
 import { hobbiesSchema } from '$lib/schemas/hobbies';
 import { createRecentActivity } from '$lib/utils/createRecentActivity';
+import { personalInformationSchema } from '$lib/schemas/personal-information';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -143,6 +144,85 @@ export const actions: Actions = {
 		} catch (err) {
 			console.log(err);
 			return fail(500, { message: 'Something went wrong.' });
+		}
+	},
+	updatePersonalInformation: async (event) => {
+		const form = await superValidate(event, zod(personalInformationSchema));
+		if (!form.valid) {
+			return fail(400, {
+				form
+			});
+		}
+
+		const { email, fullName } = form.data;
+
+		if (user) {
+			try {
+				// The upsert/update method doesn't update a field if it is undefined
+				// By doing ...(email && { email }), empty strings and null values will be turned into undefined
+				await prisma.personalInformation.upsert({
+					where: {
+						userId: user.githubId
+					},
+					update: {
+						...(email && { email }),
+						...(fullName && { fullName })
+					},
+					create: {
+						userId: user.githubId
+					}
+				});
+				createRecentActivity(
+					'PERSONAL_INFORMATION_UPDATED',
+					`Updated personal information`,
+					user.githubId
+				);
+			} catch (error) {
+				console.error(error);
+				throw Error('Failed to update personal information');
+			}
+		}
+
+		return {
+			form
+		};
+	},
+	resetPersonalInformation: async ({ url }) => {
+		const field = url.searchParams.get('field');
+		const isValidField =
+			field != null &&
+			Object.keys(prisma.personalInformation.fields).includes(field) &&
+			field != 'id' &&
+			field != 'userId';
+
+		if (!isValidField) {
+			return fail(400, { message: 'Invalid request' });
+		}
+
+		try {
+			if (user) {
+				const update: Record<string, string> = {};
+				update[field] = '';
+
+				await prisma.personalInformation.upsert({
+					where: {
+						userId: user.githubId
+					},
+					update,
+					create: {
+						userId: user.githubId
+					}
+				});
+
+				createRecentActivity(
+					'PERSONAL_INFORMATION_UPDATED',
+					`Updated personal information`,
+					user.githubId
+				);
+			}
+		} catch (error) {
+			console.error(error);
+			throw Error('Failed to update personal information');
 		}
 	}
 };

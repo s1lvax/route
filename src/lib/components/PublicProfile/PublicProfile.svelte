@@ -19,7 +19,7 @@
 <!-- Main Profile Content -->
 <div class="flex min-h-screen w-full flex-col items-center">
 	<main class="flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-		<ProfileHero {githubData} {userData} socials={userData.socials} />
+		<ProfileHero {githubData} {userData} />
 
 		<Separator class="my-4" />
 
