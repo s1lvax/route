@@ -116,7 +116,7 @@
 	<!-- Main Content Area -->
 	<div class="lg:pl-72">
 		<div
-			class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8"
+			class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b bg-background px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8"
 		>
 			<!-- Mobile Open Sidebar Button -->
 			<button on:click={toggleSidebar} type="button" class="-m-2.5 p-2.5 lg:hidden">
