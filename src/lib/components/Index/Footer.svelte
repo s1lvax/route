@@ -1,5 +1,6 @@
 <script>
 	import { socials } from '$lib/constants/socials';
+	import { findSocialIcon } from '$lib/utils/findSocialIcon';
 </script>
 
 <footer class="border-t">
@@ -8,7 +9,7 @@
 			{#each socials as social}
 				<a href={social.link} class="text-gray-400 hover:text-gray-500">
 					<span class="sr-only">{social.name}</span>
-					<svelte:component this={social.icon} />
+					<svelte:component this={findSocialIcon(social.name)} />
 				</a>
 			{/each}
 		</div>
