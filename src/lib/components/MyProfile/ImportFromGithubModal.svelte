@@ -75,7 +75,7 @@
 </script>
 
 {#if isModalVisible}
-	<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+	<div class="relative z-50" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 		<div
 			class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
 			aria-hidden="true"
