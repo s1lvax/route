@@ -44,7 +44,7 @@
 							<span
 								class={`flex h-8 w-8 items-center justify-center rounded-full ${getActivityColor(activity.activityType)}`}
 							>
-								<svelte:component this={findSocialIcon(activity.activityType)} class="h-5 w-5 " />
+								<svelte:component this={findSocialIcon(activity.activityType)} class="h-5 w-5" />
 							</span>
 						</div>
 						<div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">

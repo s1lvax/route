@@ -5,8 +5,10 @@
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import type { Link } from '@prisma/client';
+	import ImportFromGithub from '$lib/components/MyProfile/ImportFromGithub.svelte';
 
 	export let data: SuperValidated<Infer<LinksSchema>>;
+	export let username: string;
 	export let linksLength: number;
 	export let links: Link[] = [];
 	let isLimitReached = false;
@@ -21,13 +23,8 @@
 	$: $formData.order = linksLength;
 </script>
 
-<form
-	method="POST"
-	use:enhance
-	action="?/createLink"
-	class="flex w-full max-w-lg items-start justify-start space-x-4"
->
-	<div class="flex flex-col">
+<form method="POST" use:enhance action="?/createLink" class="w-full max-w-lg space-y-4">
+	<div class="flex space-x-4">
 		<Form.Field {form} name="title">
 			<Form.Control let:attrs>
 				<Form.Label>Title</Form.Label>
@@ -35,9 +32,7 @@
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
-	</div>
 
-	<div class="flex flex-col">
 		<Form.Field {form} name="url">
 			<Form.Control let:attrs>
 				<Form.Label>URL</Form.Label>
@@ -47,16 +42,16 @@
 		</Form.Field>
 	</div>
 
-	<div class="space-y-2">
-		<span class="invisible block">a</span>
-		<Form.Button disabled={isLimitReached} class="mt-5 flex align-bottom">Add</Form.Button>
-	</div>
-
 	<Form.Field {form} name="order">
 		<Form.Control let:attrs>
 			<Input {...attrs} bind:value={$formData.order} type="hidden" />
 		</Form.Control>
 	</Form.Field>
+
+	<div class="flex space-x-4">
+		<Form.Button disabled={isLimitReached}>Add</Form.Button>
+		<ImportFromGithub {linksLength} {username} />
+	</div>
 </form>
 
 {#if isLimitReached}
