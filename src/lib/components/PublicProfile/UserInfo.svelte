@@ -10,11 +10,10 @@
 	import Hobbies from '$lib/components/PublicProfile/Hobbies.svelte';
 	import Socials from '$lib/components/PublicProfile/Socials.svelte';
 	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
-	import type { Social } from '@prisma/client';
+	import { Mail } from 'lucide-svelte';
 
 	export let githubData: GithubData | null;
 	export let userData: PublicProfile;
-	export let socials: Social[];
 </script>
 
 <Card.Root class="flex h-full flex-col">
@@ -40,7 +39,9 @@
 
 					<div class="flex flex-col items-center justify-center space-y-4 text-center">
 						{#if githubData}
-							{#if githubData?.name}
+							{#if userData.personalInformation?.fullName}
+								<p class="text-4xl font-bold">{userData.personalInformation.fullName}</p>
+							{:else if githubData?.name}
 								<p class="text-4xl font-bold">{githubData.name}</p>
 							{:else}
 								<p class="text-4xl font-bold">{userData.username}</p>
@@ -65,6 +66,17 @@
 							{#if githubData?.company}
 								<p class="text-muted-foreground">Currently at {githubData?.company}</p>
 							{/if}
+
+							{#if userData.personalInformation?.email}
+								<div class="flex items-center space-x-2">
+									<Mail class="h-4 w-4" />
+									<a
+										href="mailto:{userData.personalInformation.email}"
+										class="text-muted-foreground hover:underline"
+										>{userData.personalInformation.email}</a
+									>
+								</div>
+							{/if}
 						{:else}
 							<Skeleton class="h-10 w-[200px]" />
 							<Skeleton class="h-[22px] w-[150px] rounded-full" />
@@ -76,7 +88,7 @@
 			<div class="information flex flex-col justify-between">
 				<div class="grid grid-cols-1 gap-2 md:grid-cols-2">
 					<div class="socials max-h-full">
-						<Socials {githubData} {socials} />
+						<Socials {githubData} socials={userData.socials} />
 					</div>
 					<div class="hobbies">
 						<Hobbies {userData} />
