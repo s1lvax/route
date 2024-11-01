@@ -186,5 +186,43 @@ export const actions: Actions = {
 		return {
 			form
 		};
+	},
+	resetPersonalInformation: async ({ url }) => {
+		const field = url.searchParams.get('field');
+		const isValidField =
+			field != null &&
+			Object.keys(prisma.personalInformation.fields).includes(field) &&
+			field != 'id' &&
+			field != 'userId';
+
+		if (!isValidField) {
+			return fail(400, { message: 'Invalid request' });
+		}
+
+		try {
+			if (user) {
+				const update: Record<string, string> = {};
+				update[field] = '';
+
+				await prisma.personalInformation.upsert({
+					where: {
+						userId: user.githubId
+					},
+					update,
+					create: {
+						userId: user.githubId
+					}
+				});
+
+				createRecentActivity(
+					'PERSONAL_INFORMATION_UPDATED',
+					`Updated personal information`,
+					user.githubId
+				);
+			}
+		} catch (error) {
+			console.error(error);
+			throw Error('Failed to update personal information');
+		}
 	}
 };
