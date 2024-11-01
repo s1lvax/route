@@ -6,6 +6,8 @@
 	import UserSocials from '$lib/components/MyProfile/UserSocials.svelte';
 	import HobbyForm from '$lib/components/MyProfile/HobbyForm.svelte';
 	import UserHobbies from '$lib/components/MyProfile/UserHobbies.svelte';
+	import PersonalInformationForm from '$lib/components/MyProfile/PersonalInformationForm.svelte';
+	import PersonalInformation from '$lib/components/MyProfile/PersonalInformation.svelte';
 
 	export let data: PageData;
 </script>
@@ -39,6 +41,19 @@
 			</FormCardHeader>
 			<Card.Content class="grid gap-8">
 				<UserHobbies hobbies={data.hobbies} />
+			</Card.Content>
+		</Card.Root>
+	</div>
+	<div>
+		<Card.Root>
+			<FormCardHeader
+				title="Personal Information"
+				description="You can add information about yourself here"
+			>
+				<PersonalInformationForm data={data.personalInformationForm} />
+			</FormCardHeader>
+			<Card.Content class="grid gap-8">
+				<PersonalInformation data={data.personalInformation} />
 			</Card.Content>
 		</Card.Root>
 	</div>

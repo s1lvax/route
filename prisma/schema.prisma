@@ -61,6 +61,13 @@ model Hobby {
   postedBy  User     @relation(fields: [userId], references: [githubId])
 }
 
+model PersonalInformation {
+  id       Int     @id @default(autoincrement())
+  userId   Int     @unique
+  email    String?
+  fullName String?
+}
+
 model Social {
   id        Int      @id @default(autoincrement())
   userId    Int
