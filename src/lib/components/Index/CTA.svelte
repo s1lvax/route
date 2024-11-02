@@ -21,7 +21,7 @@
 						><UserPen /> <span>My Profile</span></Button
 					>
 					<Button
-						href="https://discord.gg/9XuRcaZR"
+						href="https://discord.gg/UJPrgQvrUv"
 						target="_blank"
 						class="flex items-center space-x-2"
 						variant="secondary"
