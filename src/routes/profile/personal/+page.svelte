@@ -8,6 +8,7 @@
 	import UserHobbies from '$lib/components/MyProfile/UserHobbies.svelte';
 	import PersonalInformationForm from '$lib/components/MyProfile/PersonalInformationForm.svelte';
 	import PersonalInformation from '$lib/components/MyProfile/PersonalInformation.svelte';
+	import CryptoForm from '$lib/components/MyProfile/CryptoForm.svelte';
 
 	export let data: PageData;
 </script>
@@ -53,7 +54,24 @@
 				<PersonalInformationForm data={data.personalInformationForm} />
 			</FormCardHeader>
 			<Card.Content class="grid gap-8">
-				<PersonalInformation data={data.personalInformation} />
+				{#if data.personalInformation}
+					<PersonalInformation data={data.personalInformation} />
+				{/if}
+			</Card.Content>
+		</Card.Root>
+	</div>
+	<div>
+		<Card.Root>
+			<FormCardHeader
+				title="Crypto Wallets"
+				description="You can add your crypto wallets here that will be shown on your profile footer"
+			>
+				<CryptoForm data={data.cryptoForm} />
+			</FormCardHeader>
+			<Card.Content class="grid gap-8">
+				{#if data.personalInformation}
+					<PersonalInformation data={data.personalInformation} />
+				{/if}
 			</Card.Content>
 		</Card.Root>
 	</div>
