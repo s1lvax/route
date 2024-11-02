@@ -160,12 +160,10 @@
 						</Table.Row>
 					</Table.Header>
 					<Table.Body>
-						{#if data.userData.openToCollaborating}
-							<Table.Row>
-								<Table.Cell>Open to Collaborating</Table.Cell>
-								<Table.Cell>{data.userData.openToCollaborating}</Table.Cell>
-							</Table.Row>
-						{/if}
+						<Table.Row>
+							<Table.Cell>Open to Collaborating</Table.Cell>
+							<Table.Cell>{data.userData.openToCollaborating}</Table.Cell>
+						</Table.Row>
 					</Table.Body>
 				</Table.Root>
 
