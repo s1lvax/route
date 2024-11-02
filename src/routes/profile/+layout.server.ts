@@ -78,6 +78,10 @@ export const load: LayoutServerLoad = async (event) => {
 		where: { userId: user.githubId }
 	});
 
+	const crypto = await prisma.cryptoWallets.findMany({
+		where: { userId: user.githubId }
+	});
+
 	// Create userStats object
 	const userData = {
 		username: user.githubUsername,
@@ -105,6 +109,7 @@ export const load: LayoutServerLoad = async (event) => {
 		socials,
 		spotifyToken,
 		chessComUsername,
+		crypto,
 		form: linksForm,
 		skillsForm,
 		hobbiesForm,

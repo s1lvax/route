@@ -111,7 +111,7 @@ model IntegrationChessCom {
 model CryptoWallets {
   id         Int      @id @default(autoincrement())
   usedBy     User     @relation(fields: [userId], references: [githubId])
-  userId     Int      @unique
+  userId     Int      
   cryptoName String
   wallet     String
   createdAt  DateTime @default(now())

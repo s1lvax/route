@@ -29,7 +29,7 @@
 <form
 	method="POST"
 	use:enhance
-	action="?/createSocial"
+	action="?/createCrypto"
 	class="flex items-center justify-between space-x-4"
 >
 	<div class="flex flex-grow items-start space-x-2">

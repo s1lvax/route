@@ -57,6 +57,10 @@ export const load: PageServerLoad = async ({ params }) => {
 		where: { userId: user.githubId }
 	});
 
+	const crypto = await prisma.cryptoWallets.findMany({
+		where: { userId: user.githubId }
+	});
+
 	const userData: PublicProfile = {
 		links,
 		skills,
@@ -65,7 +69,8 @@ export const load: PageServerLoad = async ({ params }) => {
 		chessComUsername: chessCom ? chessCom.username : null,
 		username: username,
 		isOpenToCollaborating: isOpenToCollaborating?.openToCollaborating,
-		hobbies
+		hobbies,
+		crypto
 	};
 
 	return {

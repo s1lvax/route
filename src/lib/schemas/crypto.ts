@@ -5,7 +5,7 @@ const bitcoinRegex = /^(1|3|bc1)[a-zA-HJ-NP-Z0-9]{25,39}$/;
 const ethereumRegex = /^0x[a-fA-F0-9]{40}$/;
 const moneroRegex = /^(4|8)[0-9AB][1-9A-HJ-NP-Za-km-z]{93}$/;
 
-const CryptoNameEnum = z.enum(['bitcoin', 'ethereum', 'monero']);
+const CryptoNameEnum = z.enum(['Bitcoin', 'Ethereum', 'Monero']);
 
 export const cryptoSchema = z
 	.object({
@@ -16,19 +16,19 @@ export const cryptoSchema = z
 		const { cryptoName, wallet } = data;
 
 		// Validate based on the cryptoName
-		if (cryptoName === 'bitcoin' && !bitcoinRegex.test(wallet)) {
+		if (cryptoName === 'Bitcoin' && !bitcoinRegex.test(wallet)) {
 			ctx.addIssue({
 				code: 'custom',
 				path: ['wallet'],
 				message: 'Invalid Bitcoin address format.'
 			});
-		} else if (cryptoName === 'ethereum' && !ethereumRegex.test(wallet)) {
+		} else if (cryptoName === 'Ethereum' && !ethereumRegex.test(wallet)) {
 			ctx.addIssue({
 				code: 'custom',
 				path: ['wallet'],
 				message: 'Invalid Ethereum address format.'
 			});
-		} else if (cryptoName === 'monero' && !moneroRegex.test(wallet)) {
+		} else if (cryptoName === 'Monero' && !moneroRegex.test(wallet)) {
 			ctx.addIssue({
 				code: 'custom',
 				path: ['wallet'],

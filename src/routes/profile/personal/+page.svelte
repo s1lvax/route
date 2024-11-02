@@ -9,6 +9,7 @@
 	import PersonalInformationForm from '$lib/components/MyProfile/PersonalInformationForm.svelte';
 	import PersonalInformation from '$lib/components/MyProfile/PersonalInformation.svelte';
 	import CryptoForm from '$lib/components/MyProfile/CryptoForm.svelte';
+	import UserCrypto from '$lib/components/MyProfile/UserCrypto.svelte';
 
 	export let data: PageData;
 </script>
@@ -69,9 +70,7 @@
 				<CryptoForm data={data.cryptoForm} />
 			</FormCardHeader>
 			<Card.Content class="grid gap-8">
-				{#if data.personalInformation}
-					<PersonalInformation data={data.personalInformation} />
-				{/if}
+				<UserCrypto crypto={data.crypto} />
 			</Card.Content>
 		</Card.Root>
 	</div>

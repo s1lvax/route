@@ -10,7 +10,8 @@ import {
 	IconBrandDiscordFilled,
 	IconBrandGitlab,
 	IconBrandLinkedin,
-	IconBrandTelegram
+	IconBrandTelegram,
+	IconBrandBinance
 } from '@tabler/icons-svelte';
 
 const icons: Record<string, typeof IconPlus> = {
@@ -24,6 +25,8 @@ const icons: Record<string, typeof IconPlus> = {
 	LINK_SPOTIFY: IconBrandSpotifyFilled,
 	CHESS_COM_CREATED: IconChess,
 	CHESS_COM_DELETED: IconChess,
+	CRYPTO_CREATED: IconBrandBinance,
+	CRYPTO_DELETED: IconBrandBinance,
 	Discord: IconBrandDiscordFilled,
 	LinkedIn: IconBrandLinkedin,
 	Telegram: IconBrandTelegram,

@@ -15,7 +15,9 @@ export const createRecentActivity = async (
 		| 'SKILL_DELETED'
 		| 'CHESS_COM_CREATED'
 		| 'CHESS_COM_DELETED'
-		| 'PERSONAL_INFORMATION_UPDATED',
+		| 'PERSONAL_INFORMATION_UPDATED'
+		| 'CRYPTO_CREATED'
+		| 'CRYPTO_DELETED',
 	activityDescription: string,
 	userId: number
 ): Promise<void> => {
