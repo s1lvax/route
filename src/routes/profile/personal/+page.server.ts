@@ -9,6 +9,7 @@ import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
 import { hobbiesSchema } from '$lib/schemas/hobbies';
 import { createRecentActivity } from '$lib/utils/createRecentActivity';
 import { personalInformationSchema } from '$lib/schemas/personal-information';
+import { cryptoSchema } from '$lib/schemas/crypto';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -223,6 +224,74 @@ export const actions: Actions = {
 		} catch (error) {
 			console.error(error);
 			throw Error('Failed to update personal information');
+		}
+	},
+	createCrypto: async (event) => {
+		const form = await superValidate(event, zod(cryptoSchema));
+		if (!form.valid) {
+			return fail(400, {
+				form
+			});
+		}
+
+		// If no errors, get data
+		const { cryptoName, wallet } = form.data;
+
+		if (user) {
+			try {
+				await prisma.cryptoWallets.create({
+					data: {
+						cryptoName,
+						wallet,
+						userId: user.githubId
+					}
+				});
+
+				//add the crypto creation to the recent activity of the user
+				createRecentActivity(
+					'CRYPTO_CREATED',
+					`Add your ${cryptoName} address to the footer`,
+					user.githubId
+				);
+			} catch (error) {
+				console.error(error);
+				throw Error('Failed to create social');
+			}
+		}
+
+		return {
+			form
+		};
+	},
+	deleteCrypto: async ({ url }) => {
+		//get hobby id from url
+		const id = url.searchParams.get('id');
+
+		//if no id found, return error
+		if (!id) {
+			return fail(400, { message: 'Invalid request' });
+		}
+
+		//delete social
+		try {
+			if (user) {
+				await prisma.cryptoWallets.delete({
+					where: {
+						id: Number(id),
+						userId: user.githubId
+					}
+				});
+
+				//add the social deletion to the recent activity of the user
+				createRecentActivity(
+					'CRYPTO_DELETED',
+					`Removed crypto address from your footer`,
+					user.githubId
+				);
+			}
+		} catch (err) {
+			console.log(err);
+			return fail(500, { message: 'Something went wrong.' });
 		}
 	}
 };

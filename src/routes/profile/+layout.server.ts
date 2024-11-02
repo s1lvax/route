@@ -12,6 +12,7 @@ import { socialsSchema } from '$lib/schemas/socials';
 import { personalInformationSchema } from '$lib/schemas/personal-information';
 import type { LayoutServerLoad } from '../$types';
 import { chessComSchema } from '$lib/schemas/integration-chesscom';
+import { cryptoSchema } from '$lib/schemas/crypto';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -77,6 +78,10 @@ export const load: LayoutServerLoad = async (event) => {
 		where: { userId: user.githubId }
 	});
 
+	const crypto = await prisma.cryptoWallets.findMany({
+		where: { userId: user.githubId }
+	});
+
 	// Create userStats object
 	const userData = {
 		username: user.githubUsername,
@@ -91,6 +96,7 @@ export const load: LayoutServerLoad = async (event) => {
 	const socialsForm = await superValidate(zod(socialsSchema));
 	const personalInformationForm = await superValidate(zod(personalInformationSchema));
 	const chessComForm = await superValidate(zod(chessComSchema));
+	const cryptoForm = await superValidate(zod(cryptoSchema));
 
 	// Return data to the frontend
 	return {
@@ -103,11 +109,13 @@ export const load: LayoutServerLoad = async (event) => {
 		socials,
 		spotifyToken,
 		chessComUsername,
+		crypto,
 		form: linksForm,
 		skillsForm,
 		hobbiesForm,
 		socialsForm,
 		personalInformationForm,
-		chessComForm
+		chessComForm,
+		cryptoForm
 	};
 };
