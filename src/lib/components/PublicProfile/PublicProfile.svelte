@@ -7,6 +7,7 @@
 	import ProfileFooter from '$lib/components/PublicProfile/ProfileFooter.svelte';
 	import ProfileHero from '$lib/components/PublicProfile/ProfileHero.svelte';
 	import { Separator } from '$lib/components//ui/separator';
+	import ChessComStats from '$lib/components/MyProfile/ChessComStats.svelte';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
@@ -18,18 +19,28 @@
 <!-- Main Profile Content -->
 <div class="flex min-h-screen w-full flex-col items-center">
 	<main class="flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-		<ProfileHero {githubData} {userData} socials={userData.socials} />
+		<ProfileHero {githubData} {userData} />
 
 		<Separator class="my-4" />
 
-		<!-- Links and Tech Stack Side by Side -->
-		<div class="mt-8 grid gap-4 md:grid-cols-2">
-			<Links {userData} />
-			<TechStack {userData} />
+		<!-- Links, Tech Stack, and Chess Stats Side by Side -->
+		<div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+			{#if userData.links.length > 0}
+				<Links {userData} />
+			{/if}
+
+			{#if userData.skills.length > 0}
+				<TechStack {userData} />
+			{/if}
+
+			<!-- Chess Stats Section -->
+			{#if userData.chessComUsername != null}
+				<ChessComStats chessComUsername={userData.chessComUsername} />
+			{/if}
 		</div>
 
 		<div class="flex flex-col items-center justify-center gap-4">
-			<ProfileFooter />
+			<ProfileFooter crypto={userData.crypto} />
 		</div>
 	</main>
 </div>

@@ -13,7 +13,7 @@ RUN pnpm install
 # Copy the rest of the files and build the application
 COPY . .
 RUN npx prisma generate && npx prisma db push --accept-data-loss
-RUN pnpm run build
+RUN NODE_OPTIONS="--max-old-space-size=8192" pnpm build
 
 # Prune development dependencies
 RUN pnpm prune --prod

@@ -15,6 +15,6 @@
 		</div>
 	</Card.Header>
 	<Card.Content>
-		<div class="text-2xl font-bold">{data}</div>
+		<div class="text-2xl font-bold">{@html data}</div>
 	</Card.Content>
 </Card.Root>

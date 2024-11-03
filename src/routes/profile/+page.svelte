@@ -1,23 +1,14 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
+	import Timeline from '$lib/components/MyProfile/Timeline.svelte';
 	import type { PageData } from './$types';
-
-	import LinkForm from '$lib/components/MyProfile/LinkForm.svelte';
+	import * as Card from '$lib/components/ui/card';
+	import * as Table from '$lib/components/ui/table';
 	import UserStats from '$lib/components/MyProfile/UserStats.svelte';
-	import UserLinks from '$lib/components/MyProfile/UserLinks.svelte';
-	import SkillsForm from '$lib/components/MyProfile/SkillsForm.svelte';
-	import UserSkills from '$lib/components/MyProfile/UserSkills.svelte';
-
 	import { getGithubData } from '$lib/utils/getGithubData';
 	import type { GithubData } from '$lib/types/GithubData';
 	import { onMount } from 'svelte';
 	import type { PrivateProfileData } from '$lib/types/PrivateProfileData';
-	import UserSettings from '$lib/components/MyProfile/UserSettings.svelte';
-	import HobbyForm from '$lib/components/MyProfile/HobbyForm.svelte';
-	import UserHobbies from '$lib/components/MyProfile/UserHobbies.svelte';
-	import SocialsForm from '$lib/components/MyProfile/SocialsForm.svelte';
-	import UserSocials from '$lib/components/MyProfile/UserSocials.svelte';
-	import FormCardHeader from '$lib/components/MyProfile/FormCardHeader.svelte';
+	import { IconCheck } from '@tabler/icons-svelte';
 
 	let githubData: GithubData | null = null;
 	let privateProfileData: PrivateProfileData | null = null;
@@ -43,57 +34,174 @@
 	});
 </script>
 
-<div class="flex min-h-screen w-full flex-col">
-	<main class="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-		<UserSettings {data} />
-		<UserStats {privateProfileData} />
+<UserStats {privateProfileData} />
 
-		<div class="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-			<Card.Root class="xl:col-span-2">
-				<FormCardHeader
-					description="The links visible on your profile. You can drag links around to modify the order"
-					title="Links"
-				>
-					<LinkForm data={data.form} linksLength={data.links.length} links={data.links} />
-				</FormCardHeader>
-				<Card.Content>
-					<UserLinks links={data.links} />
-				</Card.Content>
-			</Card.Root>
+<div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+	<Card.Root class="col-span-5">
+		<Card.Header>
+			<Card.Title>Welcome, {data.userData.username}!</Card.Title>
+			<Card.Description>Here’s a quick overview of your profile:</Card.Description>
+		</Card.Header>
 
-			<Card.Root>
-				<FormCardHeader
-					description="You can drag skills around to modify the order"
-					title="Skills & Tools"
-				>
-					<SkillsForm
-						data={data.skillsForm}
-						skillsLength={data.skills.length}
-						skills={data.skills}
-					/>
-				</FormCardHeader>
-				<Card.Content class="grid gap-8">
-					<UserSkills skills={data.skills} />
-				</Card.Content>
-			</Card.Root>
+		<Card.Content>
+			<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+				<!-- Integrations Table -->
+				<Table.Root>
+					<Table.Caption>Integrations</Table.Caption>
+					<Table.Header>
+						<Table.Row>
+							<Table.Head>Integration</Table.Head>
+							<Table.Head>Status</Table.Head>
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						<Table.Row>
+							<Table.Cell>Spotify</Table.Cell>
+							<Table.Cell>
+								{#if data.spotifyToken}
+									<svelte:component this={IconCheck}></svelte:component>
+								{:else}
+									Not Linked
+								{/if}
+							</Table.Cell>
+						</Table.Row>
+						<Table.Row>
+							<Table.Cell>Chess.com</Table.Cell>
+							<Table.Cell>
+								{#if data.chessComUsername}
+									<svelte:component this={IconCheck} />
+								{:else}
+									Not Linked
+								{/if}
+							</Table.Cell>
+						</Table.Row>
+						<!-- Add other integrations here if needed -->
+					</Table.Body>
+				</Table.Root>
 
-			<Card.Root>
-				<FormCardHeader title="Hobbies" description="You can add your hobbies here">
-					<HobbyForm data={data.hobbiesForm} />
-				</FormCardHeader>
-				<Card.Content class="grid gap-8">
-					<UserHobbies hobbies={data.hobbies} />
-				</Card.Content>
-			</Card.Root>
+				<!-- Socials Table -->
 
-			<Card.Root>
-				<FormCardHeader title="Socials" description="You can add your social media presence here">
-					<SocialsForm data={data.socialsForm} />
-				</FormCardHeader>
-				<Card.Content class="grid gap-8">
-					<UserSocials socials={data.socials} />
-				</Card.Content>
-			</Card.Root>
-		</div>
-	</main>
+				<Table.Root>
+					<Table.Caption>Socials</Table.Caption>
+					<Table.Header>
+						<Table.Row>
+							<Table.Head>Social</Table.Head>
+							<Table.Head>Status</Table.Head>
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						{#if data.socials.length > 0}
+							{#each data.socials as social}
+								<Table.Row>
+									<Table.Cell>{social.social}</Table.Cell>
+									<Table.Cell><svelte:component this={IconCheck} /></Table.Cell>
+								</Table.Row>
+							{/each}
+						{/if}
+					</Table.Body>
+				</Table.Root>
+
+				<!-- Skills & Tools Table -->
+				<Table.Root>
+					<Table.Caption>Skills</Table.Caption>
+					<Table.Header>
+						<Table.Row>
+							<Table.Head>Skill</Table.Head>
+							<Table.Head>Level</Table.Head>
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						{#if data.skills.length > 0}
+							{#each data.skills as skill}
+								<Table.Row>
+									<Table.Cell>{skill.title}</Table.Cell>
+									<Table.Cell>Lvl {skill.level}</Table.Cell>
+								</Table.Row>
+							{/each}
+						{:else}
+							<Table.Row>
+								<Table.Cell>No skills added yet.</Table.Cell>
+							</Table.Row>
+						{/if}
+					</Table.Body>
+				</Table.Root>
+
+				<Table.Root>
+					<Table.Caption>Hobbies</Table.Caption>
+					<Table.Header>
+						<Table.Row>
+							<Table.Head>Hobby</Table.Head>
+							<Table.Head>Status</Table.Head>
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						{#if data.hobbies.length > 0}
+							{#each data.hobbies as hobby}
+								<Table.Row>
+									<Table.Cell>{hobby.hobby}</Table.Cell>
+									<Table.Cell><svelte:component this={IconCheck} /></Table.Cell>
+								</Table.Row>
+							{/each}
+						{:else}
+							<Table.Row>
+								<Table.Cell>No hobbies added yet.</Table.Cell>
+							</Table.Row>
+						{/if}
+					</Table.Body>
+				</Table.Root>
+
+				<!-- Settings Table -->
+				<Table.Root>
+					<Table.Caption>Settings</Table.Caption>
+					<Table.Header>
+						<Table.Row>
+							<Table.Head>Setting</Table.Head>
+							<Table.Head>Value</Table.Head>
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						<Table.Row>
+							<Table.Cell>Open to Collaborating</Table.Cell>
+							<Table.Cell>{data.userData.openToCollaborating}</Table.Cell>
+						</Table.Row>
+					</Table.Body>
+				</Table.Root>
+
+				{#if data.crypto.length > 0}
+					<!-- Crypto Table -->
+					<Table.Root>
+						<Table.Caption>Crypto Wallets</Table.Caption>
+						<Table.Header>
+							<Table.Row>
+								<Table.Head>Wallet</Table.Head>
+								<Table.Head>Status</Table.Head>
+							</Table.Row>
+						</Table.Header>
+						<Table.Body>
+							{#if data.crypto}
+								{#each data.crypto as crypto}
+									<Table.Row>
+										<Table.Cell>{crypto.cryptoName}</Table.Cell>
+										<Table.Cell><svelte:component this={IconCheck} /></Table.Cell>
+									</Table.Row>
+								{/each}
+							{:else}
+								<Table.Row>
+									<Table.Cell>No data found.</Table.Cell>
+								</Table.Row>
+							{/if}
+						</Table.Body>
+					</Table.Root>
+				{/if}
+			</div>
+		</Card.Content>
+	</Card.Root>
+	<Card.Root class="col-span-2">
+		<Card.Header>
+			<Card.Title>Recent Activity</Card.Title>
+		</Card.Header>
+		<Card.Content>
+			<Timeline recentActivity={data.recentActivity} />
+		</Card.Content>
+	</Card.Root>
 </div>

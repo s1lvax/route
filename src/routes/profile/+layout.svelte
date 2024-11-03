@@ -1,6 +1,7 @@
-<script>
-	import Navbar from '$lib/components/Shared/Navbar.svelte';
+<script lang="ts">
+	import SideNav from '$lib/components/MyProfile/SideNav.svelte';
 </script>
 
-<Navbar />
-<slot />
+<SideNav>
+	<slot />
+</SideNav>

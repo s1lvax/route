@@ -6,7 +6,8 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
 	import * as Select from '$lib/components/ui/select';
-	import { socials } from '$lib/constants/socials';
+	import { socials, SocialsInputType } from '$lib/constants/socials';
+	import { findSocialIcon } from '$lib/utils/findSocialIcon';
 
 	export let data: SuperValidated<Infer<SocialsSchema>>;
 
@@ -23,6 +24,9 @@
 				value: $formData.social
 			}
 		: undefined;
+
+	$: selectedSocialInputType =
+		socials.find((s) => s.name === $formData.social)?.inputType ?? SocialsInputType.URL;
 </script>
 
 <form
@@ -47,9 +51,10 @@
 					<Select.Content>
 						{#each socials as social}
 							<Select.Item value={social.name}>
-								<span class="flex flex-row items-center justify-center gap-4"
-									>{@html social.svg}{social.name}</span
-								>
+								<div class="flex flex-row items-center justify-center gap-4">
+									<svelte:component this={findSocialIcon(social.name)} />
+									<span>{social.name}</span>
+								</div>
 							</Select.Item>
 						{/each}
 					</Select.Content>
@@ -60,7 +65,7 @@
 		</Form.Field>
 		<Form.Field {form} name="socialURL">
 			<Form.Control let:attrs>
-				<Form.Label>Social URL</Form.Label>
+				<Form.Label>{selectedSocialInputType}</Form.Label>
 				<Input {...attrs} bind:value={$formData.socialURL} />
 			</Form.Control>
 			<Form.FieldErrors />

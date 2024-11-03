@@ -1,4 +1,5 @@
 import { prisma } from '$lib/server/prisma';
+import type { PublicProfile } from '$lib/types/PublicProfile';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -48,13 +49,28 @@ export const load: PageServerLoad = async ({ params }) => {
 		where: { userId: user.githubId }
 	});
 
-	const userData = {
+	const personalInformation = await prisma.personalInformation.findFirst({
+		where: { userId: user.githubId }
+	});
+
+	const chessCom = await prisma.integrationChessCom.findUnique({
+		where: { userId: user.githubId }
+	});
+
+	const crypto = await prisma.cryptoWallets.findMany({
+		where: { userId: user.githubId }
+	});
+
+	const userData: PublicProfile = {
 		links,
 		skills,
 		socials,
+		personalInformation,
+		chessComUsername: chessCom ? chessCom.username : null,
 		username: username,
 		isOpenToCollaborating: isOpenToCollaborating?.openToCollaborating,
-		hobbies
+		hobbies,
+		crypto
 	};
 
 	return {

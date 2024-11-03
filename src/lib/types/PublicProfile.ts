@@ -1,4 +1,4 @@
-import type { Social } from '@prisma/client';
+import type { CryptoWallets, PersonalInformation, Social } from '@prisma/client';
 
 export interface PublicProfile {
 	links: Array<{ title: string; url: string }>;
@@ -7,4 +7,7 @@ export interface PublicProfile {
 	isOpenToCollaborating: boolean | undefined;
 	hobbies: Array<{ hobby: string }>;
 	socials: Social[];
+	personalInformation: PersonalInformation | null;
+	chessComUsername: string | null;
+	crypto: CryptoWallets[];
 }

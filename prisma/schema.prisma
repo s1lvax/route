@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -14,17 +15,21 @@ datasource db {
 }
 
 model User {
-  id                  Int           @id @default(autoincrement())
-  githubId            Int           @unique
-  githubUsername      String        @unique
-  views               Int           @default(0)
-  openToCollaborating Boolean       @default(false)
-  createdAt           DateTime      @default(now())
-  updatedAt           DateTime      @updatedAt
+  id                  Int                  @id @default(autoincrement())
+  githubId            Int                  @unique
+  githubUsername      String               @unique
+  views               Int                  @default(0)
+  openToCollaborating Boolean              @default(false)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
   Link                Link[]
   Skill               Skill[]
   Hobby               Hobby[]
   Social              Social[]
+  spotifyToken        SpotifyToken?
+  RecentActivity      RecentActivity[]
+  IntegrationChessCom IntegrationChessCom?
+  CryptoWallets       CryptoWallets[]
 }
 
 model Link {
@@ -57,6 +62,13 @@ model Hobby {
   postedBy  User     @relation(fields: [userId], references: [githubId])
 }
 
+model PersonalInformation {
+  id       Int     @id @default(autoincrement())
+  userId   Int     @unique
+  email    String?
+  fullName String?
+}
+
 model Social {
   id        Int      @id @default(autoincrement())
   userId    Int
@@ -64,4 +76,44 @@ model Social {
   socialURL String
   createdAt DateTime @default(now())
   postedBy  User     @relation(fields: [userId], references: [githubId])
+}
+
+model SpotifyToken {
+  id           Int      @id @default(autoincrement())
+  usedBy       User     @relation(fields: [userId], references: [githubId])
+  userId       Int      @unique
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model RecentActivity {
+  id                  Int      @id @default(autoincrement())
+  usedBy              User     @relation(fields: [userId], references: [githubId])
+  userId              Int
+  activityType        String
+  activityDescription String
+  createdAt           DateTime @default(now())
+}
+
+model IntegrationChessCom {
+  id        Int      @id @default(autoincrement())
+  usedBy    User     @relation(fields: [userId], references: [githubId])
+  userId    Int      @unique
+  username  String
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CryptoWallets {
+  id         Int      @id @default(autoincrement())
+  usedBy     User     @relation(fields: [userId], references: [githubId])
+  userId     Int      
+  cryptoName String
+  wallet     String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

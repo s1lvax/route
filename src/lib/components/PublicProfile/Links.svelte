@@ -7,7 +7,7 @@
 </script>
 
 <!-- Links Section -->
-<Card.Root>
+<Card.Root class="max-h-[400px] overflow-y-auto">
 	<Card.Header>
 		<Card.Title>Links</Card.Title>
 		<Card.Description>Discover the developer's projects and favorite resources</Card.Description>
