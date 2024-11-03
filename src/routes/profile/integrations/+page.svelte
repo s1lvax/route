@@ -42,37 +42,7 @@
 			</Card.Content>
 		</Card.Root>
 	</div>
-	<div class="spotify">
-		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
-			<Card.Header>
-				<Card.Title class="flex flex-row items-center space-x-2">
-					<IconLink /> Spotify</Card.Title
-				>
-				<Card.Description>
-					Connect your Spotify account to display your currently playing song
-				</Card.Description>
-			</Card.Header>
-			<Card.Content>
-				{#if data.spotifyToken}
-					<div class="flex flex-col space-y-4">
-						<form action="?/unlinkSpotify" method="POST" use:enhance>
-							<Button variant="destructive" type="submit" class="flex items-center">
-								<AudioLines class="mr-2" />
-								<span>Unlink Spotify</span>
-							</Button>
-						</form>
 
-						<MusicPlayer githubUsername={data.userData.username} />
-					</div>
-				{:else}
-					<Button href="/api/spotify/login">
-						<AudioLines class="mr-2 text-green-700" />
-						<span>Link Spotify</span>
-					</Button>
-				{/if}
-			</Card.Content>
-		</Card.Root>
-	</div>
 	<div class="chess.com">
 		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
 			{#if data.chessComUsername}
@@ -105,6 +75,37 @@
 					</div>
 				</FormCardHeader>
 			{/if}
+		</Card.Root>
+	</div>
+	<div class="spotify">
+		<Card.Root class="pointer-events-none max-h-[500px] overflow-y-auto opacity-70 xl:col-span-2">
+			<Card.Header>
+				<Card.Title class="flex flex-row items-center space-x-2">
+					<IconLink /> Spotify (Coming Soon)</Card.Title
+				>
+				<Card.Description>
+					Connect your Spotify account to display your currently playing song
+				</Card.Description>
+			</Card.Header>
+			<Card.Content>
+				{#if data.spotifyToken}
+					<div class="flex flex-col space-y-4">
+						<form action="?/unlinkSpotify" method="POST" use:enhance>
+							<Button variant="destructive" type="submit" class="flex items-center">
+								<AudioLines class="mr-2" />
+								<span>Unlink Spotify</span>
+							</Button>
+						</form>
+
+						<MusicPlayer githubUsername={data.userData.username} />
+					</div>
+				{:else}
+					<Button href="/api/spotify/login" aria-disabled>
+						<AudioLines class="mr-2 text-green-700" />
+						<span>Link Spotify</span>
+					</Button>
+				{/if}
+			</Card.Content>
 		</Card.Root>
 	</div>
 </div>
