@@ -239,20 +239,44 @@ export const actions: Actions = {
 
 		if (user) {
 			try {
-				await prisma.cryptoWallets.create({
-					data: {
+				const existingCrypto = await prisma.cryptoWallets.findFirst({
+					where: {
 						cryptoName,
-						wallet,
 						userId: user.githubId
 					}
 				});
 
-				//add the crypto creation to the recent activity of the user
-				createRecentActivity(
-					'CRYPTO_CREATED',
-					`Add your ${cryptoName} address to the footer`,
-					user.githubId
-				);
+				if (existingCrypto) {
+					// Update if the wallet already exists
+					await prisma.cryptoWallets.update({
+						where: { id: existingCrypto.id },
+						data: {
+							wallet: wallet
+						}
+					});
+					//update the crypto creation to the recent activity of the user
+					createRecentActivity(
+						'CRYPTO_CREATED',
+						`Updated your ${cryptoName} wallet`,
+						user.githubId
+					);
+				} else {
+					// Create a new wallet if it doesn't exist
+					await prisma.cryptoWallets.create({
+						data: {
+							cryptoName: cryptoName,
+							wallet: wallet,
+							userId: user.githubId
+						}
+					});
+
+					//add the crypto creation to the recent activity of the user
+					createRecentActivity(
+						'CRYPTO_CREATED',
+						`Add your ${cryptoName} address to the footer`,
+						user.githubId
+					);
+				}
 			} catch (error) {
 				console.error(error);
 				throw Error('Failed to create social');
