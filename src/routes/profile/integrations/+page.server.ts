@@ -9,6 +9,7 @@ import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
 import { createRecentActivity } from '$lib/utils/createRecentActivity';
 import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
 import { chessComSchema } from '$lib/schemas/integration-chesscom';
+import { leetCodeSchema } from '$lib/schemas/integration-leetcode';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -157,4 +158,9 @@ export const actions: Actions = {
 			return fail(500, { message: 'Something went wrong.' });
 		}
 	}
+	
+
+	
+
+
 };

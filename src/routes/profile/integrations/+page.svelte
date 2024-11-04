@@ -112,8 +112,7 @@
 		<Card.Root class="pointer-events-none max-h-[500px] overflow-y-auto opacity-70 xl:col-span-2">
 			<Card.Header>
 				<Card.Title class="flex flex-row items-center space-x-2">
-					<IconLink /> LeetCode (Coming Soon)</Card.Title
-				>
+					<IconLink /> LeetCode</Card.Title>
 				<Card.Description>
 					Connect your LeetCode account to display your stats
 				</Card.Description>
@@ -130,7 +129,6 @@
 					</div>
 				{:else}
 					<Button href="/api/leetcode/login" aria-disabled>
-						<AudioLines class="mr-2 text-green-700" />
 						<span>Link LeetCode</span>
 					</Button>
 				{/if}
