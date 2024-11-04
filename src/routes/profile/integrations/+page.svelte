@@ -108,4 +108,34 @@
 			</Card.Content>
 		</Card.Root>
 	</div>
+	<div class="leetcode">
+		<Card.Root class="pointer-events-none max-h-[500px] overflow-y-auto opacity-70 xl:col-span-2">
+			<Card.Header>
+				<Card.Title class="flex flex-row items-center space-x-2">
+					<IconLink /> LeetCode (Coming Soon)</Card.Title
+				>
+				<Card.Description>
+					Connect your LeetCode account to display your stats
+				</Card.Description>
+			</Card.Header>
+			<Card.Content>
+				{#if true}
+					<div class="flex flex-col space-y-4">
+						<form action="?/unlinkLeetCode" method="POST" use:enhance>
+							<Button variant="destructive" type="submit" class="flex items-center">
+
+								<span>Unlink LeetCode</span>
+							</Button>
+						</form>
+					</div>
+				{:else}
+					<Button href="/api/leetcode/login" aria-disabled>
+						<AudioLines class="mr-2 text-green-700" />
+						<span>Link LeetCode</span>
+					</Button>
+				{/if}
+			</Card.Content>
+		</Card.Root>
+
+	</div>
 </div>
