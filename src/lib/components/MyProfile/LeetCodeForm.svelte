@@ -1,14 +1,14 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
-	import { chessComSchema, type ChessComSchema } from '$lib/schemas/integration-chesscom';
+    import { leetCodeSchema, type LeetCodeSchema } from '$lib/schemas/integration-leetcode';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let data: SuperValidated<Infer<ChessComSchema>>;
+	export let data: SuperValidated<Infer<LeetCodeSchema>>;
 
 	const form = superForm(data, {
-		validators: zodClient(chessComSchema),
+		validators: zodClient(leetCodeSchema),
 		resetForm: true
 	});
 
@@ -18,7 +18,7 @@
 <form
 	method="POST"
 	use:enhance
-	action="?/createChessCom"
+	action="?/createLeetCode"
 	class="flex items-center justify-between space-x-4"
 >
 	<div class="flex items-start space-x-2">
