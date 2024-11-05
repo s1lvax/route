@@ -11,6 +11,8 @@
 	import ChessComForm from '$lib/components/MyProfile/ChessComForm.svelte';
 	import { IconChess, IconLink } from '@tabler/icons-svelte';
 	import ChessComStats from '$lib/components/MyProfile/ChessComStats.svelte';
+	import LeetCodeForm from '$lib/components/MyProfile/LeetCodeForm.svelte';
+	import LeetCodeStats from '$lib/components/MyProfile/LeetCodeStats.svelte';
 
 	export let data: PageData;
 </script>
@@ -109,31 +111,33 @@
 		</Card.Root>
 	</div>
 	<div class="leetcode">
-		<Card.Root class="pointer-events-none max-h-[500px] overflow-y-auto opacity-70 xl:col-span-2">
+		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
+		  {#if data}
 			<Card.Header>
-				<Card.Title class="flex flex-row items-center space-x-2">
-					<IconLink /> LeetCode</Card.Title>
-				<Card.Description>
-					Connect your LeetCode account to display your stats
-				</Card.Description>
-			</Card.Header>
-			<Card.Content>
-				{#if true}
-					<div class="flex flex-col space-y-4">
-						<form action="?/unlinkLeetCode" method="POST" use:enhance>
-							<Button variant="destructive" type="submit" class="flex items-center">
-
-								<span>Unlink LeetCode</span>
-							</Button>
-						</form>
-					</div>
-				{:else}
-					<Button href="/api/leetcode/login" aria-disabled>
-						<span>Link LeetCode</span>
+			  <Card.Title class="flex flex-row items-center space-x-2">LeetCode</Card.Title>
+			  <Card.Description>
+				You can unlink your LeetCode account here to showcase your stats.
+			  </Card.Description>
+			  <Card.Content>
+				<div class="flex flex-col space-y-4">
+				  <form action="?/deleteLeetCode" method="POST" use:enhance>
+					<Button variant="destructive" type="submit">
+					  Unlink LeetCode
 					</Button>
-				{/if}
-			</Card.Content>
+				  </form>
+				  <LeetCodeStats leetCodeUsername={data.} />
+				</div>
+			  </Card.Content>
+			</Card.Header>
+		  {:else}
+			<FormCardHeader
+			  description="Link your LeetCode account to showcase your stats."
+			  title="LeetCode"
+			>
+			<!-- TODO Fix the data Issue -->
+			  <LeetCodeForm data={} />
+			</FormCardHeader>
+		  {/if}
 		</Card.Root>
-
-	</div>
+	  </div>
 </div>

@@ -5,7 +5,7 @@ export const leetCodeSchema = z.object({
     });
 
 
-export type LeetcodeSchema = typeof leetCodeSchema;
+export type LeetCodeSchema = typeof leetCodeSchema;
 
 
 
