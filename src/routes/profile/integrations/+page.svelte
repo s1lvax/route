@@ -15,6 +15,7 @@
 	import LeetCodeStats from '$lib/components/MyProfile/LeetCodeStats.svelte';
 
 	export let data: PageData;
+	console.log(data);
 </script>
 
 <h1
@@ -112,7 +113,7 @@
 	</div>
 	<div class="leetcode">
 		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
-		  {#if data}
+		  {#if data.leetCodeUsername}
 			<Card.Header>
 			  <Card.Title class="flex flex-row items-center space-x-2">LeetCode</Card.Title>
 			  <Card.Description>
@@ -125,7 +126,7 @@
 					  Unlink LeetCode
 					</Button>
 				  </form>
-				  <LeetCodeStats leetCodeUsername={data.} />
+				  <LeetCodeStats leetCodeUsername={data.leetCodeUsername.username} />
 				</div>
 			  </Card.Content>
 			</Card.Header>
@@ -135,9 +136,10 @@
 			  title="LeetCode"
 			>
 			<!-- TODO Fix the data Issue -->
-			  <LeetCodeForm data={} />
+			  <LeetCodeForm data={data.leetCodeForm} />
 			</FormCardHeader>
 		  {/if}
 		</Card.Root>
 	  </div>
+
 </div>

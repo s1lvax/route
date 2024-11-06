@@ -159,7 +159,6 @@ export const actions: Actions = {
 		}
 	},
 
-
 	createLeetCode: async (event) => {
 		const form = await superValidate(event, zod(leetCodeSchema));
 		if (!form.valid) return fail(400, { form });
@@ -188,21 +187,20 @@ export const actions: Actions = {
 		return { form };
 	  },
 	  
-	  deleteLeetCode: async ({ url }) => {
-		try {
-		  if (user) {
-			await prisma.integrationLeetCode.delete({
-			  where: { userId: user.githubId }
-			});
-	
-			createRecentActivity('LEETCODE_UNLINKED', `Unlinked your LeetCode account`, user.githubId);
-		  }
-		} catch (error) {
-		  console.error(error);
-		  return fail(500, { message: 'Something went wrong.' });
+	deleteLeetCode: async ({ url }) => {
+	try {
+		if (user) {
+		await prisma.integrationLeetCode.delete({
+			where: { userId: user.githubId }
+		});
+
+		createRecentActivity('LEETCODE_UNLINKED', `Unlinked your LeetCode account`, user.githubId);
 		}
-	  }
-	
+	} catch (error) {
+		console.error(error);
+		return fail(500, { message: 'Something went wrong.' });
+	}
+	}
 
 	
 

@@ -21,8 +21,8 @@ export async function fetchLeetCodeStats(username: string): Promise<LeetCodeStat
       }
    }
    `;
-
-   const response = await fetch('https://leetcode.com/graphql', {
+   // call is made through a server-side proxy
+   const response = await fetch('/api/leetcode', {
       method: 'POST',
       headers: {
          'Content-Type': 'application/json',
@@ -36,3 +36,4 @@ export async function fetchLeetCodeStats(username: string): Promise<LeetCodeStat
    const data = await response.json();
    return data?.data?.matchedUser || null;
 }
+

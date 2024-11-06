@@ -9,6 +9,7 @@
    onMount(async () => {
       try {
          data = await fetchLeetCodeStats(leetCodeUsername);
+         console.log('LeetCode stats:', data);
       } catch (error) {
          console.error('Error fetching LeetCode stats:', error);
       }
