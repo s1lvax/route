@@ -10,6 +10,5 @@ export interface PublicProfile {
 	personalInformation: PersonalInformation | null;
 	chessComUsername: string | null;
 	crypto: CryptoWallets[];
-	// TODO add leetCode to the userData
 	leetCode: IntegrationLeetCode | null;
 }
