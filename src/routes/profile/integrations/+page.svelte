@@ -116,9 +116,6 @@
 		  {#if data.leetCodeUsername}
 			<Card.Header>
 			  <Card.Title class="flex flex-row items-center space-x-2">LeetCode</Card.Title>
-			  <Card.Description>
-				You can unlink your LeetCode account here to showcase your stats.
-			  </Card.Description>
 			  <Card.Content>
 				<div class="flex flex-col space-y-4">
 				  <form action="?/deleteLeetCode" method="POST" use:enhance>
@@ -135,7 +132,6 @@
 			  description="Link your LeetCode account to showcase your stats."
 			  title="LeetCode"
 			>
-			<!-- TODO Fix the data Issue -->
 			  <LeetCodeForm data={data.leetCodeForm} />
 			</FormCardHeader>
 		  {/if}
