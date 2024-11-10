@@ -12,8 +12,6 @@
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
-	console.log(userData);
-	console.log(userData.leetCode?.username)
 	//Accept githubData as a prop
 	export let githubData: GithubData | null;
 </script>

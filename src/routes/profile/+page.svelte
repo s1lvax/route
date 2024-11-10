@@ -75,6 +75,16 @@
 								{/if}
 							</Table.Cell>
 						</Table.Row>
+						<Table.Row>
+							<Table.Cell>LeetCode</Table.Cell>
+							<Table.Cell>
+								{#if data.leetCodeUsername}
+									<svelte:component this={IconCheck} />
+								{:else}
+									Not Linked
+								{/if}
+							</Table.Cell>
+						</Table.Row>
 						<!-- Add other integrations here if needed -->
 					</Table.Body>
 				</Table.Root>

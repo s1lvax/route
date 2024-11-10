@@ -1,112 +1,135 @@
 <script lang="ts">
-   import { onMount } from 'svelte';
-   import type { LeetCodeStats } from '$lib/types/LeetCodeData';
-   import { Flame, Calendar, Medal } from 'lucide-svelte';
+	import { onMount } from 'svelte';
+	import type { LeetCodeStats } from '$lib/types/LeetCodeData';
+	import { Flame, Calendar, Medal } from 'lucide-svelte';
+	import * as Card from '$lib/components/ui/card';
+	import * as Table from '$lib/components/ui/table';
 
-   export let leetCodeUsername: string;
-   let data: LeetCodeStats | null = null;
+	export let leetCodeUsername: string;
+	let data: LeetCodeStats | null = null;
+	let loading = true;
 
-   // Variables to store problem-solving counts per difficulty
-   let easyCount = 0;
-   let mediumCount = 0;
-   let hardCount = 0;
+	// Problem-solving counts by difficulty
+	let easyCount = 0;
+	let mediumCount = 0;
+	let hardCount = 0;
 
-   // Fetch data and calculate proportions
-   onMount(async () => {
-      try {
-         const response = await fetch(`/api/leetcode?leetCodeUsername=${leetCodeUsername}`);
-         if (response.ok) {
-            const result = await response.json();
-            data = result.data.matchedUser;
+	// Fetch data
+	onMount(async () => {
+		try {
+			const response = await fetch(`/api/leetcode?leetCodeUsername=${leetCodeUsername}`);
+			if (response.ok) {
+				const result = await response.json();
+				data = result.data.matchedUser;
 
-            // Extract counts for each difficulty
-            easyCount = data?.submitStatsGlobal.acSubmissionNum.find(item => item.difficulty === "Easy")?.count || 0;
-            mediumCount = data?.submitStatsGlobal.acSubmissionNum.find(item => item.difficulty === "Medium")?.count || 0;
-            hardCount = data?.submitStatsGlobal.acSubmissionNum.find(item => item.difficulty === "Hard")?.count || 0;
-         }
-      } catch (error) {
-         console.error('Error fetching LeetCode stats:', error);
-      }
-   });
-
-   // Calculate total count and proportions for each difficulty
-   $: totalProblems = easyCount + mediumCount + hardCount;
-   $: easyProportion = (easyCount / totalProblems) * 100 || 0;
-   $: mediumProportion = (mediumCount / totalProblems) * 100 || 0;
-   $: hardProportion = (hardCount / totalProblems) * 100 || 0;
+				// Extract counts for each difficulty
+				easyCount = data?.submitStatsGlobal.acSubmissionNum.find(item => item.difficulty === "Easy")?.count || 0;
+				mediumCount = data?.submitStatsGlobal.acSubmissionNum.find(item => item.difficulty === "Medium")?.count || 0;
+				hardCount = data?.submitStatsGlobal.acSubmissionNum.find(item => item.difficulty === "Hard")?.count || 0;
+			}
+		} catch (error) {
+			console.error('Error fetching LeetCode stats:', error);
+		} finally {
+			loading = false;
+		}
+	});
 </script>
 
 <style>
-   .stats-card { padding: 1rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
-   .header, .section { margin-bottom: 1rem; }
-   .icon { width: 24px; height: 24px; margin-right: 8px; color: orange; }
-   .badge-grid { display: grid; grid-template-columns: repeat(auto-fill, 50px); gap: 8px; }
-   .badge { text-align: center; font-size: 0.8em; color: grey; }
-   .problem-summary { display: flex; flex-direction: column; padding-top: 1rem; }
-   .difficulty-line-container { margin-top: 1rem; position: relative; text-align: center; }
-   .difficulty-line { display: flex; height: 10px; border-radius: 5px; overflow: hidden; }
-   .difficulty-easy { background-color: green; }
-   .difficulty-medium { background-color: yellow; }
-   .difficulty-hard { background-color: red; }
-   .difficulty-label-container {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 0.5rem;
-      font-weight: bold;
-      font-size: 0.9em;
-      color: #f1f1f1;
-   }
+	.icon { width: 24px; height: 24px; margin-right: 8px; color: orange; }
+	.badge-grid { display: grid; grid-template-columns: repeat(auto-fill, 50px); gap: 8px; }
+	.badge { position: relative; width: 50px; height: 50px; }
+	.badge img { width: 100%; height: auto; }
+	.badge:hover .tooltip { display: block; }
+	.tooltip {
+		display: none;
+		position: absolute;
+		bottom: -24px;
+		left: 50%;
+		transform: translateX(-50%);
+		background-color: rgba(0, 0, 0, 0.75);
+		color: #fff;
+		padding: 4px 8px;
+		border-radius: 4px;
+		font-size: 0.75em;
+		white-space: nowrap;
+		z-index: 10;
+	}
 </style>
 
-<div class="stats-card">
-   <div class="header">
-      <h3>LeetCode Stats for {leetCodeUsername}</h3>
-      <div style="display: flex; gap: 1rem;">
-         <div>
-            <Flame class="icon" /><strong>{data?.userCalendar.streak}</strong> day streak
-         </div>
-         <div>
-            <Calendar class="icon" /><strong>{data?.userCalendar.totalActiveDays}</strong> active days
-         </div>
-         <div>
-            <Medal class="icon" /> Ranking: <strong>{data?.profile.ranking}</strong>
-         </div>
-      </div>
-   </div>
+<Card.Root class="max-h-[400px] overflow-y-auto">
+	<Card.Header>
+		<Card.Title>LeetCode</Card.Title>
+		<Card.Description>{leetCodeUsername}'s LeetCode stats</Card.Description>
+	</Card.Header>
+	
+	<Card.Content>
+		{#if loading}
+			<p>Loading...</p>
+		{:else if data}
+			<!-- Streak, Active Days, Ranking -->
+			<Table.Root>
+				<Table.Header>
+					<Table.Row>
+						<Table.Head>Metric</Table.Head>
+						<Table.Head>Value</Table.Head>
+					</Table.Row>
+				</Table.Header>
+				<Table.Body>
+					<Table.Row>
+						<Table.Cell><Flame class="icon" />Streak</Table.Cell>
+						<Table.Cell>{data.userCalendar.streak} days</Table.Cell>
+					</Table.Row>
+					<Table.Row>
+						<Table.Cell><Calendar class="icon" />Active Days</Table.Cell>
+						<Table.Cell>{data.userCalendar.totalActiveDays}</Table.Cell>
+					</Table.Row>
+					<Table.Row>
+						<Table.Cell><Medal class="icon" />Ranking</Table.Cell>
+						<Table.Cell>{data.profile.ranking}</Table.Cell>
+					</Table.Row>
+				</Table.Body>
+			</Table.Root>
 
-   {#if data}
-      {#if data.userCalendar.dccBadges.length > 0}
-         <div class="section">
-            <h4>Badges</h4>
-            <div class="badge-grid">
-               {#each data.userCalendar.dccBadges as badge}
-                  <div class="badge">
-                     <img src={`https://leetcode.com/${badge.badge.icon}`} alt={badge.badge.name} width="30" height="30" />
-                     <div>{badge.badge.name}</div>
-                  </div>
-               {/each}
-            </div>
-         </div>
-      {/if}
+			<!-- Badges -->
+			{#if data.userCalendar.dccBadges.length > 0}
+				<h4>Badges</h4>
+				<div class="badge-grid">
+					{#each data.userCalendar.dccBadges as badge}
+						<div class="badge">
+							<img src={`https://leetcode.com/${badge.badge.icon}`} alt={badge.badge.name} />
+							<div class="tooltip">{badge.badge.name}</div>
+						</div>
+					{/each}
+				</div>
+			{/if}
 
-      <div class="section">
-         <h4>Problem Solving Summary</h4>
-         <div class="problem-summary">
-            <div class="difficulty-line-container">
-               <div class="difficulty-line">
-                  <div class="difficulty-easy" style="flex: 0 0 {easyProportion}%;"></div>
-                  <div class="difficulty-medium" style="flex: 0 0 {mediumProportion}%;"></div>
-                  <div class="difficulty-hard" style="flex: 0 0 {hardProportion}%;"></div>
-               </div>
-               <div class="difficulty-label-container">
-                  <div>{easyCount} Easy</div>
-                  <div>{mediumCount} Medium</div>
-                  <div>{hardCount} Hard</div>
-               </div>
-            </div>
-         </div>
-      </div>
-   {:else}
-      <p>Loading LeetCode stats...</p>
-   {/if}
-</div>
+			<!-- Problem Solving Summary -->
+			<h4>Problem Solving Summary</h4>
+			<Table.Root>
+				<Table.Header>
+					<Table.Row>
+						<Table.Head>Difficulty</Table.Head>
+						<Table.Head>Count</Table.Head>
+					</Table.Row>
+				</Table.Header>
+				<Table.Body>
+					<Table.Row>
+						<Table.Cell>Easy</Table.Cell>
+						<Table.Cell>{easyCount}</Table.Cell>
+					</Table.Row>
+					<Table.Row>
+						<Table.Cell>Medium</Table.Cell>
+						<Table.Cell>{mediumCount}</Table.Cell>
+					</Table.Row>
+					<Table.Row>
+						<Table.Cell>Hard</Table.Cell>
+						<Table.Cell>{hardCount}</Table.Cell>
+					</Table.Row>
+				</Table.Body>
+			</Table.Root>
+		{:else}
+			<p>No data available.</p>
+		{/if}
+	</Card.Content>
+</Card.Root>

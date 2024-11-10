@@ -10,12 +10,12 @@
 	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
 	import ChessComForm from '$lib/components/MyProfile/ChessComForm.svelte';
 	import { IconChess, IconLink } from '@tabler/icons-svelte';
+	import { Braces } from 'lucide-svelte';
 	import ChessComStats from '$lib/components/MyProfile/ChessComStats.svelte';
 	import LeetCodeForm from '$lib/components/MyProfile/LeetCodeForm.svelte';
 	import LeetCodeStats from '$lib/components/MyProfile/LeetCodeStats.svelte';
 
 	export let data: PageData;
-	console.log(data);
 </script>
 
 <h1
@@ -45,7 +45,6 @@
 			</Card.Content>
 		</Card.Root>
 	</div>
-
 	<div class="chess.com">
 		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
 			{#if data.chessComUsername}
@@ -114,19 +113,14 @@
 	<div class="leetcode">
 		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
 		  {#if data.leetCodeUsername}
-			<Card.Header>
-			  <Card.Title class="flex flex-row items-center space-x-2">LeetCode</Card.Title>
-			  <Card.Content>
 				<div class="flex flex-col space-y-4">
 				  <form action="?/deleteLeetCode" method="POST" use:enhance>
+					<LeetCodeStats leetCodeUsername={data.leetCodeUsername.username} />
 					<Button variant="destructive" type="submit">
 					  Unlink LeetCode
 					</Button>
 				  </form>
-				  <LeetCodeStats leetCodeUsername={data.leetCodeUsername.username} />
 				</div>
-			  </Card.Content>
-			</Card.Header>
 		  {:else}
 			<FormCardHeader
 			  description="Link your LeetCode account to showcase your stats."
