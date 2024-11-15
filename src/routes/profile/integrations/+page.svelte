@@ -10,7 +10,10 @@
 	import MusicPlayer from '$lib/components/Shared/MusicPlayer.svelte';
 	import ChessComForm from '$lib/components/MyProfile/ChessComForm.svelte';
 	import { IconChess, IconLink } from '@tabler/icons-svelte';
+	import { Braces } from 'lucide-svelte';
 	import ChessComStats from '$lib/components/MyProfile/ChessComStats.svelte';
+	import LeetCodeForm from '$lib/components/MyProfile/LeetCodeForm.svelte';
+	import LeetCodeStats from '$lib/components/MyProfile/LeetCodeStats.svelte';
 
 	export let data: PageData;
 </script>
@@ -42,7 +45,6 @@
 			</Card.Content>
 		</Card.Root>
 	</div>
-
 	<div class="chess.com">
 		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
 			{#if data.chessComUsername}
@@ -108,4 +110,25 @@
 			</Card.Content>
 		</Card.Root>
 	</div>
+	<div class="leetcode">
+		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
+		  {#if data.leetCodeUsername}
+				<div class="flex flex-col space-y-4">
+				  <form action="?/deleteLeetCode" method="POST" use:enhance>
+					<LeetCodeStats leetCodeUsername={data.leetCodeUsername.username} />
+					<Button variant="destructive" type="submit">
+					  Unlink LeetCode
+					</Button>
+				  </form>
+				</div>
+		  {:else}
+			<FormCardHeader
+			  description="Link your LeetCode account to showcase your stats."
+			  title="LeetCode"
+			>
+			  <LeetCodeForm data={data.leetCodeForm} />
+			</FormCardHeader>
+		  {/if}
+		</Card.Root>
+	  </div>
 </div>
