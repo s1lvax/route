@@ -29,6 +29,7 @@ model User {
   spotifyToken        SpotifyToken?
   RecentActivity      RecentActivity[]
   IntegrationChessCom IntegrationChessCom?
+  IntegrationLeetCode  IntegrationLeetCode?
   CryptoWallets       CryptoWallets[]
 }
 
@@ -99,6 +100,16 @@ model RecentActivity {
 }
 
 model IntegrationChessCom {
+  id        Int      @id @default(autoincrement())
+  usedBy    User     @relation(fields: [userId], references: [githubId])
+  userId    Int      @unique
+  username  String
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model IntegrationLeetCode {
   id        Int      @id @default(autoincrement())
   usedBy    User     @relation(fields: [userId], references: [githubId])
   userId    Int      @unique

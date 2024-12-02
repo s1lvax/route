@@ -9,6 +9,7 @@ import { getGitHubUserIdFromImageUrl } from '$lib/utils/getGithubIDFromImage';
 import { createRecentActivity } from '$lib/utils/createRecentActivity';
 import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
 import { chessComSchema } from '$lib/schemas/integration-chesscom';
+import { leetCodeSchema } from '$lib/schemas/integration-leetcode'; 
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -23,7 +24,7 @@ export const load: PageServerLoad = async (event) => {
 	// Fetch the user from the database
 	user = await prisma.user.findUnique({
 		where: { githubId: userId }
-	});
+	}); 
 };
 
 export const actions: Actions = {
@@ -156,5 +157,52 @@ export const actions: Actions = {
 			console.log(err);
 			return fail(500, { message: 'Something went wrong.' });
 		}
+	},
+
+	createLeetCode: async (event) => {
+		const form = await superValidate(event, zod(leetCodeSchema));
+		if (!form.valid) return fail(400, { form });
+	
+		const { username } = form.data;
+	
+		if (user) {
+		  try {
+			await prisma.integrationLeetCode.create({
+			  data: {
+				username,
+				userId: user.githubId
+			  }
+			});
+	
+			createRecentActivity(
+			  'LEETCODE_LINKED',
+			  `Linked your LeetCode account (${username})`,
+			  user.githubId
+			);
+		  } catch (error) {
+			console.error(error);
+			throw new Error('Failed to create LeetCode integration');
+		  }
+		}
+		return { form };
+	  },
+	  
+	deleteLeetCode: async ({ url }) => {
+	try {
+		if (user) {
+		await prisma.integrationLeetCode.delete({
+			where: { userId: user.githubId }
+		});
+
+		createRecentActivity('LEETCODE_UNLINKED', `Unlinked your LeetCode account`, user.githubId);
+		}
+	} catch (error) {
+		console.error(error);
+		return fail(500, { message: 'Something went wrong.' });
 	}
+	}
+
+	
+
+
 };

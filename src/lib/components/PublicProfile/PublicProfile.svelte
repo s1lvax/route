@@ -8,10 +8,10 @@
 	import ProfileHero from '$lib/components/PublicProfile/ProfileHero.svelte';
 	import { Separator } from '$lib/components//ui/separator';
 	import ChessComStats from '$lib/components/MyProfile/ChessComStats.svelte';
+	import LeetCodeStats from '$lib/components/MyProfile/LeetCodeStats.svelte';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
-
 	//Accept githubData as a prop
 	export let githubData: GithubData | null;
 </script>
@@ -36,6 +36,11 @@
 			<!-- Chess Stats Section -->
 			{#if userData.chessComUsername != null}
 				<ChessComStats chessComUsername={userData.chessComUsername} />
+			{/if}
+
+			<!-- LeetCode Stats Section -->
+			{#if userData.leetCode != null}
+				<LeetCodeStats leetCodeUsername={userData.leetCode.username} />
 			{/if}
 		</div>
 
