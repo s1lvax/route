@@ -10,6 +10,7 @@ import { createRecentActivity } from '$lib/utils/createRecentActivity';
 import { unlinkSpotify } from '$lib/utils/spotify/unlinkSpotify';
 import { chessComSchema } from '$lib/schemas/integration-chesscom';
 import { leetCodeSchema } from '$lib/schemas/integration-leetcode'; 
+import { codewarsSchema } from '$lib/schemas/integration-codewars';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -159,6 +160,49 @@ export const actions: Actions = {
 		}
 	},
 
+	createCodewars: async (event) => {
+		const form = await superValidate(event, zod(codewarsSchema));
+		if (!form.valid) return fail(400, { form });
+
+		const { username } = form.data;
+
+		if (user) {
+			try {
+				await prisma.integrationCodewars.create({
+					data: {
+						username,
+						userId: user.githubId
+					}
+				});
+
+				createRecentActivity(
+					'CODEWARS_LINKED',
+					`Linked your Codewars account (${username})`,
+					user.githubId
+				);
+			} catch (error) {
+				console.error(error);
+				throw new Error('Failed to create Codewars integration');
+			}
+		}
+		return { form };
+	},
+
+	deleteCodewars: async ({ url }) => {
+		try {
+			if (user) {
+				await prisma.integrationCodewars.delete({
+					where: { userId: user.githubId }
+				});
+
+				createRecentActivity('CODEWARS_UNLINKED', `Unlinked your Codewars account`, user.githubId);
+			}
+		} catch (error) {
+			console.error(error);
+			return fail(500, { message: 'Something went wrong.' });
+		}
+	},
+
 	createLeetCode: async (event) => {
 		const form = await superValidate(event, zod(leetCodeSchema));
 		if (!form.valid) return fail(400, { form });
@@ -188,21 +232,17 @@ export const actions: Actions = {
 	  },
 	  
 	deleteLeetCode: async ({ url }) => {
-	try {
-		if (user) {
-		await prisma.integrationLeetCode.delete({
-			where: { userId: user.githubId }
-		});
+		try {
+			if (user) {
+			await prisma.integrationLeetCode.delete({
+				where: { userId: user.githubId }
+			});
 
-		createRecentActivity('LEETCODE_UNLINKED', `Unlinked your LeetCode account`, user.githubId);
+			createRecentActivity('LEETCODE_UNLINKED', `Unlinked your LeetCode account`, user.githubId);
+			}
+		} catch (error) {
+			console.error(error);
+			return fail(500, { message: 'Something went wrong.' });
 		}
-	} catch (error) {
-		console.error(error);
-		return fail(500, { message: 'Something went wrong.' });
 	}
-	}
-
-	
-
-
 };
