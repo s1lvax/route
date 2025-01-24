@@ -14,6 +14,7 @@ import type { LayoutServerLoad } from '../$types';
 import { chessComSchema } from '$lib/schemas/integration-chesscom';
 import { cryptoSchema } from '$lib/schemas/crypto';
 import { leetCodeSchema } from '$lib/schemas/integration-leetcode';
+import { codewarsSchema } from '$lib/schemas/integration-codewars';
 
 // Define the user variable with a possible null
 let user: User | null = null;
@@ -83,6 +84,10 @@ export const load: LayoutServerLoad = async (event) => {
 		where: { userId: user.githubId }
 	});
 
+	const codewarsUsername = await prisma.integrationCodewars.findFirst({
+		where: { userId: user.githubId }
+	});
+
 	const crypto = await prisma.cryptoWallets.findMany({
 		where: { userId: user.githubId }
 	});
@@ -103,6 +108,7 @@ export const load: LayoutServerLoad = async (event) => {
 	const chessComForm = await superValidate(zod(chessComSchema));
 	const cryptoForm = await superValidate(zod(cryptoSchema));
 	const leetCodeForm = await superValidate(zod(leetCodeSchema));
+	const codewarsForm = await superValidate(zod(codewarsSchema));
 
 	// Return data to the frontend
 	return {
@@ -116,6 +122,7 @@ export const load: LayoutServerLoad = async (event) => {
 		spotifyToken,
 		chessComUsername,
 		leetCodeUsername,
+		codewarsUsername,
 		crypto,
 		form: linksForm,
 		skillsForm,
@@ -124,6 +131,7 @@ export const load: LayoutServerLoad = async (event) => {
 		personalInformationForm,
 		chessComForm,
 		cryptoForm,
-		leetCodeForm
+		leetCodeForm,
+		codewarsForm
 	};
 };

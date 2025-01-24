@@ -9,6 +9,7 @@
 	import { Separator } from '$lib/components//ui/separator';
 	import ChessComStats from '$lib/components/MyProfile/ChessComStats.svelte';
 	import LeetCodeStats from '$lib/components/MyProfile/LeetCodeStats.svelte';
+	import CodewarsStats from '$lib/components/MyProfile/CodewarsStats.svelte';
 
 	// Accept userData as a prop
 	export let userData: PublicProfile;
@@ -41,6 +42,11 @@
 			<!-- LeetCode Stats Section -->
 			{#if userData.leetCode != null}
 				<LeetCodeStats leetCodeUsername={userData.leetCode.username} />
+			{/if}
+
+			<!-- Codewars Stats Section -->
+			{#if userData.codewars != null}
+				<CodewarsStats codewarsUsername={userData.codewars.username} />
 			{/if}
 		</div>
 

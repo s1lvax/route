@@ -18,6 +18,8 @@ export const createRecentActivity = async (
 		| 'PERSONAL_INFORMATION_UPDATED'
 		| 'CRYPTO_CREATED'
 		| 'CRYPTO_DELETED'
+		| 'CODEWARS_LINKED'
+		| 'CODEWARS_UNLINKED'
 		| 'LEETCODE_LINKED'
 		| 'LEETCODE_UNLINKED',
 	activityDescription: string,

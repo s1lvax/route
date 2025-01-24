@@ -1,4 +1,4 @@
-import type { CryptoWallets, PersonalInformation, Social,  IntegrationLeetCode} from '@prisma/client';
+import type { CryptoWallets, PersonalInformation, Social, IntegrationLeetCode, IntegrationCodewars} from '@prisma/client';
 
 export interface PublicProfile {
 	links: Array<{ title: string; url: string }>;
@@ -11,4 +11,5 @@ export interface PublicProfile {
 	chessComUsername: string | null;
 	crypto: CryptoWallets[];
 	leetCode: IntegrationLeetCode | null;
+	codewars: IntegrationCodewars | null;
 }

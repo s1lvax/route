@@ -14,6 +14,8 @@
 	import ChessComStats from '$lib/components/MyProfile/ChessComStats.svelte';
 	import LeetCodeForm from '$lib/components/MyProfile/LeetCodeForm.svelte';
 	import LeetCodeStats from '$lib/components/MyProfile/LeetCodeStats.svelte';
+	import CodewarsForm from '$lib/components/MyProfile/CodewarsForm.svelte';
+	import CodewarsStats from '$lib/components/MyProfile/CodewarsStats.svelte';
 
 	export let data: PageData;
 </script>
@@ -131,4 +133,26 @@
 		  {/if}
 		</Card.Root>
 	  </div>
+
+	  <div class="codewars">
+		<Card.Root class="max-h-[500px] overflow-y-auto xl:col-span-2">
+			{#if data.codewarsUsername}
+					<div class="flex flex-col space-y-4">
+						<form action="?/deleteCodewars" method="POST" use:enhance>
+							<CodewarsStats codewarsUsername={data.codewarsUsername.username} />
+							<Button variant="destructive" type="submit">
+							Unlink Codewars
+							</Button>
+						</form>
+					</div>
+			{:else}
+				<FormCardHeader
+					description="Link your Codewars account to showcase your stats."
+					title="Codewars"
+					>
+					<CodewarsForm data={data.leetCodeForm} />
+				</FormCardHeader>
+			{/if}
+		</Card.Root>
+	</div>
 </div>
