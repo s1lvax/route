@@ -60,7 +60,12 @@ export const load: PageServerLoad = async ({ params }) => {
 	const crypto = await prisma.cryptoWallets.findMany({
 		where: { userId: user.githubId }
 	});
+
 	const leetCode = await prisma.integrationLeetCode.findUnique({
+		where: { userId: user.githubId }
+	});
+
+	const codewars = await prisma.integrationCodewars.findUnique({
 		where: { userId: user.githubId }
 	});
 
@@ -76,8 +81,8 @@ export const load: PageServerLoad = async ({ params }) => {
 		hobbies,
 		crypto,
 		// TODO add leetCode to the userData
-		leetCode
-
+		leetCode,
+		codewars,
 	};
 
 	return {
