@@ -1,3 +1,7 @@
+# DEPRECATED
+
+new project in https://github.com/s1lvax/whoami
+
 # Route
 
 Route is a platform that allows users to easily share their favourite links, tech skills and GitHub stats in one centralized place.
